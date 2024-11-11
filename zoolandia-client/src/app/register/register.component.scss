@@ -1,0 +1,15 @@
+.register {
+  gap: 96px;
+
+  .form-holder {
+
+    h2 {
+      margin-bottom: 36px;
+    }
+    .form-group-name-and-surname {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      grid-gap: 50px;
+    }
+  }
+}
