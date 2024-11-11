@@ -1,1 +1,37 @@
-<p>login works!</p>
+<div class="auth-background">
+  <section class="container">
+    <div class="auth-layout login">
+      <div class="form-holder">
+        <h2>Добре дошъл отново!</h2>
+        <p>Нямаш профил? <a routerLink="">Регистрирай се!</a></p>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="form-group">
+            <label for="text">Имейл</label>
+            <input class="main-input"
+                   type="email"
+                   placeholder="karina.ivanova@gmail.com"
+                   formControlName="email">
+          </div>
+          <div class="form-group">
+            <label for="text">Парола</label>
+            <input class="main-input"
+                   type="password"
+                   formControlName="password">
+          </div>
+          <div class="auth-preferences">
+            <div class="form-group-checkbox">
+              <input type="checkbox">
+              <label for="text">Запомни ме</label>
+            </div>
+            <a >Забравена парола</a>
+          </div>
+          <button class="btn primary-button">Вход</button>
+          <button class="btn auth-google">Влез с Google</button>
+        </form>
+      </div>
+      <div class="image-holder">
+        <img src="../../assets/images/login-image.svg" alt="people giving welcome">
+      </div>
+    </div>
+  </section>
+</div>
