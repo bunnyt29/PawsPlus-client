@@ -39,8 +39,9 @@
           <div class="form-group">
             <label>Телефонен номер</label>
             <input class="main-input"
-                   type="number"
-                   placeholder="+359888990865">
+                   type="text"
+                   placeholder="0888990865"
+                   formControlName="phoneNumber">
             <div *ngIf="phoneNumber?.touched && phoneNumber?.errors?.['required']" class="alert">* задължително</div>
             <div *ngIf="phoneNumber?.touched && phoneNumber?.errors?.['pattern']" class="alert">* въведи валиден телефонен номер</div>
           </div>
@@ -48,7 +49,7 @@
             <label>Парола</label>
             <input class="main-input"
                    type="password"
-                   formContolName="password">
+                   formControlName="password">
             <div *ngIf="password?.touched && password?.errors?.['required']" class="alert">* задължително</div>
           </div>
           <div class="form-group">

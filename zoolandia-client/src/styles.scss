@@ -1,1 +1,137 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'assets/style/base/reset';
+@use 'assets/style/abstracts/typography';
+@use 'assets/style/abstracts/colors';
+@use 'assets/style/components/buttons';
+
+body {
+  background-color: colors.$primary-background;
+}
+
+.container {
+  --max-width: 1196px;
+  --padding: 16px;
+
+  width: min(var(--max-width), 100% - 2*var(--padding));
+  margin-inline: auto;
+}
+
+.auth-background {
+  background-image: url("/assets/images/login-background.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.auth-layout {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.form-holder {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    font-size: typography.$font-size-2xl;
+    line-height: 55px;
+  }
+
+  p {
+    margin-block: 10px 33px;
+
+    a {
+      color: colors.$accent-color;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-preferences {
+  margin-block: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-group-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  input[type="checkbox"] {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid colors.$accent-color;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+
+    &:checked {
+      background-color: colors.$accent-color;
+      color: white;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 3px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+label {
+  font-weight: typography.$semi-bold ;
+}
+
+input {
+  background: transparent;
+  border: none;
+}
+
+.invalid-input {
+  background: colors.$danger-color;
+  border: 1px solid colors.$danger-darker-color;
+}
+
+.main-input {
+  padding: 15px 20px;
+  background: colors.$secondary-background;
+  border-radius: 5px;
+}
+
+.main-input::placeholder {
+  color: colors.$primary-text-color;
+  opacity: 60%;
+}
+
+.main-input:focus {
+  border: 1px solid red;
+}
+
+.main-input.ng-invalid.ng-touched {
+  border: 1px solid colors.$danger-darker-color;
+  background-color: colors.$danger-color;
+}
+
+
+

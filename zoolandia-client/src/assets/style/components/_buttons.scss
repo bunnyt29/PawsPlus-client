@@ -1,0 +1,24 @@
+@use '../abstracts/colors';
+
+.btn {
+  border: none;
+}
+
+.primary-button {
+  padding-block: 15px;
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  background-color: colors.$accent-color;
+  border-radius: 5px;
+}
+
+.auth-google {
+  padding-block: 15px;
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  background-color: colors.$secondary-background;
+  border-radius: 5px;
+}
+

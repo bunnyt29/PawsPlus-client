@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import { confirmPasswordValidator } from '../confirm-password.validator';
+import {AuthService} from "../services/auth.service";
 
 
 @Component({
@@ -13,7 +14,8 @@ export class RegisterComponent implements OnInit{
   registerForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService
   )
   { }
 
@@ -31,26 +33,24 @@ export class RegisterComponent implements OnInit{
   get firstName() {
     return this.registerForm.get('firstName');
   }
-
   get lastName() {
     return this.registerForm.get('lastName');
   }
   get email() {
     return this.registerForm.get('email');
   }
-
   get phoneNumber() {
     return this.registerForm.get('phoneNumber');
   }
-
   get password() {
     return this.registerForm.get('password');
   }
-
   get passwordMatchError() {
     return this.registerForm.errors?.['PasswordNoMatch'] && this.registerForm.get('confirmPassword')?.touched;
   }
   register() {
-    console.log(this.registerForm.value);
+    this.authService.register(this.registerForm.value).subscribe(data => {
+      console.log("send to the server");
+    });
   }
 }
