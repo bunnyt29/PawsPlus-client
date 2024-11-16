@@ -6,8 +6,9 @@ import { AppComponent } from './app.component';
 import {LoginComponent} from "./login/login.component";
 import { RegisterComponent } from './register/register.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {provideHttpClient} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, provideHttpClient} from "@angular/common/http";
 import {AuthService} from "./services/auth.service";
+import {TokenInterceptorService} from "./services/token-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,12 @@ import {AuthService} from "./services/auth.service";
     ReactiveFormsModule
   ],
   providers: [
-    provideHttpClient()
+    provideHttpClient(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
