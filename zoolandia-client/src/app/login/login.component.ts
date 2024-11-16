@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {confirmPasswordValidator} from "../confirm-password.validator";
 import {AuthService} from "../services/auth.service";
 
 @Component({
@@ -32,7 +31,7 @@ export class LoginComponent implements OnInit{
     return this.loginForm.get('password');
   }
 
-  login() {
+  login(): void {
     this.authService.login(this.loginForm.value).subscribe(data => {
       this.authService.saveToken(data['token']);
     })
