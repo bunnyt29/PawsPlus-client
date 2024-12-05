@@ -16,7 +16,7 @@ body {
 }
 
 .auth-background {
-  background-image: url("/assets/images/login-background.svg");
+  background-image: url("/assets/images/desktop/auth-background.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -133,5 +133,11 @@ input {
   background-color: colors.$danger-color;
 }
 
+.main-textarea {
+  background-color: colors.$secondary-background;
+  border-radius: 5px;
+}
 
-
+.main-textarea {
+  padding: 20px;
+}

@@ -3,31 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {LoginComponent} from "./login/login.component";
-import { RegisterComponent } from './register/register.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {HTTP_INTERCEPTORS, provideHttpClient} from "@angular/common/http";
-import {AuthService} from "./services/auth.service";
-import {TokenInterceptorService} from "./services/token-interceptor.service";
+import { AuthModule } from './features/auth/auth.module';
+import {provideHttpClient} from "@angular/common/http";
+import {CoreModule} from "./core/core.module";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AuthModule,
+    CoreModule
   ],
   providers: [
-    provideHttpClient(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptorService,
-      multi: true
-    }
+    provideHttpClient()
   ],
   bootstrap: [AppComponent]
 })

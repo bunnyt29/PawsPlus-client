@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
+import {environment} from "../../../../environments/environment";
 import {Observable} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,8 @@ export class AuthService {
   private registerPath = environment.apiUrl + '/identity/register';
   private loginPath = environment.apiUrl + '/identity/login';
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private cookieService: CookieService
   ) { }
 
   register(data: any):Observable<any> {
@@ -22,11 +25,11 @@ export class AuthService {
   }
 
   saveToken(token: any) {
-    localStorage.setItem('token', token);
+    this.cookieService.set('auth', token, { path: '/' });
   }
 
   getToken() {
-    return localStorage.getItem('token');
+    return this.cookieService.get('auth');
   }
 
   isAuthenticated() {

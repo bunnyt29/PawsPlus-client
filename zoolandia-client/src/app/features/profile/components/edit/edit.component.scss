@@ -1,0 +1,74 @@
+@use "../../../../../assets/style/abstracts/colors";
+@use "../../../../../assets/style/abstracts/typography";
+.create-profile-holder {
+  margin-block: 74px 84px;
+  padding-inline: 122px;
+
+  .create-profile-head {
+    padding-bottom: 23px;
+    display: flex;
+    align-items: center;
+    gap: 44px;
+    border-bottom: 1px solid colors.$primary-text-color;
+
+    .profile-name {
+      display: flex;
+      flex-direction: column;
+      color: colors.$primary-text-color;
+      font-size: typography.$font-size-2xl;
+      font-weight: typography.$bold;
+
+      input:focus {
+        border: none !important;
+      }
+    }
+  }
+
+  .create-profile-main {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 33px;
+
+    .create-profile-main-left-side {
+      display: flex;
+      flex-direction: column;
+      gap: 47px;
+
+      .form-sections-heading {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+
+        span {
+          font-size: typography.$font-size-lg;
+          font-weight: typography.$bold;
+        }
+      }
+
+      .contacts {
+        .contacts-main-holder {
+          max-width: 500px;
+          margin-top: 24px;
+          display: flex;
+          gap: 40px;
+          flex-wrap: wrap;
+
+          .contact {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+
+            label {
+              font-size: typography.$font-size-md;
+            }
+          }
+
+          .contact:last-child {
+            flex-wrap: wrap;
+          }
+        }
+      }
+    }
+  }
+}

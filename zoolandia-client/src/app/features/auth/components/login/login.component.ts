@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../services/auth.service";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AuthService} from "../../services/auth.service";
+import {SharedModule} from "../../../../shared/shared.module";
 
 @Component({
   selector: 'login',
+  standalone: true,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  imports: [SharedModule]
 })
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;

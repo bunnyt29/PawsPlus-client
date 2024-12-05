@@ -2,7 +2,14 @@
   <section class="container">
     <div class="auth-layout register">
       <div class="image-holder">
-        <img src="../../assets/images/register-image.svg" alt="people playing with pets">
+        <picture>
+          <source media="(min-width:650px)" srcset="../../../../../assets/images/desktop/register-image.svg">
+          <source media="(min-width:465px)" srcset="../../../../../assets/images/desktop/register-image.svg">
+          <img ngSrc="../../../../../assets/images/desktop/register-image.svg"
+               alt="welcoming people"
+               height="500"
+               width="750">
+        </picture>
       </div>
       <div class="form-holder">
         <h2>Радваме се да се запознаем!</h2>

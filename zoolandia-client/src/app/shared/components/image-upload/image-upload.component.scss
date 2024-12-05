@@ -1,0 +1,70 @@
+@use '../../../../assets/style/abstracts/colors';
+@use '../../../../assets/style/abstracts/typography';
+
+.image-upload {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .image-preview {
+    position: relative;
+    margin-bottom: 10px;
+    width: 169px;
+    height: 169px;
+    background-color: colors.$secondary-background;
+    border-radius: 100%;
+    overflow: hidden;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      transition: all 0.3s ease;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(217, 217, 217, 0.71);
+      opacity: 0;
+      border-radius: 100%;
+      transition: opacity 0.3s ease;
+    }
+  }
+
+  .upload-label {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 169px;
+    height: 169px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: black;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    text-align: center;
+    font-weight: typography.$semi-bold;
+  }
+
+  &:hover {
+    .image-preview::after {
+      opacity: 1;
+    }
+
+    .upload-label {
+      opacity: 1;
+    }
+  }
+
+  .file-input {
+    display: none;
+  }
+}
