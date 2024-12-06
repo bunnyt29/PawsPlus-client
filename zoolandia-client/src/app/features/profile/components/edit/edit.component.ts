@@ -19,16 +19,21 @@ import {ImageUploadComponent} from '../../../../shared/components/image-upload/i
   styleUrl: './edit.component.scss'
 })
 export class EditComponent {
+
   profileForm!: FormGroup;
   profile!: Profile;
+
+
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) { }
 
+
   ngOnInit(): void {
+
     if (!this.authService.isAuthenticated()) {
       // Redirect to login if the user is not authenticated
       this.router.navigate(['/login']);
@@ -53,6 +58,7 @@ export class EditComponent {
     console.log('File uploaded:', file);
   }
 
+  
   get firstName() {
     return this.profileForm.get('firstName');
   }
