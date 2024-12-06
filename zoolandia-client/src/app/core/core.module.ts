@@ -9,7 +9,6 @@ import {TokenInterceptorService} from "./interseptors/token-interceptor.service"
     CommonModule
   ],
   providers: [
-    provideHttpClient(),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

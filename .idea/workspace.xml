@@ -5,31 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a941f9ec-fc21-438b-9c53-6c7e7e2e368e" name="Changes" comment="Add auth guard">
-      <change afterPath="$PROJECT_DIR$/zoolandia-client/src/app/shared/models/Roles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/app-routing.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/guards/auth.gurad.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/core/guards/auth.gurad.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/auth/components/login/login.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/login/login.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/auth/components/login/login.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/login/login.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/auth/components/login/login.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/auth/components/login/login.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/register/register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/auth/components/register/register.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/register/register.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/auth/components/register/register.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/register/register.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/auth/components/register/register.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/auth/components/register/register.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/services/auth.service.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/auth/services/auth.service.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/auth/services/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/services/token-interceptor.service.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/core/interseptors/token-interceptor.service.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/services/token-interceptor.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/core/interseptors/token-interceptor.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/assets/images/auth-background.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/assets/images/login-background.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/assets/images/login-image.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/assets/images/register-image.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/assets/style/abstracts/_colors.scss" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/assets/style/abstracts/_colors.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/assets/style/components/_buttons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/assets/style/components/_buttons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/core/core.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/core/core.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/core/interseptors/token-interceptor.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/core/interseptors/token-interceptor.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/features/profile/components/edit/edit.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/profile/components/edit/edit.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/features/profile/components/edit/edit.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/profile/components/edit/edit.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zoolandia-client/src/app/features/profile/components/edit/edit.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/app/features/profile/components/edit/edit.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zoolandia-client/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/zoolandia-client/src/styles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -143,7 +125,7 @@
       <workItem from="1733299863448" duration="1196000" />
       <workItem from="1733312013417" duration="29000" />
       <workItem from="1733340837985" duration="6712000" />
-      <workItem from="1733408739573" duration="3938000" />
+      <workItem from="1733408739573" duration="9196000" />
     </task>
     <task id="LOCAL-00001" summary="Create login component]">
       <option name="closed" value="true" />
@@ -198,16 +180,5 @@
     <MESSAGE value="Make login and register work with the server" />
     <MESSAGE value="Add auth guard" />
     <option name="LAST_COMMIT_MESSAGE" value="Add auth guard" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/zoolandia-client/src/app/features/auth/services/auth.service.ts</url>
-          <line>30</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -9,7 +9,7 @@
       </div>
       <span class="profile-name">
             <input placeholder="Филип"
-                   class="profile-name"
+                   class="profile-name profile-input"
                    type="text"
                    formControlName="firstName">
             <div class="alert"
@@ -21,7 +21,7 @@
               * минимален брой символи 2
             </div>
             <input placeholder="Иванов"
-                   class="profile-name"
+                   class="profile-name profile-input"
                    type="text" formControlName="lastName">
             <div class="alert"
                  *ngIf="lastName?.touched && lastName?.errors?.['required']">
@@ -54,15 +54,22 @@
           <div class="contacts-main-holder">
             <div class="contact">
               <label>Имейл адрес</label>
-              <label>filip.aleksandrov.gmail.com</label>
+              <input class="profile-input"
+                     type="email"
+                     placeholder="karina.ivanova@gmail.com"
+                     formControlName="email">
+              <div *ngIf="email?.touched && email?.errors?.['required']" class="alert">* задължително</div>
+              <div *ngIf="email?.touched && email?.errors?.['email']" class="alert">* въведи валиден имейл</div>
+              <div *ngIf="email?.touched && email?.errors?.['minLength'] || email?.touched && email?.errors?.['maxLength']" class="alert">* най-малко 3 символа и най-много 50</div>
             </div>
             <div class="contact">
               <label>Телефонен номер</label>
-              <label>088990298</label>
-            </div>
-            <div class="contact">
-              <label>Социални мрежи</label>
-              <label>Добави+</label>
+              <input class="profile-input"
+                     type="text"
+                     placeholder="0888990865"
+                     formControlName="phoneNumber">
+              <div *ngIf="phoneNumber?.touched && phoneNumber?.errors?.['required']" class="alert">* задължително</div>
+              <div *ngIf="phoneNumber?.touched && phoneNumber?.errors?.['pattern']" class="alert">* въведи валиден телефонен номер</div>
             </div>
           </div>
         </div>
@@ -72,7 +79,19 @@
               <img src="assets/images/shared/location-icon.svg">
               <span>Местоположение</span>
             </div>
-            <input type="text" class="main-input">
+            <div class="location-holder">
+              <input type="text" class="main-input">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="create-profile-main-right-side">
+        <div class="animals-holder">
+          <div class="add-animal-holder">
+            <div class="add-animal">
+              <img src="assets/images/shared/add-animal.svg" alt="Add animal button">
+              <span>Добави домашен любимец</span>
+            </div>
           </div>
         </div>
       </div>

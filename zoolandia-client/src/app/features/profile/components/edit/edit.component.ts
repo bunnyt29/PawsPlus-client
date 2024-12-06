@@ -4,6 +4,8 @@ import {Profile} from "../../../../shared/models/Profile";
 import {ProfileService} from "../../services/profile.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SharedModule} from "../../../../shared/shared.module";
+import {AuthService} from "../../../auth/services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-edit',
@@ -17,10 +19,16 @@ export class EditComponent implements OnInit{
   profile!: Profile;
   constructor(
     private fb: FormBuilder,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    if (!this.authService.isAuthenticated()) {
+      // Redirect to login if the user is not authenticated
+      this.router.navigate(['/login']);
+    }
     this.fetchProfile();
   }
 
@@ -48,6 +56,14 @@ export class EditComponent implements OnInit{
 
   get lastName() {
     return this.profileForm.get('lastName');
+  }
+
+  get email() {
+    return this.profileForm.get('email');
+  }
+
+  get phoneNumber() {
+    return this.profileForm.get('phoneNumber');
   }
 
 }
