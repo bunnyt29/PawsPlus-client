@@ -1,0 +1,100 @@
+<section class="create-profile-holder">
+  <form [formGroup]="profileForm">
+    <div class="create-profile-head">
+      <div class="profile-image">
+<!--        <app-image-upload-->
+<!--          [defaultImage]="'assets/my-default-image.png'"-->
+<!--          (fileSelected)="onFileUpload($event)"-->
+<!--        ></app-image-upload>-->
+      </div>
+      <span class="profile-name">
+            <input placeholder="Филип"
+                   class="profile-name profile-input"
+                   type="text"
+                   formControlName="firstName">
+            <div class="alert"
+                 *ngIf="firstName?.touched && firstName?.errors?.['required']">
+              * задължително
+            </div>
+            <div class="alert"
+                 *ngIf="firstName?.touched && firstName?.errors?.['minlength']">
+              * минимален брой символи 2
+            </div>
+            <input placeholder="Иванов"
+                   class="profile-name profile-input"
+                   type="text" formControlName="lastName">
+            <div class="alert"
+                 *ngIf="lastName?.touched && lastName?.errors?.['required']">
+              * задължително
+            </div>
+            <div class="alert"
+                 *ngIf="lastName?.touched && lastName?.errors?.['minlength']">
+              * минимален брой символи 2
+            </div>
+      </span>
+    </div>
+    <div class="create-profile-main">
+      <div class="create-profile-main-left-side">
+        <div class="additional-information">
+          <div class="form-group">
+            <div class="form-sections-heading">
+              <span>Допълнително описание</span>
+            </div>
+            <textarea class="main-textarea"
+                      placeholder="Опиши себе си така, че да привлечеш вниманието на нашите собственици"
+                      rows="5">
+            </textarea>
+          </div>
+        </div>
+        <div class="contacts">
+          <div class="form-sections-heading">
+            <img src="../../../../../../../Zoolandia/client/zoolandia-client/src/assets/images/shared/contacts-icon.svg">
+            <span>Контакти</span>
+          </div>
+          <div class="contacts-main-holder">
+            <div class="contact">
+              <label>Имейл адрес</label>
+              <input class="profile-input"
+                     type="email"
+                     placeholder="karina.ivanova@gmail.com"
+                     formControlName="email">
+              <div *ngIf="email?.touched && email?.errors?.['required']" class="alert">* задължително</div>
+              <div *ngIf="email?.touched && email?.errors?.['email']" class="alert">* въведи валиден имейл</div>
+              <div *ngIf="email?.touched && email?.errors?.['minLength'] || email?.touched && email?.errors?.['maxLength']" class="alert">* най-малко 3 символа и най-много 50</div>
+            </div>
+            <div class="contact">
+              <label>Телефонен номер</label>
+              <input class="profile-input"
+                     type="text"
+                     placeholder="0888990865"
+                     formControlName="phoneNumber">
+              <div *ngIf="phoneNumber?.touched && phoneNumber?.errors?.['required']" class="alert">* задължително</div>
+              <div *ngIf="phoneNumber?.touched && phoneNumber?.errors?.['pattern']" class="alert">* въведи валиден телефонен номер</div>
+            </div>
+          </div>
+        </div>
+        <div class="location">
+          <div class="form-group">
+            <div class="form-sections-heading">
+              <img src="../../../../../../../Zoolandia/client/zoolandia-client/src/assets/images/shared/location-icon.svg">
+              <span>Местоположение</span>
+            </div>
+            <div class="location-holder">
+              <input type="text" class="main-input">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="create-profile-main-right-side">
+        <div class="animals-holder">
+          <div class="add-animal-holder">
+            <div class="add-animal">
+              <img src="../../../../../../../Zoolandia/client/zoolandia-client/src/assets/images/shared/add-animal.svg" alt="Add animal button">
+              <span>Добави домашен любимец</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
