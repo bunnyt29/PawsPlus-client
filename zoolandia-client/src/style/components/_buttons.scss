@@ -22,6 +22,14 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.secondary-button {
+  padding: 10px 30px;
+  background-color: colors.$accent-color;
+  color: colors.$primary-text-color;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .auth-google {
   padding-block: 15px;
   width: 350px;

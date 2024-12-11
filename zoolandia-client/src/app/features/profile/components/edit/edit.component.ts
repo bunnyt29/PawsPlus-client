@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
@@ -7,6 +7,7 @@ import {ProfileService} from '../../services/profile.service';
 import {Profile} from '../../../../shared/models/Profile';
 import {SharedModule} from '../../../../shared/shared.module';
 import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
+import {FileService} from '../../../../core/services/file.service';
 
 @Component({
   selector: 'app-edit',
@@ -18,47 +19,51 @@ import {ImageUploadComponent} from '../../../../shared/components/image-upload/i
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
 })
-export class EditComponent {
+export class EditComponent implements OnInit{
 
   profileForm!: FormGroup;
   profile!: Profile;
-
-
+  defaultImage: string | undefined = '/images/shared/default-image-owner.svg';
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
+    private fileService: FileService,
     private authService: AuthService,
     private router: Router,
   ) { }
 
-
   ngOnInit(): void {
-
-    if (!this.authService.isAuthenticated()) {
-      // Redirect to login if the user is not authenticated
-      this.router.navigate(['/login']);
-    }
     this.fetchProfile();
   }
 
   fetchProfile(){
     this.profileService.getProfile().subscribe(res => {
+      console.log(res)
       this.profile = res;
       this.profileForm = this.fb.group({
         'id': [this.profile.id],
-        'firstName': [[this.profile.firstName], [Validators.required, Validators.minLength(2)]],
-        'lastName': [[this.profile.lastName], [Validators.required, Validators.minLength(2)]],
+        'firstName': [this.profile.firstName, [Validators.required, Validators.minLength(2)]],
+        'lastName': [this.profile.lastName, [Validators.required, Validators.minLength(2)]],
+        'description': [''],
+        'phoneNumber': [this.profile.phoneNumber, [Validators.required, Validators.pattern('^[+]?[0-9]{9,15}$')]],
         'photoUrl': [this.profile.photoUrl]
       })
+      this.defaultImage = this.profile.photoUrl;
     })
   }
 
-
   onFileUpload(file: File): void {
-    console.log('File uploaded:', file);
+    this.fileService.uploadImage(file).subscribe({
+      next: (res) => {
+        const photoUrl = res.imageUrl;
+        this.profileForm.patchValue({ photoUrl: photoUrl });
+      },
+      error: (err) => {
+        console.error('File upload failed:', err);
+      },
+    });
   }
 
-  
   get firstName() {
     return this.profileForm.get('firstName');
   }
@@ -73,5 +78,11 @@ export class EditComponent {
 
   get phoneNumber() {
     return this.profileForm.get('phoneNumber');
+  }
+
+  editProfile(){
+    this.profileService.editProfile(this.profile.id, this.profileForm.value).subscribe( () => {
+      this.router.navigate(["/features/login"]);
+    });
   }
 }

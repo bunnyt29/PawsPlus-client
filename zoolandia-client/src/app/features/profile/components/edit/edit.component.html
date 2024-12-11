@@ -1,11 +1,14 @@
+<img class="profile-decoration-left" src="/images/desktop/profile-left-blob.svg" alt="decoration">
+<img class="profile-decoration-right" src="/images/desktop/profile-right-blob.svg" alt="decoration">
+
 <section class="create-profile-holder">
   <form [formGroup]="profileForm">
     <div class="create-profile-head">
       <div class="profile-image">
-<!--        <app-image-upload-->
-<!--          [defaultImage]="'assets/my-default-image.png'"-->
-<!--          (fileSelected)="onFileUpload($event)"-->
-<!--        ></app-image-upload>-->
+        <app-image-upload
+          [defaultImage]="defaultImage"
+          (fileSelected)="onFileUpload($event)"
+        ></app-image-upload>
       </div>
       <span class="profile-name">
             <input placeholder="Филип"
@@ -42,26 +45,17 @@
             </div>
             <textarea class="main-textarea"
                       placeholder="Опиши себе си така, че да привлечеш вниманието на нашите собственици"
+                      formControlName="description"
                       rows="5">
             </textarea>
           </div>
         </div>
         <div class="contacts">
           <div class="form-sections-heading">
-            <img src="../../../../../../../Zoolandia/client/zoolandia-client/src/assets/images/shared/contacts-icon.svg">
+            <img src="/images/shared/contacts-icon.svg">
             <span>Контакти</span>
           </div>
           <div class="contacts-main-holder">
-            <div class="contact">
-              <label>Имейл адрес</label>
-              <input class="profile-input"
-                     type="email"
-                     placeholder="karina.ivanova@gmail.com"
-                     formControlName="email">
-              <div *ngIf="email?.touched && email?.errors?.['required']" class="alert">* задължително</div>
-              <div *ngIf="email?.touched && email?.errors?.['email']" class="alert">* въведи валиден имейл</div>
-              <div *ngIf="email?.touched && email?.errors?.['minLength'] || email?.touched && email?.errors?.['maxLength']" class="alert">* най-малко 3 символа и най-много 50</div>
-            </div>
             <div class="contact">
               <label>Телефонен номер</label>
               <input class="profile-input"
@@ -76,7 +70,7 @@
         <div class="location">
           <div class="form-group">
             <div class="form-sections-heading">
-              <img src="../../../../../../../Zoolandia/client/zoolandia-client/src/assets/images/shared/location-icon.svg">
+              <img src="/images/shared/location-icon.svg">
               <span>Местоположение</span>
             </div>
             <div class="location-holder">
@@ -89,12 +83,15 @@
         <div class="animals-holder">
           <div class="add-animal-holder">
             <div class="add-animal">
-              <img src="../../../../../../../Zoolandia/client/zoolandia-client/src/assets/images/shared/add-animal.svg" alt="Add animal button">
+              <img src="/images/shared/add-animal.svg" alt="Add animal button">
               <span>Добави домашен любимец</span>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="complete-profile">
+      <button class="btn secondary-button" (click)="editProfile()">Завърши</button>
     </div>
   </form>
 </section>

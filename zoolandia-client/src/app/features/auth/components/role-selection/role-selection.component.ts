@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 
 import {Role} from '../../../../shared/models/Roles';
 import {SharedModule} from '../../../../shared/shared.module';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-role-selection',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, NgOptimizedImage],
   templateUrl: './role-selection.component.html',
   styleUrl: './role-selection.component.scss'
 })

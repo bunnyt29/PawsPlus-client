@@ -14,7 +14,10 @@ export class ProfileService {
     private http: HttpClient
   ) { }
 
-  getProfile():Observable<Profile> {
-    return this.http.get<Profile>(this.userPath);
+  getProfile():Observable<any> {
+    return this.http.get<any>(this.userPath);
+  }
+  editProfile(id:string, data:any){
+    return this.http.put(this.userPath + '/' + id, data);
   }
 }

@@ -1,7 +1,7 @@
-@use 'assets/style/base/reset';
-@use 'assets/style/abstracts/typography';
-@use 'assets/style/abstracts/colors';
-@use 'assets/style/components/buttons';
+@use "base/reset";
+@use 'abstracts/colors';
+@use 'components/buttons';
+@use 'abstracts/typography';
 
 body {
   background-color: colors.$primary-background;
@@ -16,7 +16,7 @@ body {
 }
 
 .auth-background {
-  background-image: url("/assets/images/desktop/auth-background.svg");
+  background-image: url("/public/images/desktop/auth-background.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

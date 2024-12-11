@@ -1,4 +1,4 @@
-@use '../../../../../assets/style/abstracts/colors';
+@use '../../../../../style/abstracts/colors';
 
 .role-selection {
   height: 100vh;
@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url("/zoolandia-client/src/assets/images/desktop/role-selection-background.svg");
+  background-image: url("/public/images/desktop/auth-background.svg");
   background-repeat: no-repeat;
   background-size: cover;
 
