@@ -1,0 +1,232 @@
+@use '../../../../../style/abstracts/typography';
+@use '../../../../../style/abstracts/colors';
+
+.animal-left-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.animal-create-holder {
+  padding-top: 112px;
+
+  h2 {
+    text-align: center;
+    font-size: typography.$font-size-2xl;
+  }
+
+  .animal-main-details-holder {
+    margin-top: 73px;
+
+    h3 {
+      margin: 0 auto;
+      padding: 10px 20px;
+      width: fit-content;
+      font-size: typography.$font-size-xl;
+      background-color: colors.$secondary-text-color;
+      color: white;
+      border-radius: 20px;
+    }
+
+    .main-details {
+      margin-top: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+
+      .carousel-holder {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        .arrow {
+          padding: 0 10px;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 24px;
+          color: #333;
+          background: none;
+          border: none;
+          cursor: pointer;
+        }
+
+        .arrow.left {
+          left: 0;
+        }
+
+        .arrow.right {
+          right: 0;
+        }
+
+        .arrow:hover {
+          color: #000;
+        }
+
+        .carousel {
+          display: flex;
+          justify-content: center;
+          flex-wrap: nowrap;
+          overflow: hidden;
+          width: 600px;
+
+          .carousel-item {
+            display: none;
+            flex: 0 0 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 500px;
+            height: 600px;
+
+            span {
+              margin-top: 14px;
+              font-size: typography.$font-size-2xl;
+              font-weight: typography.$semi-bold;
+            }
+          }
+
+          .carousel-item.selected {
+            display: flex;
+          }
+        }
+      }
+
+      .form {
+        padding: 30px 55px 30px 55px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background-color: colors.$secondary-background;
+        border-radius: 40px;
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 27px;
+
+          .common-fields {
+            display: flex;
+            align-items: center;
+            gap: 26.5px;
+
+            .input-for-animal-name {
+              padding-bottom: 10px;
+              width: 200px;
+              font-size: typography.$font-size-lg;
+              font-weight: typography.$black;
+              border-bottom: 2px solid colors.$secondary-text-color;
+            }
+
+            .input-for-animal-name::placeholder {
+              font-size: typography.$font-size-lg;
+            }
+
+            .input-for-animal-name:focus {
+              outline: none;
+              border: none;
+              border-bottom: 2px solid colors.$secondary-text-color;
+            }
+          }
+
+          .age-and-gender-fields {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .age-fields-holder {
+
+              .age-fields {
+                display: flex;
+                gap: 10px;
+
+                .age {
+                  width: 100px;
+                }
+              }
+            }
+
+            .gender-fields-holder {
+              .gender-fields {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+
+                .gender-icon {
+                  padding: 7px;
+                  background-color: colors.$primary-background;
+                  border-radius: 5px;
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+
+                  .hidden-radio {
+                    display: none;
+                  }
+                }
+
+                .gender-icon:hover {
+                  background-color: colors.$accent-color;
+                }
+
+                .gender-icon.selected {
+                  background-color: colors.$accent-color;
+                }
+              }
+            }
+          }
+
+          .kilograms-fields-holder {
+
+            .kilograms-fields {
+              display: flex;
+              justify-content: space-between;
+              gap: 11px;
+
+              .kilogram-option {
+                font-size: typography.$font-size-md;
+              }
+            }
+          }
+
+          .breed-field-holder {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .save-animal {
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+
+  .animal-right-decoration {
+    position: absolute;
+    right: 0;
+  }
+
+  .animal-additional-details-holder {
+    position: relative;
+    margin-top: 141px;
+
+    h3 {
+      margin: 0 auto;
+      padding: 10px 20px;
+      width: fit-content;
+      font-size: typography.$font-size-xl;
+      border: 1px solid colors.$secondary-text-color;
+      border-radius: 20px;
+    }
+  }
+}
+
+.animal-label {
+  font-size: typography.$font-size-md;
+  font-weight: typography.$semi-bold;
+}

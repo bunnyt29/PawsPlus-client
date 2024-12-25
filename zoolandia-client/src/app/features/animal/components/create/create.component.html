@@ -1,0 +1,119 @@
+<img src="/images/desktop/animal-create-left-blob.svg" class="animal-left-decoration" alt="decoration">
+<section class="container animal-create-holder">
+  <h2>Разкажи ни за твоя домашен любимец</h2>
+  <div class="animal-main-details-holder">
+    <h3>Основна информация</h3>
+    <div class="main-details">
+      <div class="carousel-holder">
+        <button class="arrow left" (click)="previousAnimal()"><img src="/images/desktop/arrow-left.svg" alt="Arrow left"></button>
+        <div class="carousel">
+          <div *ngFor="let animal of animals; let i = index"
+               [class.selected]="animal === selectedAnimal"
+               class="carousel-item"
+               [hidden]="i !== currentIndex">
+            <img [src]="'/images/desktop/' + animal + '.svg'" alt="{{ animal }}" />
+            <span>{{ getTranslatedAnimalName() }}</span>
+          </div>
+        </div>
+        <button class="arrow right" (click)="nextAnimal()"><img src="/images/desktop/arrow-right.svg" alt="Arrow right"></button>
+      </div>
+      <div class="form">
+        <form [formGroup]="animalForm" (ngSubmit)="onSubmit()">
+          <div class="common-fields">
+            <app-image-upload [defaultImage]="defaultImage"
+                              (fileSelected)="onFileUpload($event)"
+                              [width]="'100px'"
+                              [height]="'100px'"></app-image-upload>
+            <input type="text"
+                   formControlName="name"
+                   class="input-for-animal-name"
+                   placeholder="Име"/>
+          </div>
+
+          <div class="age-and-gender-fields">
+            <div class="age-fields-holder" *ngIf="dynamicFields.includes('years') || dynamicFields.includes('months')">
+              <label for="age" class="animal-label">Възраст</label>
+              <div class="age-fields">
+                <input type="text" class="secondary-input age" placeholder="Години" id="age" formControlName="years">
+                <input type="text" class="secondary-input age" placeholder="Месеци" formControlName="months">
+              </div>
+            </div>
+            <div class="gender-fields-holder">
+              <label class="gender-icon" [class.selected]="animalForm.get('gender')?.value === Gender.Male">
+                <input
+                  type="radio"
+                  formControlName="gender"
+                  [value]="Gender.Male"
+                  class="hidden-radio"
+                />
+                <img src="/images/desktop/gender-male.svg" alt="Male">
+              </label>
+
+              <label class="gender-icon" [class.selected]="animalForm.get('gender')?.value === Gender.Female">
+                <input
+                  type="radio"
+                  formControlName="gender"
+                  [value]="Gender.Female"
+                  class="hidden-radio"
+                />
+                <img src="/images/desktop/gender-female.svg" alt="Female">
+              </label>
+            </div>
+          </div>
+
+          <div *ngIf="dynamicFields.includes('weight')" class="kilograms-fields-holder">
+            <label for="weight" class="animal-label">Килограми</label>
+            <div class="kilograms-fields">
+              <button
+                id="weight"
+                type="button"
+                class="kilogram-option square-input"
+                [class.selected]="animalForm.get('weight')?.value === '1'"
+                (click)="onKilogramSelect(10)"
+              >
+                0-7 кг
+              </button>
+              <button
+                type="button"
+                class="kilogram-option square-input"
+                [class.selected]="animalForm.get('weight')?.value === '2'"
+                (click)="onKilogramSelect(20)"
+              >
+                8-20 кг
+              </button>
+              <button
+                type="button"
+                class="kilogram-option square-input"
+                [class.selected]="animalForm.get('weight')?.value === '3'"
+                (click)="onKilogramSelect(30)"
+              >
+                21-50 кг
+              </button>
+              <button
+                type="button"
+                class="kilogram-option square-input"
+                [class.selected]="animalForm.get('weight')?.value === '4'"
+                (click)="onKilogramSelect(40)"
+              >
+                50+ кг
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="dynamicFields.includes('breed')" class="breed-field-holder">
+            <label for="breed" class="animal-label">Порода</label>
+            <input id="breed" type="text" class="secondary-input">
+          </div>
+
+          <div class="save-animal">
+            <button type="submit" class="btn secondary-button" [disabled]="!animalForm.valid">Запази</button>
+          </div>
+        </form>
+      </div>
+      </div>
+    </div>
+  <img src="/images/desktop/animal-create-right-blob.svg" class="animal-right-decoration" alt="decoration">
+  <div class="animal-additional-details-holder">
+    <h3>Допълнителна информация</h3>
+  </div>
+</section>
