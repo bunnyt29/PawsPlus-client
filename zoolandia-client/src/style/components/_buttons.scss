@@ -10,9 +10,9 @@
   width: 350px;
   display: flex;
   justify-content: center;
+  font-weight: typography.$medium;
   background-color: colors.$accent-color;
   border-radius: 5px;
-  font-weight: typography.$medium;
 }
 
 .primary-button:hover {
@@ -24,6 +24,7 @@
 
 .secondary-button {
   padding: 10px 30px;
+  font-weight: typography.$medium;
   background-color: colors.$accent-color;
   color: colors.$primary-text-color;
   border-radius: 10px;

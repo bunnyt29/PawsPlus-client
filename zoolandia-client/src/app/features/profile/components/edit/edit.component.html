@@ -5,10 +5,10 @@
   <form [formGroup]="profileForm">
     <div class="create-profile-head">
       <div class="profile-image">
-        <app-image-upload
-          [defaultImage]="defaultImage"
-          (fileSelected)="onFileUpload($event)"
-        ></app-image-upload>
+        <app-image-upload [defaultImage]="defaultImage"
+                          (fileSelected)="onFileUpload($event)">
+
+        </app-image-upload>
       </div>
       <span class="profile-name">
             <input placeholder="Филип"

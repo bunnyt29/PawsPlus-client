@@ -1,8 +1,8 @@
 <div class="image-upload">
-  <div class="image-preview">
+  <div class="image-preview" [style.width]="width" [style.height]="height">
     <img [src]="previewImage"/>
   </div>
-  <label for="file-upload" class="upload-label">
+  <label for="file-upload" class="upload-label" [style.width]="width" [style.height]="height">
     <input
       type="file"
       id="file-upload"

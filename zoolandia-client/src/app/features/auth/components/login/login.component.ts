@@ -3,11 +3,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {AuthService} from '../../services/auth.service';
 import {SharedModule} from '../../../../shared/shared.module';
+import {ToastrService} from 'ngx-toastr';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -16,7 +18,8 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService
   )
   { }
 
@@ -38,6 +41,7 @@ export class LoginComponent {
   login(): void {
     this.authService.login(this.loginForm.value).subscribe(data => {
       this.authService.saveToken(data['token']);
+      this.toastr.success('Успешно влезна в профила си!');
     })
   }
 }

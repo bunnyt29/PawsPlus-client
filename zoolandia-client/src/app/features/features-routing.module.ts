@@ -11,6 +11,11 @@ const routes: Routes = [
     path: "profile",
     // data: { preload: true },
     loadChildren: () => import("./profile/profile.module").then((m) => m.ProfileModule)
+  },
+  {
+    path: "animal",
+    // data: { preload: true },
+    loadChildren: () => import("./animal/animal.module").then((m) => m.AnimalModule)
   }
 ];
 

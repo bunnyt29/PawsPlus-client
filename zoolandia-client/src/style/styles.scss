@@ -133,6 +133,35 @@ input {
   background-color: colors.$danger-color;
 }
 
+.secondary-input {
+  padding: 10px 20px;
+  background-color: colors.$primary-background;
+  border-radius: 10px;
+}
+
+.square-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  font-weight: typography.$black;
+  background-color: colors.$primary-background;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.square-input:hover {
+  background-color: colors.$accent-color;
+}
+
+.square-input.selected {
+  background-color: colors.$accent-color;
+}
+
+
 .main-textarea {
   background-color: colors.$secondary-background;
   border-radius: 5px;
@@ -142,6 +171,130 @@ input {
   padding: 20px;
 }
 
+//Profile
+
+.profile-decoration-right {
+  position: absolute;
+  top: 10px;
+  right: 0;
+}
+
+.profile-decoration-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.create-profile-holder {
+  position: relative;
+  margin-block: 74px 84px;
+  padding-inline: 122px;
+
+  form {
+    .profile-input:focus {
+      outline: none;
+      border: none;
+    }
+
+    .create-profile-head {
+      padding-bottom: 23px;
+      display: flex;
+      align-items: center;
+      gap: 44px;
+      border-bottom: 1px solid colors.$primary-text-color;
+
+      .profile-name {
+        display: flex;
+        flex-direction: column;
+        color: colors.$primary-text-color;
+        font-size: typography.$font-size-2xl;
+        font-weight: typography.$bold;
+
+        input:focus {
+          border: none !important;
+        }
+      }
+    }
+
+    .create-profile-main {
+      margin-top: 50px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 33px;
+
+      &-left-side {
+        display: flex;
+        flex-direction: column;
+        gap: 47px;
+
+        .form-sections-heading {
+          display: flex;
+          align-items: center;
+          gap: 13px;
+
+          span {
+            font-size: typography.$font-size-lg;
+            font-weight: typography.$bold;
+          }
+        }
+
+        .contacts {
+          .contacts-main-holder {
+            max-width: 500px;
+            margin-top: 24px;
+            padding-left: 50px;
+            display: flex;
+            gap: 40px;
+
+            .contact {
+              display: flex;
+              flex-direction: column;
+              gap: 13px;
+
+              label {
+                font-size: typography.$font-size-md;
+              }
+
+              input {
+                font-size: typography.$font-size-md;
+              }
+            }
+          }
+        }
+
+        .location {
+          &-holder {
+            margin-top: 17px;
+
+            input {
+              width: 60%;
+            }
+          }
+        }
+      }
+
+      &-right-side {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .animals-holder {
+
+          .add-animal-holder {
+            padding: 87px 128px;
+            border: 1px solid colors.$primary-text-color;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .complete-profile {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
 
 //Animal
 .add-animal {

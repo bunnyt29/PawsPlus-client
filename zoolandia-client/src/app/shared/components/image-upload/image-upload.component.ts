@@ -1,13 +1,18 @@
 import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-image-upload',
   standalone: true,
-  imports: [],
+  imports: [
+    ReactiveFormsModule
+  ],
   templateUrl: './image-upload.component.html',
   styleUrls: ['./image-upload.component.scss']
 })
 export class ImageUploadComponent implements OnChanges{
+  @Input() width: string = '169px';
+  @Input() height: string = '169px';
   @Input() defaultImage: string | undefined = '/images/shared/default-image-owner.svg';
   @Output() fileSelected = new EventEmitter<File>();
 

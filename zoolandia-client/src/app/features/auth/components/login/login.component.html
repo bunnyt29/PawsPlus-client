@@ -16,8 +16,9 @@
             <div *ngIf="email?.touched && email?.errors?.['minLength'] || email?.touched && email?.errors?.['maxLength']" class="alert">* най-малко 3 символа и най-много 50</div>
           </div>
           <div class="form-group">
-            <label>Парола</label>
-            <input class="main-input"
+            <label for="password">Парола</label>
+            <input id="password"
+                   class="main-input"
                    type="password"
                    formControlName="password">
             <div *ngIf="password?.touched && password?.errors?.['required']" class="alert">* задължително</div>

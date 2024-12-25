@@ -9,8 +9,6 @@
   .image-preview {
     position: relative;
     margin-bottom: 10px;
-    width: 169px;
-    height: 169px;
     background-color: colors.$secondary-background;
     border-radius: 100%;
     overflow: hidden;
@@ -41,8 +39,6 @@
     z-index: 2;
     top: 0;
     left: 0;
-    width: 169px;
-    height: 169px;
     display: flex;
     align-items: center;
     justify-content: center;
