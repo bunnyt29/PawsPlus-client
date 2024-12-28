@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {AuthService} from '../../services/auth.service';
@@ -13,7 +13,7 @@ import {CommonModule} from '@angular/common';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
 
   constructor(

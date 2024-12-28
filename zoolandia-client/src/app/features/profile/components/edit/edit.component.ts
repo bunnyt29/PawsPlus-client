@@ -8,6 +8,7 @@ import {Profile} from '../../../../shared/models/Profile';
 import {SharedModule} from '../../../../shared/shared.module';
 import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
 import {FileService} from '../../../../core/services/file.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit',
@@ -30,6 +31,7 @@ export class EditComponent implements OnInit{
     private fileService: FileService,
     private authService: AuthService,
     private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -82,7 +84,7 @@ export class EditComponent implements OnInit{
 
   editProfile(){
     this.profileService.editProfile(this.profile.id, this.profileForm.value).subscribe( () => {
-      this.router.navigate(["/features/login"]);
+      this.toastr.success("Успешно редактира профила си!");
     });
   }
 }

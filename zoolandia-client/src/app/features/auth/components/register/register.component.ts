@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
 
 import {AuthService} from '../../services/auth.service';
 import {SharedModule} from '../../../../shared/shared.module';
 import {passwordMatchValidator} from '../../../../core/validators/password-match.validator';
-import {provideHttpClient} from '@angular/common/http';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -16,11 +16,14 @@ import {provideHttpClient} from '@angular/common/http';
 })
 export class RegisterComponent {
   registerForm!: FormGroup;
+  role!: string;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService
   )
   {
     this.registerForm = this.fb.group({
@@ -36,9 +39,9 @@ export class RegisterComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const role = params['role'];
-      if (role) {
-        this.registerForm.patchValue({  role: Number(role) });
+      this.role = params['role'];
+      if (this.role) {
+        this.registerForm.patchValue({  role: Number(this.role) });
       }
     });
   }
@@ -65,7 +68,12 @@ export class RegisterComponent {
     delete formData.confirmPassword;
 
     this.authService.register(formData).subscribe(data => {
-      console.log("send to the server");
+      this.toastr.success("Успешно се регистрира!");
+      if (this.role == '2') {
+        this.router.navigate(['/features/auth/multi-step-form'])
+      } else {
+        this.router.navigate(['/features/profile/edit']);
+      }
     });
   }
 }

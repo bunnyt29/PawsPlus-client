@@ -25,7 +25,8 @@
             </div>
             <input placeholder="Иванов"
                    class="profile-name profile-input"
-                   type="text" formControlName="lastName">
+                   type="text"
+                   formControlName="lastName">
             <div class="alert"
                  *ngIf="lastName?.touched && lastName?.errors?.['required']">
               * задължително

@@ -16,6 +16,11 @@ const routes: Routes = [
     path: 'role-selection',
     loadComponent: () =>
       import('./components/role-selection/role-selection.component').then((m) => m.RoleSelectionComponent),
+  },
+  {
+    path: 'multi-step-form',
+    loadComponent: () =>
+      import('./components/multi-step-form/multi-step-form.component').then((m) => m.MultiStepFormComponent),
   }
 ];
 
