@@ -16,6 +16,11 @@ const routes: Routes = [
     path: "animal",
     // data: { preload: true },
     loadChildren: () => import("./animal/animal.module").then((m) => m.AnimalModule)
+  },
+  {
+    path: "post",
+    // data: { preload: true },
+    loadChildren: () => import("./post/post.module").then((m) => m.PostModule)
   }
 ];
 
