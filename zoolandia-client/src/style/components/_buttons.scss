@@ -31,6 +31,14 @@
   cursor: pointer;
 }
 
+.secondary-button-small {
+  padding: 5px 20px;
+  background-color: colors.$accent-color;
+  color: colors.$primary-text-color;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .auth-google {
   padding-block: 15px;
   width: 350px;

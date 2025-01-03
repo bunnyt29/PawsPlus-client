@@ -1,0 +1,95 @@
+@use '../../../../../style/abstracts/colors';
+@use '../../../../../style/abstracts/typography';
+
+.multi-step-form-holder {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .multi-step-form {
+    padding: 60px 41px;
+    min-width: 500px;
+    background-color: colors.$secondary-background;
+    border-radius: 20px;
+
+    .form-heading {
+      font-size: typography.$font-size-md;
+    }
+
+    .form {
+
+      .fields-container {
+        margin-top: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 18px;
+
+        label {
+          padding: 35px 50px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          background-color: colors.$primary-background;
+          border: 1px solid transparent;
+          border-radius: 20px;
+          cursor: pointer;
+          position: relative;
+          transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+          font-weight: typography.$bold;
+
+          img {
+            width: 100px;
+          }
+
+          input[type='checkbox'] {
+            cursor: pointer;
+            visibility: hidden; /* Hide the default checkbox */
+          }
+        }
+
+        .field-size {
+          min-width: 200px;
+          min-height: 200px;
+          padding: 60px 30px 30px 30px;
+
+          .size-value {
+            font-size: typography.$font-size-xl;
+            font-weight: typography.$black;
+          }
+        }
+
+        label.selected {
+          border: 2px solid colors.$accent-color;
+        }
+
+        label.selected::after {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          padding: 0 8px;
+          content: '✔';
+          font-size: typography.$font-size-md;
+          font-weight: typography.$extra-bold;
+          color: colors.$primary-text-color;
+          background-color: colors.$accent-color;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .button-container {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+
+    button[disabled] {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+}
+

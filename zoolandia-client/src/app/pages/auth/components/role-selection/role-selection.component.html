@@ -1,0 +1,26 @@
+<section class="role-selection">
+  <div class="heading">
+    <h2>Регистрирай се</h2>
+    <p>Избери своята роля</p>
+  </div>
+  <section class="roles">
+    <div class="role role-owner"
+         (click)="chooseRole('owner')">
+      <h3>Аз съм собственик -></h3>
+      <picture>
+        <source media="(min-width:650px)" srcset="/images/desktop/auth/role-owner.svg">
+        <source media="(min-width:465px)" srcset="/images/desktop/auth/role-owner.svg">
+        <img src="/images/desktop/auth/role-owner.svg" alt="owner">
+      </picture>
+    </div>
+    <div class="role role-sitter"
+         (click)="chooseRole('sitter')">
+      <h3>Аз съм гледач -></h3>
+      <picture>
+        <source media="(min-width:650px)" srcset="/images/desktop/auth/role-sitter.svg">
+        <source media="(min-width:465px)" srcset="/images/desktop/auth/role-sitter.svg">
+        <img src="/images/desktop/auth/role-sitter.svg" alt="sitter training with cat">
+      </picture>
+    </div>
+  </section>
+</section>

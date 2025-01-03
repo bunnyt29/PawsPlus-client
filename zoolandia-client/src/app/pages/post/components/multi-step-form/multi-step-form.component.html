@@ -1,0 +1,83 @@
+<!-- Step 1: Select Services -->
+<div class="multi-step-form-holder">
+  <div class="multi-step-form">
+    <h1 class="form-heading">Избери своите предпочитания</h1>
+    <div *ngIf="currentStep === 1" class="form">
+      <span>Избери животните, за които ще предлагаш услуги</span>
+      <div class="fields-container">
+        <div *ngFor="let pet of pets">
+          <label
+            class="field"
+            [class.selected]="isSelected(pet.id, 'pets')">
+            <img [src]="pet.imagePath" [alt]="pet.name">
+            <input
+              type="checkbox"
+              [value]="pet.id"
+              (change)="onCheckboxChange($event, 'pets')"
+              [checked]="isSelected(pet.id, 'pets')"
+            />
+            {{ pet.name }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep === 2" class="form">
+      <span>Избери размер на кучето</span>
+      <div class="fields-container">
+        <div *ngFor="let size of sizes">
+          <label
+            class="field-size"
+            [class.selected]="isSelected(size.id, 'size')">
+            <span class="size-value">{{ size.value }}</span>
+            <input
+              type="checkbox"
+              [value]="size.id"
+              (change)="onCheckboxChange($event, 'size')"
+              [checked]="isSelected(size.id, 'size')"
+            />
+            {{ size.name }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep === 3" class="form">
+        <span>С какво ще се занимаваш?</span>
+      <div class="fields-container">
+        <div *ngFor="let service of services">
+          <label
+            class="field"
+            [class.selected]="isSelected(service.id, 'services')">
+            <img [src]="service.imagePath" [alt]="service.name">
+            <input
+              type="checkbox"
+              [value]="service.id"
+              (change)="onCheckboxChange($event, 'services')"
+              [checked]="isSelected(service.id, 'services')"
+            />
+            {{ service.name }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button (click)="previousStep()"
+              [disabled]="currentStep === 1"
+              class="btn secondary-button-small">
+        <- Назад
+      </button>
+      <button (click)="nextStep()"
+              *ngIf="currentStep < 3"
+              class="btn secondary-button-small">
+        Напред ->
+      </button>
+      <button (click)="submitForm()"
+              *ngIf="currentStep === 3"
+              class="btn secondary-button-small">
+        Завърши
+      </button>
+    </div>
+  </div>
+</div>

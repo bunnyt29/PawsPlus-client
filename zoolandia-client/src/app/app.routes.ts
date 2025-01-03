@@ -7,8 +7,28 @@ export const routes: Routes = [
     redirectTo: ""
   },
   {
-    path: "features",
+    path: "home",
     // data: { preload: true },
-    loadChildren: () => import("./features/features.module").then((m) => m.FeaturesModule)
+    loadChildren: () => import("./pages/home/home.module").then((m) => m.HomeModule)
+  },
+  {
+    path: "auth",
+    // data: { preload: true },
+    loadChildren: () => import("./pages/auth/auth.module").then((m) => m.AuthModule)
+  },
+  {
+    path: "profile",
+    // data: { preload: true },
+    loadChildren: () => import("./pages/profile/profile.module").then((m) => m.ProfileModule)
+  },
+  {
+    path: "animal",
+    // data: { preload: true },
+    loadChildren: () => import("./pages/animal/animal.module").then((m) => m.AnimalModule)
+  },
+  {
+    path: "post",
+    // data: { preload: true },
+    loadChildren: () => import("./pages/post/post.module").then((m) => m.PostModule)
   }
 ];
