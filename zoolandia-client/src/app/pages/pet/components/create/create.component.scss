@@ -1,13 +1,13 @@
 @use '../../../../../style/abstracts/typography';
 @use '../../../../../style/abstracts/colors';
 
-.animal-left-decoration {
+.pet-left-decoration {
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.animal-create-holder {
+.pet-create-holder {
   padding-top: 112px;
 
   h2 {
@@ -15,7 +15,7 @@
     font-size: typography.$font-size-2xl;
   }
 
-  .animal-main-details-holder {
+  .pet-main-details-holder {
     margin-top: 73px;
 
     h3 {
@@ -113,7 +113,7 @@
             align-items: center;
             gap: 26.5px;
 
-            .input-for-animal-name {
+            .input-for-pet-name {
               padding-bottom: 10px;
               width: 200px;
               font-size: typography.$font-size-lg;
@@ -121,11 +121,11 @@
               border-bottom: 2px solid colors.$secondary-text-color;
             }
 
-            .input-for-animal-name::placeholder {
+            .input-for-pet-name::placeholder {
               font-size: typography.$font-size-lg;
             }
 
-            .input-for-animal-name:focus {
+            .input-for-pet-name:focus {
               outline: none;
               border: none;
               border-bottom: 2px solid colors.$secondary-text-color;
@@ -197,7 +197,7 @@
             flex-direction: column;
           }
 
-          .save-animal {
+          .save-pet {
             display: flex;
             justify-content: flex-end;
           }
@@ -206,12 +206,12 @@
     }
   }
 
-  .animal-right-decoration {
+  .pet-right-decoration {
     position: absolute;
     right: 0;
   }
 
-  .animal-additional-details-holder {
+  .pet-additional-details-holder {
     position: relative;
     margin-top: 141px;
 
@@ -226,7 +226,7 @@
   }
 }
 
-.animal-label {
+.pet-label {
   font-size: typography.$font-size-md;
   font-weight: typography.$semi-bold;
 }

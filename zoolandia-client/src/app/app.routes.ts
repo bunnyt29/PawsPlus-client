@@ -22,9 +22,9 @@ export const routes: Routes = [
     loadChildren: () => import("./pages/profile/profile.module").then((m) => m.ProfileModule)
   },
   {
-    path: "animal",
+    path: "pet",
     // data: { preload: true },
-    loadChildren: () => import("./pages/animal/animal.module").then((m) => m.AnimalModule)
+    loadChildren: () => import("./pages/pet/pet.module").then((m) => m.PetModule)
   },
   {
     path: "post",

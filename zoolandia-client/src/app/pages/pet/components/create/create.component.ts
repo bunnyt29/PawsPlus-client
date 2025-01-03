@@ -5,10 +5,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ImageUploadComponent } from '../../../../shared/components/image-upload/image-upload.component';
 import { FileService } from '../../../../core/services/file.service';
-import {AnimalService} from '../../services/animal.service';
+import {PetService} from '../../services/pet.service';
 import {PetType} from '../../../../shared/models/PetType';
 import {Gender} from '../../../../shared/models/Gender';
 import {ProfileService} from '../../../profile/services/profile.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-create',
@@ -19,16 +20,16 @@ import {ProfileService} from '../../../profile/services/profile.service';
 })
 
 export class CreateComponent implements OnInit{
-  animalForm: FormGroup;
-  selectedAnimal: string = 'dog';
+  petForm: FormGroup;
+  selectedPet: string = 'dog';
   currentIndex: number = 0;
-  animals: string[] = ['dog', 'cat', 'bird', 'other'];
+  pets: string[] = ['dog', 'cat', 'bird', 'other'];
   dynamicFields: string[] = ['name', 'photo'];
   defaultImage: string | undefined = '/images/shared/default-image-owner.svg';
   Gender = Gender;
   profileId!: string;
 
-  animalTranslations: { [key: string]: string } = {
+  petTranslations: { [key: string]: string } = {
     dog: 'Куче',
     cat: 'Котка',
     bird: 'Птица',
@@ -38,10 +39,11 @@ export class CreateComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private fileService: FileService,
-    private animalService: AnimalService,
-    private profileService: ProfileService
+    private petService: PetService,
+    private profileService: ProfileService,
+    private toastr: ToastrService
   ) {
-    this.animalForm = this.fb.group({
+    this.petForm = this.fb.group({
       profileId: ['', Validators.required],
       name: ['', Validators.required],
       weight: [''],
@@ -56,15 +58,15 @@ export class CreateComponent implements OnInit{
     this.updateFormFields();
   }
 
-  previousAnimal(): void {
-    this.currentIndex = (this.currentIndex - 1 + this.animals.length) % this.animals.length;
-    this.selectedAnimal = this.animals[this.currentIndex];
+  previousPet(): void {
+    this.currentIndex = (this.currentIndex - 1 + this.pets.length) % this.pets.length;
+    this.selectedPet = this.pets[this.currentIndex];
     this.updateFormFields();
   }
 
-  nextAnimal(): void {
-    this.currentIndex = (this.currentIndex + 1) % this.animals.length;
-    this.selectedAnimal = this.animals[this.currentIndex];
+  nextPet(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.pets.length;
+    this.selectedPet = this.pets[this.currentIndex];
     this.updateFormFields();
   }
 
@@ -76,17 +78,17 @@ export class CreateComponent implements OnInit{
       other: ['name', 'photoUrl', 'gender']
     };
 
-    this.dynamicFields = fields[this.selectedAnimal];
+    this.dynamicFields = fields[this.selectedPet];
 
-    Object.keys(this.animalForm.controls).forEach(control => {
+    Object.keys(this.petForm.controls).forEach(control => {
       if (!this.dynamicFields.includes(control)) {
-        this.animalForm.removeControl(control);
+        this.petForm.removeControl(control);
       }
     });
 
     this.dynamicFields.forEach(field => {
-      if (!this.animalForm.contains(field)) {
-        this.animalForm.addControl(
+      if (!this.petForm.contains(field)) {
+        this.petForm.addControl(
           field,
           this.fb.control(
             '',
@@ -98,14 +100,14 @@ export class CreateComponent implements OnInit{
   }
 
   onKilogramSelect(value: number): void {
-    this.animalForm.patchValue({ weight: value.toString() });
+    this.petForm.patchValue({ weight: value.toString() });
   }
 
   onFileUpload(file: File): void {
     this.fileService.uploadImage(file).subscribe({
       next: (res) => {
         const photoUrl = res.imageUrl;
-        this.animalForm.patchValue({ photoUrl: photoUrl });
+        this.petForm.patchValue({ photoUrl: photoUrl });
       },
       error: (err) => {
         console.error('File upload failed:', err);
@@ -113,32 +115,31 @@ export class CreateComponent implements OnInit{
     });
   }
 
-  getTranslatedAnimalName(): string {
-    return this.animalTranslations[this.selectedAnimal];
+  getTranslatedPetName(): string {
+    return this.petTranslations[this.selectedPet];
   }
 
   onSubmit(): void {
     this.profileService.getProfile().subscribe(res => {
       this.profileId = res.id;
 
-      if (this.animalForm.valid) {
-        const petTypeEnumValue = PetType[this.selectedAnimal.charAt(0).toUpperCase() + this.selectedAnimal.slice(1).toLowerCase() as keyof typeof PetType];
+      if (this.petForm.valid) {
+        const petTypeEnumValue = PetType[this.selectedPet.charAt(0).toUpperCase() + this.selectedPet.slice(1).toLowerCase() as keyof typeof PetType];
 
         const formData = {
-          ...this.animalForm.value,
+          ...this.petForm.value,
           profileId: this.profileId,
           petType: petTypeEnumValue,
-          weight: this.animalForm.value.weight?.toString() || '',
-          gender: Number(this.animalForm.value.gender),
+          weight: this.petForm.value.weight?.toString() || '',
+          gender: Number(this.petForm.value.gender),
           breed: 1,
         };
 
-        this.animalService.create(formData).subscribe({
-          next: (res) => console.log('Animal created successfully:', res),
-          error: (err) => console.error('Error creating animal:', err),
+        this.petService.create(formData).subscribe(res => {
+          this.toastr.success("Успешно създаде твоя домашен любимец");
         });
       } else {
-        console.error('Invalid form data');
+        console.error('Невалидно попълнени данни.');
       }
     });
   }

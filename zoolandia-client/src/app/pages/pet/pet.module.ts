@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AnimalRoutingModule } from './animal-routing.module';
+import { PetRoutingModule } from './pet-routing.module';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    AnimalRoutingModule
+    PetRoutingModule
   ]
 })
-export class AnimalModule { }
+export class PetModule { }
