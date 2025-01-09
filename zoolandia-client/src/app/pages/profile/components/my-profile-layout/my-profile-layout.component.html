@@ -1,0 +1,17 @@
+<div class="profile-container">
+  <div class="sidebar">
+    <picture>
+      <source media="(max-width:1100px)" srcset="/images/desktop/logo.svg">
+      <img src="/images/desktop/logo.svg" alt="logo">
+    </picture>
+    <ul>
+      <li><a routerLink="my-profile" routerLinkActive="active">Моят профил</a></li>
+      <li *ngIf="profile?.roles?.includes('Owner')"><a routerLink="my-pets" routerLinkActive="active">Моето животно</a></li>
+      <li *ngIf="profile?.roles?.includes('Sitter')"><a routerLink="my-post" routerLinkActive="active">Моята обява</a></li>
+      <li><a routerLink="notifications" routerLinkActive="active">Известия</a></li>
+    </ul>
+  </div>
+  <div class="profile-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

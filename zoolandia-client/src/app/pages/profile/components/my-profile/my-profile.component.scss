@@ -1,0 +1,92 @@
+@use '../../../../../style/abstracts/typography';
+@use '../../../../../style/abstracts/colors';
+
+.my-profile-holder {
+  position: relative;
+  padding: 70px 116px 0 130px;
+
+  .edit {
+    position: absolute;
+    right: 120px;
+  }
+
+  .my-profile-head {
+    padding-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    border-bottom: 1px solid colors.$primary-text-color;
+
+    .my-profile-image {
+      width: 169px;
+      height: 169px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .my-profile-names {
+      display: flex;
+      flex-direction: column;
+      span {
+        font-size: typography.$font-size-xl;
+        font-weight: typography.$bold;
+      }
+    }
+  }
+
+  .my-profile-main {
+    margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    &-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      &-title {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+
+        h2 {
+          font-size: typography.$font-size-lg;
+        }
+      }
+
+      p {
+        width: 80%;
+        text-align: justify;
+      }
+
+      .contacts {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+
+        .contact {
+          display: flex;
+          flex-direction: column;
+
+          h3 {
+            font-size: typography.$font-size-md;
+          }
+        }
+      }
+    }
+  }
+}
+
+address {
+  font-size: typography.$font-size-md;
+}
