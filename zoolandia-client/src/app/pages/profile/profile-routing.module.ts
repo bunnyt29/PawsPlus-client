@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {MyProfileLayoutComponent} from './components/my-profile-layout/my-profile-layout.component';
+import {MyProfileComponent} from './components/my-profile/my-profile.component';
+import {MyPetsComponent} from './components/my-pets/my-pets.component';
+import {NotificationsComponent} from './components/notifications/notifications.component';
+import {MyPostComponent} from '../post/components/my-post/my-post.component';
+import {ProfileResolver} from './services/profile-resolver.guard';
 
 const routes: Routes = [
   {
@@ -8,14 +14,34 @@ const routes: Routes = [
       import('./components/edit/edit.component').then((m) => m.EditComponent)
   },
   {
-    path: 'details-mine',
-    loadComponent: () =>
-      import('./components/details-mine/details-mine.component').then((m) => m.DetailsMineComponent)
-  },
-  {
-    path: 'basic-profile',
-    loadComponent: () =>
-      import('./components/basic-profile/basic-profile.component').then((m) => m.BasicProfileComponent)
+    path: 'my-profile-details',
+    component: MyProfileLayoutComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'my-profile',
+        pathMatch: 'full'
+      },
+      {
+        path: 'my-profile',
+        component: MyProfileComponent,
+        resolve: { profile: ProfileResolver }
+      },
+      {
+        path: 'my-pets',
+        component: MyPetsComponent,
+        resolve: { profile: ProfileResolver }
+      },
+      {
+        path: 'my-post',
+        component: MyPostComponent,
+        resolve: { profile: ProfileResolver }
+      },
+      {
+        path: 'notifications',
+        component: NotificationsComponent
+      }
+    ]
   }
 ];
 

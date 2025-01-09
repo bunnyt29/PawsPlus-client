@@ -11,22 +11,18 @@
         </app-image-upload>
       </div>
       <span class="profile-name">
-            <input placeholder="Филип"
+            <input placeholder="Иванов"
                    class="profile-name profile-input"
                    type="text"
                    formControlName="firstName">
             <div class="alert"
-                 *ngIf="firstName?.touched && firstName?.errors?.['required']">
+             *ngIf="firstName?.touched && firstName?.errors?.['required']">
               * задължително
             </div>
             <div class="alert"
                  *ngIf="firstName?.touched && firstName?.errors?.['minlength']">
               * минимален брой символи 2
             </div>
-            <input placeholder="Иванов"
-                   class="profile-name profile-input"
-                   type="text"
-                   formControlName="lastName">
             <div class="alert"
                  *ngIf="lastName?.touched && lastName?.errors?.['required']">
               * задължително
@@ -35,6 +31,10 @@
                  *ngIf="lastName?.touched && lastName?.errors?.['minlength']">
               * минимален брой символи 2
             </div>
+            <input placeholder="Иванов"
+                   class="profile-name profile-input"
+                   type="text"
+                   formControlName="lastName">
       </span>
     </div>
     <div class="create-profile-main">
@@ -42,12 +42,13 @@
         <div class="additional-information">
           <div class="form-group">
             <div class="form-sections-heading">
+              <img src="/images/shared/additional-description.svg" alt="additional-information">
               <span>Допълнително описание</span>
             </div>
             <textarea class="main-textarea"
                       placeholder="Опиши себе си така, че да привлечеш вниманието на нашите собственици"
                       formControlName="description"
-                      rows="5">
+                      rows="8">
             </textarea>
           </div>
         </div>
@@ -81,18 +82,23 @@
         </div>
       </div>
       <div class="create-profile-main-right-side">
-        <div class="animals-holder">
-          <div class="add-animal-holder">
-            <div class="add-animal">
-              <img src="/images/shared/add-animal.svg" alt="Add animal button">
-              <span>Добави домашен любимец</span>
-            </div>
+        <div class="sitter-owner-option-holder">
+          <div *ngIf="profile.roles?.includes('Owner')" class="add">
+            <img src="/images/shared/add-animal.svg" alt="Add button">
+            <span>Добави домашен любимец</span>
+          </div>
+          <div *ngIf="profile.roles?.includes('Sitter')" class="add">
+            <img src="/images/shared/add-gallery.svg" alt="Add button">
+            <span>Създай галерия от твои снимки с животни</span>
           </div>
         </div>
       </div>
     </div>
     <div class="complete-profile">
-      <button class="btn secondary-button" (click)="editProfile()">Завърши</button>
+      <button class="btn secondary-button"
+              (click)="editProfile()">
+        Завърши
+      </button>
     </div>
   </form>
 </section>

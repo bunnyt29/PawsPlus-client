@@ -69,11 +69,7 @@ export class RegisterComponent {
     delete formData.confirmPassword;
     this.authService.register(formData).subscribe(data => {
       this.toastr.success("Успешно се регистрира!");
-      if (this.role == 2) {
-        this.router.navigate(['/post/multi-step-form']);
-      } else {
-        this.router.navigate(['/profile/edit']);
-      }
+      this.router.navigate(['/auth/login']);
     });
   }
 }

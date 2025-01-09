@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 import {AuthService} from '../../../auth/services/auth.service';
 import {ProfileService} from '../../services/profile.service';
@@ -15,13 +15,13 @@ import {ToastrService} from 'ngx-toastr';
   standalone: true,
   imports: [
     SharedModule,
-    ImageUploadComponent
+    ImageUploadComponent,
+    RouterLink
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
 })
-export class EditComponent implements OnInit{
-
+export class EditComponent implements OnInit {
   profileForm!: FormGroup;
   profile!: Profile;
   defaultImage: string | undefined = '/images/shared/default-image-owner.svg';
@@ -35,21 +35,29 @@ export class EditComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
+    this.profileForm = this.fb.group({
+      'id': [''],
+      'firstName': ['', [Validators.required, Validators.minLength(2)]],
+      'lastName': ['', [Validators.required, Validators.minLength(2)]],
+      'description': [''],
+      'phoneNumber': ['', [Validators.required, Validators.pattern('^[+]?[0-9]{9,15}$')]],
+      'photoUrl': ['']
+    });
+
     this.fetchProfile();
   }
 
   fetchProfile(){
     this.profileService.getProfile().subscribe(res => {
-      console.log(res)
       this.profile = res;
-      this.profileForm = this.fb.group({
-        'id': [this.profile.id],
-        'firstName': [this.profile.firstName, [Validators.required, Validators.minLength(2)]],
-        'lastName': [this.profile.lastName, [Validators.required, Validators.minLength(2)]],
-        'description': [''],
-        'phoneNumber': [this.profile.phoneNumber, [Validators.required, Validators.pattern('^[+]?[0-9]{9,15}$')]],
-        'photoUrl': [this.profile.photoUrl]
-      })
+      this.profileForm.patchValue({
+        'id': this.profile.id,
+        'firstName': this.profile.firstName,
+        'lastName': this.profile.lastName,
+        'description': this.profile.description,
+        'phoneNumber': this.profile.phoneNumber,
+        'photoUrl': this.profile.photoUrl
+      });
       this.defaultImage = this.profile.photoUrl;
     })
   }
@@ -74,10 +82,6 @@ export class EditComponent implements OnInit{
     return this.profileForm.get('lastName');
   }
 
-  get email() {
-    return this.profileForm.get('email');
-  }
-
   get phoneNumber() {
     return this.profileForm.get('phoneNumber');
   }
@@ -85,6 +89,7 @@ export class EditComponent implements OnInit{
   editProfile(){
     this.profileService.editProfile(this.profile.id, this.profileForm.value).subscribe( () => {
       this.toastr.success("Успешно редактира профила си!");
+      this.router.navigate(['/profile/my-profile-details'])
     });
   }
 }

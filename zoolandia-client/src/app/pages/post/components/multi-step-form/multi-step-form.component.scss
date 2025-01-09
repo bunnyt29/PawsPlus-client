@@ -13,6 +13,24 @@
     background-color: colors.$secondary-background;
     border-radius: 20px;
 
+    .step-indicator {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 8px;
+
+      span {
+        width: 25px;
+        height: 3px;
+        background-color: colors.$primary-text-color;
+        transition: background-color 0.3s;
+      }
+
+      span.active {
+        background-color: colors.$accent-color;
+      }
+
+    }
+
     .form-heading {
       font-size: typography.$font-size-md;
     }

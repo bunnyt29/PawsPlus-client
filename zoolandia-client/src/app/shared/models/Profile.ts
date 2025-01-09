@@ -6,5 +6,5 @@ export interface Profile {
   phoneNumber: string;
   photoUrl?: string;
   description?: string;
-  socials?: string;
+  roles?: Array<string>;
 }

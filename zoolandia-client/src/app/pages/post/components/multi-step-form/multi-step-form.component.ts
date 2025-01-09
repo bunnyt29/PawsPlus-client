@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SharedModule} from '../../../../shared/shared.module';
 import {CommonModule} from '@angular/common';
 import {PostService} from '../../services/post.service';
 import {ToastrService} from 'ngx-toastr';
+import {ProfileService} from '../../../profile/services/profile.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-multi-step-form',
@@ -14,6 +16,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class MultiStepFormComponent {
   currentStep = 1;
+  profileId!: string;
 
   services = [
     { id: 1, name: 'Разходка', imagePath: '/images/desktop/post/service-walking.svg' },
@@ -27,7 +30,7 @@ export class MultiStepFormComponent {
     { id: 2, name: 'Котка', imagePath: '/images/shared/cat.svg' },
   ];
 
-  sizes = [
+  weights = [
     { id: 1, name: 'Малко', value: '0-7 кг.' },
     { id: 2, name: 'Средно', value: '8-20 кг.' },
     { id: 3, name: 'Голямо', value: '21-50 кг.' },
@@ -39,13 +42,16 @@ export class MultiStepFormComponent {
   constructor(
     private fb: FormBuilder,
     private postService: PostService,
+    private profileService: ProfileService,
+    private router: Router,
     private toastr: ToastrService
   )
   {
     this.postForm = this.fb.group({
-      services: this.fb.array([]),
-      pets: this.fb.array([]),
-      size: this.fb.array([]),
+      profileId: ['', Validators.required],
+      services: this.fb.array([], [Validators.required, Validators.minLength(1)]),
+      pets: this.fb.array([], [Validators.required, Validators.minLength(1)]),
+      weights: this.fb.array([])
     });
   }
 
@@ -61,6 +67,9 @@ export class MultiStepFormComponent {
         formArray.removeAt(index);
       }
     }
+
+    formArray.markAsTouched();
+    formArray.updateValueAndValidity();
   }
 
   isSelected(id: number, controlName: string): boolean {
@@ -69,11 +78,16 @@ export class MultiStepFormComponent {
   }
 
   nextStep() {
-    const petsValue: number[] = this.postForm.get('pets')?.value || [];
-    if (this.currentStep === 1 && !petsValue.includes(1)) {
-      this.currentStep = 3;
+    const stepValid = this.validateCurrentStep();
+    if (stepValid) {
+      const petsValue: number[] = this.postForm.get('pets')?.value || [];
+      if (this.currentStep === 1 && !petsValue.includes(1)) {
+        this.currentStep = 3;
+      } else {
+        this.currentStep++;
+      }
     } else {
-      this.currentStep++;
+      this.toastr.error("Моля, изберете поне една опция преди да продължите!");
     }
   }
 
@@ -86,9 +100,35 @@ export class MultiStepFormComponent {
     }
   }
 
+  validateCurrentStep(): boolean {
+    let controlName = '';
+    if (this.currentStep === 1) {
+      controlName = 'pets';
+    } else if (this.currentStep === 2) {
+      controlName = 'weights';
+    } else if (this.currentStep === 3) {
+      controlName = 'services';
+    }
+
+    const formArray = this.postForm.get(controlName) as FormArray;
+    return formArray.value.length > 0;
+  }
+
   submitForm() {
-    this.postService.create(this.postForm.value).subscribe(res => {
-      this.toastr.success("Успешно създаде своя профил!")
+    this.profileService.getProfile().subscribe(res => {
+      this.profileId = res.id;
+
+      this.postForm.patchValue({
+        profileId: this.profileId
+      });
+
+      if (this.postForm.valid) {
+        this.postService.create(this.postForm.value).subscribe(() => {
+          this.router.navigate(['/profile/my-profile-details']);
+        });
+      } else {
+        this.toastr.error("Моля, попълнете всички необходими полета преди да изпратите формата!");
+      }
     })
   }
 }

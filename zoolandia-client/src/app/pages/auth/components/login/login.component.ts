@@ -5,7 +5,7 @@ import {AuthService} from '../../services/auth.service';
 import {SharedModule} from '../../../../shared/shared.module';
 import {ToastrService} from 'ngx-toastr';
 import {CommonModule} from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {ActivatedRoute, Route, Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,8 @@ export class LoginComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   )
   { }
 
@@ -40,9 +41,18 @@ export class LoginComponent implements OnInit{
   }
 
   login(): void {
-    this.authService.login(this.loginForm.value).subscribe(data => {
-      this.authService.saveToken(data['token']);
-      this.toastr.success('Успешно влезна в профила си!');
+    this.authService.login(this.loginForm.value).subscribe(res => {
+      this.authService.saveToken(res['token']);
+      if (res.firstLogin) {
+        console.log(res);
+        if (res.roles == "Sitter") {
+          this.router.navigate(['/post/multi-step-form']);
+        } else {
+          this.router.navigate(['/profile/edit']);
+        }
+      } else {
+        this.router.navigate(['/profile/my-profile-details']);
+      }
     })
   }
 }

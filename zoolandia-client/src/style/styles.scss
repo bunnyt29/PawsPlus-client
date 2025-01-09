@@ -161,7 +161,6 @@ input {
   background-color: colors.$accent-color;
 }
 
-
 .main-textarea {
   background-color: colors.$secondary-background;
   border-radius: 5px;
@@ -278,12 +277,29 @@ input {
         justify-content: center;
         align-items: center;
 
-        .animals-holder {
+        .sitter-owner-option-holder {
+          min-width: 600px;
+          padding: 87px 20px;
+          border: 1px solid colors.$primary-text-color;
+          border-radius: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
 
-          .add-animal-holder {
-            padding: 87px 128px;
-            border: 1px solid colors.$primary-text-color;
-            border-radius: 5px;
+          .add {
+            width: 240px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+
+            span {
+              text-align: center;
+              font-weight: typography.$semi-bold;
+            }
           }
         }
       }

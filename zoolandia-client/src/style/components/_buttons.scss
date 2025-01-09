@@ -3,6 +3,7 @@
 
 .btn {
   border: none;
+  cursor: pointer;
 }
 
 .primary-button {
@@ -17,6 +18,7 @@
 
 .primary-button:hover {
   border: 1px solid colors.$primary-text-color;
+  font-weight: typography.$bold;
   background-color: #F7621D;
   color: #4A2A26;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
