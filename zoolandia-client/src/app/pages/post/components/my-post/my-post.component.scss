@@ -34,45 +34,12 @@
         overflow: hidden;
         transition: background-color 0.3s ease, transform 0.3s ease;
 
-        .overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: colors.$accent-color;
-          border-radius: 20px;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-          z-index: 1;
-        }
-
         img {
           width: 100px;
         }
 
         span {
           font-weight: typography.$bold;
-        }
-
-        .action-buttons {
-          position: absolute;
-          top: 40%;
-          z-index: 2;
-          display: flex;
-          justify-content: center;
-          gap: 10px;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.3s ease;
-
-          button {
-            background-color: transparent;
-
-            img {
-              width: 35px;
-            }
-          }
         }
       }
 
@@ -87,6 +54,39 @@
         .action-buttons {
           opacity: 1;
           pointer-events: auto;
+        }
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: colors.$accent-color;
+        border-radius: 20px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 1;
+      }
+
+      .action-buttons {
+        position: absolute;
+        top: 40%;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+
+        button {
+          background-color: transparent;
+
+          img {
+            width: 35px;
+          }
         }
       }
     }

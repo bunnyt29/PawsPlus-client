@@ -6,7 +6,7 @@
     </picture>
     <ul>
       <li><a routerLink="my-profile" routerLinkActive="active">Моят профил</a></li>
-      <li *ngIf="profile?.roles?.includes('Owner')"><a routerLink="my-pets" routerLinkActive="active">Моето животно</a></li>
+      <li *ngIf="profile?.roles?.includes('Owner')"><a routerLink="my-pet" routerLinkActive="active">Моето животно</a></li>
       <li *ngIf="profile?.roles?.includes('Sitter')"><a routerLink="my-post" routerLinkActive="active">Моята обява</a></li>
       <li><a routerLink="notifications" routerLinkActive="active">Известия</a></li>
     </ul>

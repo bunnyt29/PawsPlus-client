@@ -5,6 +5,7 @@ import {PostService} from '../../services/post.service';
 import {Post} from '../../../../shared/models/Post';
 import {SharedModule} from '../../../../shared/shared.module';
 import {ActivatedRoute} from '@angular/router';
+import {ModalService} from 'ngx-modal-ease';
 
 @Component({
   selector: 'app-my-post',
@@ -22,7 +23,8 @@ export class MyPostComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private postService: PostService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {

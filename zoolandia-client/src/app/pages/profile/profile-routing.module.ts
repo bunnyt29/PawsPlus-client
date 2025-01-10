@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {MyProfileLayoutComponent} from './components/my-profile-layout/my-profile-layout.component';
 import {MyProfileComponent} from './components/my-profile/my-profile.component';
-import {MyPetsComponent} from './components/my-pets/my-pets.component';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {MyPostComponent} from '../post/components/my-post/my-post.component';
 import {ProfileResolver} from './services/profile-resolver.guard';
+import {MyPetComponent} from '../pet/components/my-pet/my-pet.component';
 
 const routes: Routes = [
   {
@@ -28,8 +28,8 @@ const routes: Routes = [
         resolve: { profile: ProfileResolver }
       },
       {
-        path: 'my-pets',
-        component: MyPetsComponent,
+        path: 'my-pet',
+        component: MyPetComponent,
         resolve: { profile: ProfileResolver }
       },
       {

@@ -23,6 +23,7 @@
     "@angular/ssr": "^18.2.11",
     "express": "^4.18.2",
     "ngx-cookie-service": "^18.0.0",
+    "ngx-modal-ease": "^0.1.2",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
