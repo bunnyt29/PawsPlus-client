@@ -5,7 +5,7 @@ import {MyProfileComponent} from './components/my-profile/my-profile.component';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {MyPostComponent} from '../post/components/my-post/my-post.component';
 import {ProfileResolver} from './services/profile-resolver.guard';
-import {MyPetComponent} from '../pet/components/my-pet/my-pet.component';
+import {DetailsComponent} from '../pet/components/details/details.component';
 
 const routes: Routes = [
   {
@@ -28,8 +28,8 @@ const routes: Routes = [
         resolve: { profile: ProfileResolver }
       },
       {
-        path: 'my-pet',
-        component: MyPetComponent,
+        path: 'my-pets',
+        component: DetailsComponent,
         resolve: { profile: ProfileResolver }
       },
       {
