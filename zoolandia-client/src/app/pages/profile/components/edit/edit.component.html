@@ -83,7 +83,9 @@
       </div>
       <div class="create-profile-main-right-side">
         <div class="sitter-owner-option-holder">
-          <div *ngIf="profile.roles?.includes('Owner')" class="add">
+          <div *ngIf="profile.roles?.includes('Owner')"
+               routerLink="/pet/create"
+               class="add">
             <img src="/images/shared/add-animal.svg" alt="Add button">
             <span>Добави домашен любимец</span>
           </div>

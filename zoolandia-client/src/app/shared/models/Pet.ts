@@ -1,5 +1,5 @@
-import {PetType} from './PetType';
-import {Gender} from './Gender';
+import { PetType } from './PetType';
+import { Gender } from './Gender';
 
 export interface Pet {
   name: string;
@@ -12,14 +12,14 @@ export interface Pet {
   gender: Gender;
   breed: number;
   weight: string;
-  personality: {
+  personality?: {
     temperament: string;
     activityLevel: string;
     isTrained: number;
     hasFears: number;
     fearsDescription: string;
   };
-  healthStatus: {
+  healthStatus?: {
     isVaccinated: boolean;
     isCastrated: boolean;
     takesMedications: boolean;

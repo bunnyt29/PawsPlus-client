@@ -149,32 +149,30 @@
               }
             }
 
-            .gender-fields-holder {
-              .gender-fields {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 4px;
+            .gender-fields {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 4px;
 
-                .gender-icon {
-                  padding: 7px;
-                  background-color: colors.$primary-background;
-                  border-radius: 5px;
-                  cursor: pointer;
-                  transition: all 0.3s ease;
+              .gender-icon {
+                padding: 7px;
+                background-color: colors.$primary-background;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all 0.3s ease;
 
-                  .hidden-radio {
-                    display: none;
-                  }
+                .hidden-radio {
+                  display: none;
                 }
+              }
 
-                .gender-icon:hover {
-                  background-color: colors.$accent-color;
-                }
+              .gender-icon:hover {
+                background-color: colors.$accent-color;
+              }
 
-                .gender-icon.selected {
-                  background-color: colors.$accent-color;
-                }
+              .gender-icon.selected {
+                background-color: colors.$accent-color;
               }
             }
           }
@@ -188,6 +186,10 @@
 
               .kilogram-option {
                 font-size: typography.$font-size-md;
+              }
+
+              .kilogram-option.selected {
+                background-color: colors.$accent-color;
               }
             }
           }

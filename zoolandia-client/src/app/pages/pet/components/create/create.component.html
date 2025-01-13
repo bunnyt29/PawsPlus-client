@@ -31,14 +31,24 @@
           </div>
 
           <div class="age-and-gender-fields">
-            <div class="age-fields-holder" *ngIf="dynamicFields.includes('years') || dynamicFields.includes('months')">
-              <label for="age" class="pet-label">Възраст</label>
-              <div class="age-fields">
-                <input type="text" class="secondary-input age" placeholder="Години" id="age" formControlName="years">
-                <input type="text" class="secondary-input age" placeholder="Месеци" formControlName="months">
+            <div class="age-fields-holder" *ngIf="dynamicFields.includes('age')">
+              <label for="age-years" class="pet-label">Възраст</label>
+              <div class="age-fields" formGroupName="age">
+                <input type="number"
+                       class="secondary-input age"
+                       placeholder="Години"
+                       id="age-years"
+                       formControlName="years"
+                       min="0">
+                <input type="number"
+                       class="secondary-input age"
+                       placeholder="Месеци"
+                       id="age-months"
+                       formControlName="months"
+                       min="0" max="11">
               </div>
             </div>
-            <div class="gender-fields-holder">
+            <div class="gender-fields">
               <label class="gender-icon" [class.selected]="petForm.get('gender')?.value === Gender.Male">
                 <input
                   type="radio"
@@ -69,7 +79,7 @@
                 type="button"
                 class="kilogram-option square-input"
                 [class.selected]="petForm.get('weight')?.value === '1'"
-                (click)="onKilogramSelect(10)"
+                (click)="onKilogramSelect(1)"
               >
                 0-7 кг
               </button>
@@ -77,7 +87,7 @@
                 type="button"
                 class="kilogram-option square-input"
                 [class.selected]="petForm.get('weight')?.value === '2'"
-                (click)="onKilogramSelect(20)"
+                (click)="onKilogramSelect(2)"
               >
                 8-20 кг
               </button>
@@ -85,7 +95,7 @@
                 type="button"
                 class="kilogram-option square-input"
                 [class.selected]="petForm.get('weight')?.value === '3'"
-                (click)="onKilogramSelect(30)"
+                (click)="onKilogramSelect(3)"
               >
                 21-50 кг
               </button>
@@ -93,7 +103,7 @@
                 type="button"
                 class="kilogram-option square-input"
                 [class.selected]="petForm.get('weight')?.value === '4'"
-                (click)="onKilogramSelect(40)"
+                (click)="onKilogramSelect(4)"
               >
                 50+ кг
               </button>
@@ -106,7 +116,7 @@
           </div>
 
           <div class="save-pet">
-            <button type="submit" class="btn secondary-button" [disabled]="!petForm.valid">Запази</button>
+            <button type="submit" class="btn secondary-button">Запази</button>
           </div>
         </form>
       </div>
