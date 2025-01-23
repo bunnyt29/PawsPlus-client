@@ -5,7 +5,7 @@ import {MyProfileComponent} from './components/my-profile/my-profile.component';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {MyPostComponent} from '../post/components/my-post/my-post.component';
 import {ProfileResolver} from './services/profile-resolver.guard';
-import {DetailsComponent} from '../pet/components/details/details.component';
+import {MyPetsComponent} from '../pet/components/my-pets/my-pets.component';
 
 const routes: Routes = [
   {
@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: 'my-pets',
-        component: DetailsComponent,
+        component: MyPetsComponent,
         resolve: { profile: ProfileResolver }
       },
       {

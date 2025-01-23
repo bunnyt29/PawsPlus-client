@@ -1,0 +1,32 @@
+<section class="my-pets-holder">
+  <div *ngIf="pets.length > 0">
+    <div *ngFor="let pet of pets" class="my-pet">
+      <div class="overlay"></div>
+      <span (click)="navigateToPetDetails(profile.id)" class="my-pet-view-more">Разгледай повече</span>
+      <div class="my-pet-image">
+        <img [src]="pet.photoUrl" alt="Снимка на твоят сомашен любимец">
+      </div>
+      <div class="main-details">
+        <div class="left">
+          <span class="pet-name">{{pet.name}}</span>
+          <span class="main-detail">
+          <img *ngIf="pet.petType == 1" src="/images/shared/dog.svg" alt="Иконка на куче">
+          <img *ngIf="pet.petType == 2" src="/images/shared/cat.svg" alt="Иконка на котка">
+            {{ pet.breed }}
+        </span>
+        </div>
+        <div class="right">
+          <span class="main-detail"><img src="/images/shared/gender.png" alt="Иконка за пол"> {{ getGenderTranslation(pet.gender) }}</span>
+          <span class="main-detail"><img src="/images/shared/age.png" alt="Иконка за възраст"> {{pet.age.years}} г. {{pet.age.months}} м.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="add-pet">
+    <div routerLink="/pet/create"
+         class="add">
+      <img src="/images/shared/add-animal.svg" alt="Add button">
+      <span>Добави домашен любимец</span>
+    </div>
+  </div>
+</section>

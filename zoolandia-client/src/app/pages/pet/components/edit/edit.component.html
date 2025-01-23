@@ -2,7 +2,7 @@
 <navigation-menu></navigation-menu>
 <section class="container pet-create-holder">
   <h2>Разкажи ни за твоя домашен любимец</h2>
-  <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="petForm">
     <div class="pet-main-details-holder">
       <h3>Основна информация</h3>
       <div class="main-details-holder">
@@ -380,7 +380,7 @@
       </div>
     </div>
     <div class="save-pet">
-      <button type="submit" class="btn secondary-button">Запази</button>
+      <button (click)="editPet()" class="btn secondary-button">Редактирай</button>
     </div>
   </form>
 </section>

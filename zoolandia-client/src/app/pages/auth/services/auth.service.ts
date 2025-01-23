@@ -24,6 +24,10 @@ export class AuthService {
     return this.http.post(this.loginPath, data);
   }
 
+  logout(): void {
+    this.cookieService.delete('auth');
+  }
+
   saveToken(token: any) {
     this.cookieService.set('auth', token, { path: '/' });
   }

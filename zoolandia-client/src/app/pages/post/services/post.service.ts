@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 })
 export class PostService {
   private postPath = environment.apiUrl + "/posts"
+  private userPath = environment.apiUrl + "/profiles"
   constructor(
     private http: HttpClient
   ) { }
@@ -17,6 +18,6 @@ export class PostService {
   }
 
   get(id: string):Observable<any> {
-    return this.http.get<any>(this.postPath + '/' + id);
+    return this.http.get<any>(this.userPath + '/' + id + '/myPost');
   }
 }

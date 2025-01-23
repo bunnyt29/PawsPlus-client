@@ -1,0 +1,117 @@
+@use '../../../../../style/abstracts/colors';
+@use '../../../../../style/abstracts/typography';
+
+.my-pets-holder {
+  position: relative;
+  padding: 70px 116px 0 130px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+
+  .my-pet {
+    position: relative;
+    padding-bottom: 10px;
+    width: 340px;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid colors.$secondary-background;
+    border-radius: 20px;
+    cursor: pointer;
+
+    .my-pet-image {
+      width: 100%;
+      height: 60%;
+      overflow: hidden;
+      border-top-right-radius: 20px;
+      border-top-left-radius: 20px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .main-details {
+      padding-inline: 30px;
+      width: 100%;
+      height: 40%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+
+      .left, .right {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .main-detail {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-weight: typography.$semi-bold;
+
+          img {
+            width: 20px;
+          }
+        }
+      }
+
+      .pet-name {
+        font-size: typography.$font-size-md;
+        font-weight: typography.$bold;
+      }
+    }
+
+    .view-more-button-holder {
+      width: 100%;
+      padding-inline: 5px;
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        background: transparent;
+
+        img {
+          width: 30px;
+        }
+      }
+    }
+
+    .overlay {
+      position: absolute;
+      width: 340px;
+      height: 360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: colors.$primary-background;
+      border-radius: 20px;
+      opacity: 0;
+      transition: 0.5s ease-in-out;
+    }
+
+    .my-pet-view-more {
+      position: absolute;
+      top: 50%;
+      font-weight: typography.$bold;
+      opacity: 0;
+      transition: 0.2s ease-in-out;
+    }
+  }
+
+  .my-pet:hover {
+    .overlay {
+      opacity: 0.6;
+    }
+
+    .my-pet-view-more {
+      opacity: 1;
+    }
+  }
+
+}

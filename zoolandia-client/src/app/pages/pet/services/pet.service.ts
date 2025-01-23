@@ -17,7 +17,15 @@ export class PetService {
     return this.http.post<any>(this.petPath, data);
   }
 
-  get(id: string):Observable<any> {
-    return this.http.get<any>(this.userPath + "/" + id + "/pet" );
+  get(id: string | null):Observable<any> {
+    return this.http.get<any>(this.userPath + "/" + id + "/myPet" );
+  }
+
+  edit(id:string, data:any){
+    return this.http.put(this.petPath + '/' + id, data);
+  }
+
+  delete(id: string): Observable<any> {
+    return this.http.delete(this.petPath + '/' + id);
   }
 }

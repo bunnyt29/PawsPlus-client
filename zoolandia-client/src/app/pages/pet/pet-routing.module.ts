@@ -6,6 +6,16 @@ const routes: Routes = [
     path: 'create',
     loadComponent: () =>
       import('./components/create/create.component').then((m) => m.CreateComponent)
+  },
+  {
+    path: 'edit',
+    loadComponent: () =>
+      import('./components/edit/edit.component').then((m) => m.EditComponent)
+  },
+  {
+    path: 'details/:id',
+    loadComponent: () =>
+      import('./components/details/details.component').then((m) => m.DetailsComponent)
   }
 ];
 

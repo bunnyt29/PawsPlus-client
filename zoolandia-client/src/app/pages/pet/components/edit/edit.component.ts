@@ -1,28 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { SharedModule } from '../../../../shared/shared.module';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { ImageUploadComponent } from '../../../../shared/components/image-upload/image-upload.component';
-import { FileService } from '../../../../core/services/file.service';
+import {Component, OnInit} from '@angular/core';
+import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
+import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
+import {CommonModule, NgForOf, NgIf} from '@angular/common';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FileService} from '../../../../core/services/file.service';
 import {PetService} from '../../services/pet.service';
-import {PetType} from '../../../../shared/models/PetType';
-import {Gender} from '../../../../shared/models/Gender';
 import {ProfileService} from '../../../profile/services/profile.service';
 import {ToastrService} from 'ngx-toastr';
-import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
+import {PetType} from '../../../../shared/models/PetType';
+import {Pet} from '../../../../shared/models/Pet';
+import {Gender} from '../../../../shared/models/Gender';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-create',
+  selector: 'app-edit',
   standalone: true,
-  imports: [SharedModule, CommonModule, ImageUploadComponent, NavigationMenuComponent],
-  templateUrl: './create.component.html',
-  styleUrl: './create.component.scss'
+  imports: [
+    ImageUploadComponent,
+    NavigationMenuComponent,
+    NgForOf,
+    NgIf,
+    ReactiveFormsModule,
+    CommonModule
+  ],
+  templateUrl: './edit.component.html',
+  styleUrl: './edit.component.scss'
 })
-
-export class CreateComponent implements OnInit{
+export class EditComponent implements OnInit{
   petForm!: FormGroup;
+  pet!: Pet;
+  petId!: string;
   selectedPet: string = 'dog';
   currentIndex: number = 0;
   pets: string[] = ['dog', 'cat'];
@@ -46,13 +53,13 @@ export class CreateComponent implements OnInit{
     private router: Router
   ) {
     this.petForm = this.fb.group({
-      profileId: ['', Validators.required],
+      id: [''],
       name: ['', Validators.required],
       photoUrl: [null],
       petType: [1, Validators.required],
       age: this.fb.group({
-        years: [0, Validators.required],
-        months: [0, Validators.required]
+        years: [null, Validators.required],
+        months: [null, Validators.required]
       }),
       gender: [Gender.Male, Validators.required],
       breed: ['', Validators.required],
@@ -68,7 +75,7 @@ export class CreateComponent implements OnInit{
         isVaccinated: [null],
         isCastrated: [null],
         takesMedications: [null],
-        hasEatingSchedule: ['Няма'],
+        hasEatingSchedule: [''],
         otherDietaryNeeds: ['Няма'],
         healthProblems: ['Няма']
       })
@@ -78,6 +85,7 @@ export class CreateComponent implements OnInit{
   ngOnInit(): void {
     this.updateFormFields();
     this.setupAgeAdjuster();
+    this.fetchData();
   }
   previousPet(): void {
     this.currentIndex = (this.currentIndex - 1 + this.pets.length) % this.pets.length;
@@ -141,31 +149,57 @@ export class CreateComponent implements OnInit{
     this.petForm.get('personality.activityLevel')?.setValue(level.toString());
   }
 
-  onSubmit(): void {
-    this.profileService.getProfile().subscribe({
-      next: (res) => {
-        this.profileId = res.id;
-
-        const formData = {
-          ...this.petForm.value,
-          profileId: this.profileId,
-          petType: PetType[this.selectedPet.charAt(0).toUpperCase() + this.selectedPet.slice(1).toLowerCase() as keyof typeof PetType],
-        };
-
-        this.petService.create(formData).subscribe({
-          next: (response) => {
-            this.toastr.success("Успешно създаде твоя домашен любимец");
-            this.router.navigate(['/my-profile-details/my-pets'])
+  fetchData() {
+    this.profileService.getProfile().subscribe(res => {
+      this.profileId = res.id;
+      this.petService.get(this.profileId).subscribe(res => {
+        this.pet = res;
+        this.petId = res.id;
+        this.petForm.patchValue({
+          id: this.petId,
+          name: this.pet.name,
+          photoUrl: this.pet.photoUrl,
+          petType: this.pet.petType,
+          age: {
+            years: this.pet.age?.years,
+            months: this.pet.age?.months,
           },
-          error: (err) => {
-            this.toastr.error("Неуспешно създаване. Опитайте отново.");
+          gender: this.pet.gender,
+          breed: this.pet.breed,
+          weight: this.pet.weight,
+          personality: {
+            temperament: this.pet.personality?.temperament,
+            activityLevel: this.pet.personality?.activityLevel,
+            isTrained: this.pet.personality?.isTrained,
+            hasFears: this.pet.personality?.hasFears,
+            fearsDescription: this.pet.personality?.fearsDescription || 'Липсват',
+          },
+          healthStatus: {
+            isVaccinated: this.pet.healthStatus?.isVaccinated,
+            isCastrated: this.pet.healthStatus?.isCastrated,
+            takesMedications: this.pet.healthStatus?.takesMedications,
+            hasEatingSchedule: this.pet.healthStatus?.hasEatingSchedule,
+            otherDietaryNeeds: this.pet.healthStatus?.otherDietaryNeeds || 'Няма',
+            healthProblems: this.pet.healthStatus?.healthProblems,
           }
-        });
-      },
-      error: (err) => {
-        this.toastr.error('Грешка при разпознаване на профила!')
-      }
-    });
+        })
+        if (res.petType == 1) {
+          this.selectedPet = 'dog';
+        } else {
+          this.selectedPet = 'cat';
+        }
+      })
+    })
   }
+  editPet(): void {
+    const formData = {
+      ...this.petForm.value,
+      petType: PetType[this.selectedPet.charAt(0).toUpperCase() + this.selectedPet.slice(1).toLowerCase() as keyof typeof PetType],
+    };
 
+    this.petService.edit(this.petId, formData).subscribe(res => {
+      this.toastr.success("Успешно редактира домашния си любимец!");
+      this.router.navigate(['/profile/my-profile-details'])
+    })
+  }
 }

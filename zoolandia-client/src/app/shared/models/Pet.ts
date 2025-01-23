@@ -23,7 +23,7 @@ export interface Pet {
     isVaccinated: boolean;
     isCastrated: boolean;
     takesMedications: boolean;
-    hasEatingSchedule: boolean;
+    hasEatingSchedule: string;
     otherDietaryNeeds: string;
     healthProblems: string;
   };
