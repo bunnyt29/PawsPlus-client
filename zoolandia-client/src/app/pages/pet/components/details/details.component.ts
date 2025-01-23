@@ -1,30 +1,62 @@
 import {Component, OnInit} from '@angular/core';
 import {PetService} from '../../services/pet.service';
-import {ActivatedRoute} from '@angular/router';
-import {Profile} from '../../../../shared/models/Profile';
+import {ActivatedRoute, RouterLink} from '@angular/router';
+import {Pet} from '../../../../shared/models/Pet';
+import {Gender, GenderTranslations} from '../../../../shared/models/Gender';
+import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
+import {CommonModule} from '@angular/common';
+import {ModalService} from '../../../../shared/services/modal.service';
+import {ModalComponent} from '../../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    NavigationMenuComponent,
+    RouterLink,
+    ModalComponent
+  ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
 })
 export class DetailsComponent implements OnInit{
-  private profile!: Profile;
+  profileId!: string | null;
+  pet!: Pet;
+  petId!: string;
+  activityLevel: number = 0;
+
   constructor(
     private petService: PetService,
-    private route: ActivatedRoute
+    private modalService: ModalService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.profile = this.route.snapshot.data['profile'];
+    this.profileId = this.route.snapshot.paramMap.get('id');
     this.fetchData();
   }
 
   fetchData(){
-    this.petService.get(this.profile.id).subscribe(res => {
-      console.log(res);
+    this.petService.get(this.profileId).subscribe(res => {
+      this.pet = res;
+      this.petId = res.id;
+      this.activityLevel = Number(this.pet.personality?.activityLevel);
+      console.log(res)
     })
+  }
+
+  getGenderTranslation(gender: number): string {
+    return GenderTranslations[gender as Gender] || 'Неизвестен';
+  }
+
+  openDeleteModal(petId: string) {
+    this.modalService.open({
+      title: 'Изтрий домашния си любимец',
+      description: 'Сигурен ли си, че искаш да изтриеш домашния си любимец?',
+      action: 'delete',
+      data: petId,
+      discard: () => console.log('Delete cancelled'),
+    });
   }
 }
