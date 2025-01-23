@@ -1,0 +1,43 @@
+<div class="modal" tabindex="-1" role="dialog" *ngIf="open">
+  <div class="modal-dialog" role="document">
+    <button
+      type="button"
+      class="close btn"
+      data-dismiss="modal"
+      aria-label="Close"
+      (click)="discardWrapper($event)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="modal-image">
+      <img src="/images/shared/are-you-sure.png" alt="Объркан домашен любимец">
+    </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">{{ config.title }}</h3>
+      </div>
+      <div class="modal-body">
+        <p>{{ config.description }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          *ngIf="config.action === 'delete'"
+          type="button"
+          class="btn approve"
+          (click)="deletePet(config.data)"
+        >
+          Изтрий
+        </button>
+
+        <button
+          type="button"
+          class="btn disapprove"
+          data-dismiss="modal"
+          (click)="discardWrapper($event)"
+        >
+          Не
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+@use '../../../../style/abstracts/typography';
+@use '../../../../style/abstracts/colors';
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.52);
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-dialog {
+    position: relative;
+    padding: 20px 30px;
+    width: 400px;
+    max-width: 90%;
+    background-color: white;
+    border-radius: 0.3rem;
+    border: 1px solid rgb(227, 227, 227);
+    overflow: auto;
+    z-index: 1060;
+
+    .close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background-color: transparent;
+
+      span {
+        font-size: typography.$font-size-xl;
+      }
+    }
+
+    .modal-header {
+
+      .modal-title {
+        font-size: typography.$font-size-lg;
+        text-align: center;
+      }
+    }
+
+    .modal-content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+      .modal-body {
+        p {
+          text-align: center;
+          font-size: typography.$font-size-md;
+        }
+      }
+
+      .modal-footer {
+        margin-top: 20px;
+        display: flex;
+
+        button {
+          padding: 20px 60px;
+          background-color: transparent;
+          border: 1px solid grey;
+          font-weight: typography.$semi-bold;
+        }
+
+        button:first-child {
+          border-right: none;
+        }
+
+        .approve {
+          background-color: colors.$approve-color;
+          color: white;
+          border-top-left-radius: 2px;
+          border-bottom-left-radius: 2px;
+        }
+
+        .approve:hover {
+          opacity: 0.8;
+        }
+
+        .disapprove {
+          background-color: colors.$danger-darker-color;
+          color: white;
+          border-top-right-radius: 2px;
+          border-bottom-right-radius: 2px;
+        }
+
+        .disapprove:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
