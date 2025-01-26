@@ -9,19 +9,18 @@ import {environment} from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private registerPath = environment.apiUrl + '/identity/register';
-  private loginPath = environment.apiUrl + '/identity/login';
+  private authPath = environment.apiUrl + '/identity';
   constructor(
     private http: HttpClient,
     private cookieService: CookieService
   ) { }
 
   register(data: any):Observable<any> {
-    return this.http.post(this.registerPath ,data);
+    return this.http.post(this.authPath + '/register', data);
   }
 
   login(data: any):Observable<any> {
-    return this.http.post(this.loginPath, data);
+    return this.http.post(this.authPath + '/login', data);
   }
 
   logout(): void {
@@ -38,5 +37,9 @@ export class AuthService {
 
   isAuthenticated() {
     return !!this.getToken();
+  }
+
+  confirmEmail(userId: string, token: string) {
+    return this.http.put(this.authPath + '/confirmEmail', {'userId': userId, 'token': token});
   }
 }
