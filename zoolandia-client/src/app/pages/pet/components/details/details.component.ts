@@ -56,6 +56,7 @@ export class DetailsComponent implements OnInit{
       description: 'Сигурен ли си, че искаш да изтриеш домашния си любимец?',
       action: 'delete',
       data: petId,
+      type: 'deletePet',
       discard: () => console.log('Delete cancelled'),
     });
   }

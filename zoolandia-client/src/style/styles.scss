@@ -2,6 +2,9 @@
 @use 'abstracts/colors';
 @use 'components/buttons';
 @use 'abstracts/typography';
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
 
 body {
   background-color: colors.$primary-background;
@@ -106,6 +109,12 @@ label {
 input {
   background: transparent;
   border: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .invalid-input {

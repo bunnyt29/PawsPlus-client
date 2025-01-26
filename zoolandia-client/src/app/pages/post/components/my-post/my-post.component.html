@@ -9,9 +9,9 @@
           <img src="/images/desktop/post/service-walking.svg" alt="Разходки">
           <span>Разходки</span>
           <div class="action-buttons">
-            <button class="btn"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
-            <button class="btn"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
-            <button class="btn"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
+            <button class="btn" (click)="openEditModal(service.id, 'своите разходки')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
+            <button class="btn" (click)="openViewDetailsModal(service.id, 'Разходки')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
+            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
           </div>
         </div>
         <div *ngIf="service.name == 'DailyCare'"
@@ -20,9 +20,9 @@
           <img src="/images/desktop/post/service-daily-care.svg" alt="Днавна грижа">
           <span>Дневна грижа</span>
           <div class="action-buttons">
-            <button class="btn"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
-            <button class="btn"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
-            <button class="btn"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
+            <button class="btn" (click)="openEditModal(service.id, 'дневната грижа')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
+            <button class="btn" (click)="openViewDetailsModal(service.id, 'Дневна грижа')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
+            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
           </div>
         </div>
         <div *ngIf="service.name == 'PetSitting'"
@@ -31,9 +31,9 @@
           <img src="/images/desktop/post/service-pet-boarding.svg" alt="Престой">
           <span>Престой</span>
           <div class="action-buttons">
-            <button class="btn"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
-            <button class="btn"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
-            <button class="btn"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
+            <button class="btn" (click)="openEditModal(service.id, 'престой')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
+            <button class="btn" (click)="openViewDetailsModal(service.id, 'Престой')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
+            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
           </div>
         </div>
         <div *ngIf="service.name == 'Training'"
@@ -42,16 +42,15 @@
           <img src="/images/desktop/post/service-pet-training.svg" alt="Тренировки">
           <span>Тренировки</span>
           <div class="action-buttons">
-            <button class="btn"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
-            <button class="btn"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
-            <button class="btn"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
+            <button class="btn" (click)="openEditModal(service.id, 'своите тренировки')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
+            <button class="btn" (click)="openViewDetailsModal(service.id, 'Тренировки')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
+            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
           </div>
         </div>
       </div>
-      <div *ngIf="post.services.length <= 4">
-
+      <div *ngIf="post.services.length < 4 " (click)="openAddNewServiceModal(post)">
+        + Добави услуга
       </div>
-      + Добави услуга
     </div>
   </div>
   <div class="my-post-details-holder services">
@@ -72,3 +71,4 @@
     </div>
   </div>
 </section>
+<app-modal></app-modal>

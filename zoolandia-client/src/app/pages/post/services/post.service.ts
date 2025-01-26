@@ -16,8 +16,10 @@ export class PostService {
   create(data:any): Observable<any> {
     return this.http.post<any>(this.postPath, data);
   }
-
   get(id: string):Observable<any> {
     return this.http.get<any>(this.userPath + '/' + id + '/myPost');
   }
+
+  // delete(id: string): Observable<any> {
+  // }
 }

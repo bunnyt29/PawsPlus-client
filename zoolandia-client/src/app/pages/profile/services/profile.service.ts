@@ -14,9 +14,9 @@ export class ProfileService {
   ) { }
 
   getProfile():Observable<any> {
-    return this.http.get<any>(this.userPath);
+    return this.http.get<any>(this.userPath + '/mine');
   }
-  editProfile(id:string, data:any){
+  editProfile(id:string, data:any) {
     return this.http.put(this.userPath + '/' + id, data);
   }
 }

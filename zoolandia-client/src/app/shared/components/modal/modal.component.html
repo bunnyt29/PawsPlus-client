@@ -1,5 +1,54 @@
 <div class="modal" tabindex="-1" role="dialog" *ngIf="open">
-  <div class="modal-dialog" role="document">
+  <!--  Modal for displaying details of a service-->
+  <div class="modal-dialog edit-service" role="document"  *ngIf="isDetailsAction()">
+    <button
+      type="button"
+      class="close btn"
+      data-dismiss="modal"
+      aria-label="Close"
+      (click)="discardWrapper($event)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="modal-content" [formGroup]="serviceForm">
+      <div class="modal-header">
+        <h3 class="modal-title">{{ config.title }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body-item choose-available-dates">
+          <div class="modal-body-item-title">
+            <span>Твоят график</span>
+          </div>
+          <p-calendar
+            formControlName="availableDates"
+            selectionMode="multiple"
+            dataType="string"
+            [dateFormat]="'yy-mm-dd'"
+            [readonlyInput]="true"
+            [inline]="true"
+            [minDate]="today"
+            class="custom-calendar">
+          </p-calendar>
+        </div>
+        <div class="modal-body-item choose-price">
+          <div class="modal-body-item-title">
+            <span>Цена за услугата</span>
+          </div>
+          <div class="service-price">
+            <input type="number"
+                   min="1"
+                   step="any"
+                   placeholder="50"
+                   class="price-input"
+                   formControlName="price"/>
+            <span>лв.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--  Modal for deleting pet and service-->
+  <div class="modal-dialog" role="document"  *ngIf="isDeleteAction()">
     <button
       type="button"
       class="close btn"
@@ -21,21 +70,163 @@
       </div>
       <div class="modal-footer">
         <button
-          *ngIf="config.action === 'delete'"
+          *ngIf="config.action === 'delete' && config.type === 'deletePet'"
           type="button"
-          class="btn approve"
+          class="btn modal-button approve"
           (click)="deletePet(config.data)"
         >
-          Изтрий
+          Да
+        </button>
+        <button
+          *ngIf="config.action === 'delete' && config.type === 'deleteService'"
+          type="button"
+          class="btn modal-button approve"
+          (click)="deleteService(config.data)"
+        >
+          Да
         </button>
 
         <button
           type="button"
-          class="btn disapprove"
+          class="btn modal-button disapprove"
           data-dismiss="modal"
           (click)="discardWrapper($event)"
         >
           Не
+        </button>
+      </div>
+    </div>
+  </div>
+<!--  Modal for editing service-->
+  <div class="modal-dialog edit-service" role="document"  *ngIf="isEditAction()">
+    <button
+      type="button"
+      class="close btn"
+      data-dismiss="modal"
+      aria-label="Close"
+      (click)="discardWrapper($event)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="modal-content" [formGroup]="serviceForm">
+      <div class="modal-header">
+        <h3 class="modal-title"><img src="/images/shared/edit.svg" alt="Редактирай"> {{ config.title }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body-item choose-available-dates">
+          <div class="modal-body-item-title">
+            <span class="step">1</span>
+            <span>Направи свой график</span>
+          </div>
+          <p-calendar
+            formControlName="availableDates"
+            selectionMode="multiple"
+            dataType="string"
+            [dateFormat]="'yy-mm-dd'"
+            [readonlyInput]="true"
+            [inline]="true"
+            [minDate]="today"
+            class="custom-calendar">
+          </p-calendar>
+        </div>
+        <div class="modal-body-item choose-price">
+          <div class="modal-body-item-title">
+            <span class="step">2</span>
+            <span>Постави цена</span>
+          </div>
+            <div class="service-price">
+              <input type="number"
+                     min="1"
+                     step="any"
+                     placeholder="50"
+                     class="price-input"
+                     formControlName="price"/>
+              <span>лв.</span>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          *ngIf="config.action === 'edit' && config.type === 'editService'"
+          type="button"
+          class="btn secondary-button"
+          data-dismiss="modal"
+          (click)="editService(config.data)"
+        >
+          Запази
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--  Modal for adding service-->
+  <div class="modal-dialog edit-service" role="document"  *ngIf="isAddAction()">
+    <button
+      type="button"
+      class="close btn"
+      data-dismiss="modal"
+      aria-label="Close"
+      (click)="discardWrapper($event)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="modal-content" [formGroup]="serviceForm">
+      <div class="modal-header">
+        <h3 class="modal-title">+ {{ config.title }}</h3>
+      </div>
+      <div class="fields-container">
+        <div *ngFor="let service of services">
+          <label
+            class="field">
+            <img [src]="service.imagePath" [alt]="service.name">
+            <input
+              type="radio"
+              [value]="service.id"
+            />
+            {{ service.name }}
+          </label>
+        </div>
+      <div class="modal-body">
+        <div class="modal-body-item choose-available-dates">
+          <div class="modal-body-item-title">
+            <span class="step">1</span>
+            <span>Направи свой график</span>
+          </div>
+          <p-calendar
+            formControlName="availableDates"
+            selectionMode="multiple"
+            dataType="string"
+            [dateFormat]="'yy-mm-dd'"
+            [readonlyInput]="true"
+            [inline]="true"
+            [minDate]="today"
+            class="custom-calendar">
+          </p-calendar>
+        </div>
+        <div class="modal-body-item choose-price">
+          <div class="modal-body-item-title">
+            <span class="step">2</span>
+            <span>Постави цена</span>
+          </div>
+          <div class="service-price">
+            <input type="number"
+                   min="1"
+                   step="any"
+                   placeholder="50"
+                   class="price-input"
+                   formControlName="price"/>
+            <span>лв.</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          *ngIf="config.action === 'edit' && config.type === 'editService'"
+          type="button"
+          class="btn secondary-button"
+          data-dismiss="modal"
+          (click)="editService(config.data)"
+        >
+          Запази
         </button>
       </div>
     </div>
