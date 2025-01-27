@@ -57,7 +57,7 @@ export class ModalComponent implements OnInit {
   today: Date;
   postService!: PostService;
   post!: Post;
-  selectedService: string | null = null;
+  selectedService: number | null = null;
 
   services = [
     { id: 1, name: 'DogWalking', imagePath: '/images/desktop/post/service-walking.svg' },
@@ -137,6 +137,24 @@ export class ModalComponent implements OnInit {
     return this.config.action === 'add';
   }
 
+  selectService(serviceId: number): void {
+    this.selectedService = serviceId;
+    this.serviceForm.patchValue({
+      serviceType: this.selectedService
+    })
+  }
+
+  createService(post: Post){
+    this.serviceForm.patchValue({
+      'postId': post.id
+    });
+    this.postServicesService.create(this.serviceForm.value).subscribe( () => {
+      this.toastr.success("Успешно добави услуга!");
+      this.serviceForm.reset();
+    })
+    this.modalService.close();
+    location.reload();
+  }
   getPost() {
     this.post = this.config.data;
     console.log(this.post)
@@ -169,18 +187,18 @@ export class ModalComponent implements OnInit {
     this.modalService.close();
     this.router.navigate(['/my-profile-details/my-pets']);
   }
-
   deleteService(serviceId: string) {
     this.postServicesService.delete(serviceId).subscribe(() => {
       this.toastr.success("Успешно изтрита услуга!");
     })
+    this.modalService.close()
+    location.reload();
   }
-
   editService(serviceId: string) {
     this.serviceForm.patchValue({
       id: serviceId
     })
-    this.postServicesService.edit(serviceId, this.serviceForm.value).subscribe(res => {
+    this.postServicesService.edit(serviceId, this.serviceForm.value).subscribe(() => {
       this.toastr.success("Успешно редактира своята услуга!");
       this.modalService.close();
     })

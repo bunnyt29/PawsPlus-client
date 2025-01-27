@@ -173,58 +173,63 @@
       <div class="modal-header">
         <h3 class="modal-title">+ {{ config.title }}</h3>
       </div>
-      <div class="fields-container">
-        <div *ngFor="let service of services">
-          <label
-            class="field">
-            <img [src]="service.imagePath" [alt]="service.name">
-            <input
-              type="radio"
-              [value]="service.id"
-            />
-            {{ service.name }}
-          </label>
-        </div>
-      <div class="modal-body">
-        <div class="modal-body-item choose-available-dates">
-          <div class="modal-body-item-title">
-            <span class="step">1</span>
-            <span>Направи свой график</span>
+      <div class="modal-body-with-choosing-service">
+        <div class="fields-container">
+          <div *ngFor="let service of services">
+            <label
+              class="field"
+              [ngClass]="{'selected': selectedService === service.id}"
+              (click)="selectService(service.id)">
+              <img [src]="service.imagePath" [alt]="service.name">
+              <input
+                type="radio"
+                [value]="service.id"
+                [checked]="selectedService === service.id"
+              />
+              {{ service.name }}
+            </label>
           </div>
-          <p-calendar
-            formControlName="availableDates"
-            selectionMode="multiple"
-            dataType="string"
-            [dateFormat]="'yy-mm-dd'"
-            [readonlyInput]="true"
-            [inline]="true"
-            [minDate]="today"
-            class="custom-calendar">
-          </p-calendar>
         </div>
-        <div class="modal-body-item choose-price">
-          <div class="modal-body-item-title">
-            <span class="step">2</span>
-            <span>Постави цена</span>
+        <div class="modal-body" *ngIf="selectedService">
+          <div class="modal-body-item choose-available-dates">
+            <div class="modal-body-item-title">
+              <span class="step">1</span>
+              <span>Направи свой график</span>
+            </div>
+            <p-calendar
+              formControlName="availableDates"
+              selectionMode="multiple"
+              dataType="string"
+              [dateFormat]="'yy-mm-dd'"
+              [readonlyInput]="true"
+              [inline]="true"
+              [minDate]="today"
+              class="custom-calendar">
+            </p-calendar>
           </div>
-          <div class="service-price">
-            <input type="number"
-                   min="1"
-                   step="any"
-                   placeholder="50"
-                   class="price-input"
-                   formControlName="price"/>
-            <span>лв.</span>
+          <div class="modal-body-item choose-price">
+            <div class="modal-body-item-title">
+              <span class="step">2</span>
+              <span>Постави цена</span>
+            </div>
+            <div class="service-price">
+              <input type="number"
+                     min="1"
+                     step="any"
+                     placeholder="50"
+                     class="price-input"
+                     formControlName="price"/>
+              <span>лв.</span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" *ngIf="selectedService">
         <button
-          *ngIf="config.action === 'edit' && config.type === 'editService'"
           type="button"
           class="btn secondary-button"
           data-dismiss="modal"
-          (click)="editService(config.data)"
+          (click)="createService(config.data)"
         >
           Запази
         </button>

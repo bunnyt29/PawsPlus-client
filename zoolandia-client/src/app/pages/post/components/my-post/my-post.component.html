@@ -48,8 +48,9 @@
           </div>
         </div>
       </div>
-      <div *ngIf="post.services.length < 4 " (click)="openAddNewServiceModal(post)">
-        + Добави услуга
+      <div *ngIf="post.services.length < 4 " (click)="openAddNewServiceModal(post)" class="add">
+        <img src="/images/shared/add-service.png" alt="Добави">
+        <span>Добави услуга</span>
       </div>
     </div>
   </div>
@@ -67,6 +68,10 @@
           <img src="/images/shared/cat.svg" alt="Котка">
           <span>Котка</span>
         </div>
+      </div>
+      <div *ngIf="post.pets.length < 3 " (click)="openAddNewPetModal(post)" class="add">
+        <img src="/images/shared/add-animal.svg" alt="Добави">
+        <span>Добави домашен любимец</span>
       </div>
     </div>
   </div>

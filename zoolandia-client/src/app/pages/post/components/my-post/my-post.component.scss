@@ -89,6 +89,19 @@
           }
         }
       }
+
+      .add {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+
+        span {
+          width: 15ch;
+          font-weight: typography.$bold;
+          text-align: center;
+        }
+      }
     }
   }
 }

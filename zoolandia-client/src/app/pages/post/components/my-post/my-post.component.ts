@@ -85,4 +85,15 @@ export class MyPostComponent implements OnInit {
       discard: () => console.log('Delete cancelled'),
     });
   }
+
+  openAddNewPetModal(post: Post) {
+    this.modalService.open({
+      title: 'Добави домашен любимец, за когото ще предлагаш грижи ',
+      description: 'Избери домашен любимец',
+      action: 'add',
+      data: post,
+      type: 'addPet',
+      discard: () => console.log('Delete cancelled'),
+    });
+  }
 }

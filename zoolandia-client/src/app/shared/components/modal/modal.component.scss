@@ -60,6 +60,11 @@
         }
       }
 
+      .modal-body-with-choosing-service {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+      }
       .modal-body {
         p {
           text-align: center;
