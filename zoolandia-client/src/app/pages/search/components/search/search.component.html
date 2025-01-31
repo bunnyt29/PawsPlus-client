@@ -1,0 +1,129 @@
+<div class="search-holder">
+  <div class="left-side">
+    <h1>Твоето търсене</h1>
+    <div class="filters-holder">
+      <div class="filters">
+        <div class="filter">
+          <span class="filter-text">Търсене за:</span>
+          <div class="filter-options">
+            <label class="radio-button"
+                   [ngClass]="{ 'selected': searchParams.petType === 1 }"
+                   (click)="onPetTypeChange(1)">
+              <input type="radio" [(ngModel)]="searchParams.petType" [value]="1" class="hidden-radio"/>
+              <img src="/images/shared/dog.svg" alt="Куче" />
+            </label>
+
+            <label class="radio-button"
+                   [ngClass]="{ 'selected': searchParams.petType === 2 }"
+                   (click)="onPetTypeChange(2)">
+              <input type="radio" [(ngModel)]="searchParams.petType" [value]="2" class="hidden-radio"/>
+              <img src="/images/shared/cat.svg" alt="Котка" />
+            </label>
+          </div>
+        </div>
+        <div class="filter">
+          <span class="filter-text">Начална дата:</span>
+          <div class="filter-options">
+            <p-calendar
+              [(ngModel)]="searchParams.startDate"
+              [showIcon]="true"
+              [dateFormat]="'yy-mm-dd'"
+              [minDate]="today"
+              dataType="string"
+              inputId="startDate"
+              class="custom-calendar"
+              placeholder="29.09.2025"
+            ></p-calendar>
+          </div>
+        </div>
+
+        <div class="filter">
+          <span class="filter-text">Крайна дата:</span>
+          <div class="filter-options">
+            <p-calendar
+              [(ngModel)]="searchParams.endDate"
+              [showIcon]="true"
+              [dateFormat]="'yy-mm-dd'"
+              [minDate]="today"
+              dataType="string"
+              inputId="endDate"
+              placeholder="29.09.2025"
+            ></p-calendar>
+          </div>
+        </div>
+      </div>
+
+      <div class="filters">
+        <div class="filter">
+          <span class="filter-text">Търсена услуга:</span>
+          <div class="filter-options">
+            <div class="custom-dropdown" (click)="toggleDropdown()">
+              <div class="selected-option">
+                <img *ngIf="selectedOption?.image" [src]="selectedOption?.image" alt="Selected service icon" />
+                {{ selectedOption?.text || 'Изберете услуга' }}
+                <span class="arrow-down"><img src="/images/shared/dropdown-arrow.svg" alt="Иконка за отваряне на менюто"></span>
+              </div>
+
+              <div class="dropdown-options" *ngIf="dropdownOpen">
+                <div
+                  *ngFor="let option of serviceOptions"
+                  class="dropdown-option"
+                  (click)="selectOption(option, $event)">
+                  <img [src]="option.image" alt="Service icon" />
+                  {{ option.text }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter">
+          <span class="filter-text">Цена:</span>
+          <div class="filter-options">
+            <span>0</span>
+            <p-slider
+              [(ngModel)]="priceRange"
+              [range]="true"
+              (onChange)="updatePriceRange($event)"
+            ></p-slider>
+            <span>200</span>
+          </div>
+        </div>
+
+        <div class="filter">
+          <span class="filter-text">Район:</span>
+          <google-autocomplete (placeSelected)="handlePlaceSelected($event)"></google-autocomplete>
+        </div>
+      </div>
+
+      <div class="right-button-holder">
+        <button class="btn secondary-button-small" (click)="onSearch()">Търси</button>
+      </div>
+    </div>
+    <div class="search-results-holder">
+      <div *ngFor="let searchResult of searchResults" class="search-result">
+        <div class="search-result-info">
+          <div class="image-holder">
+            <img [src]="searchResult.photoUrl" alt="Снимка на {{searchResult.firstName}}">
+          </div>
+          <div class="sitter-info">
+            <span class="sitter-name">{{searchResult.firstName}} {{searchResult.lastName}}</span>
+            <span class="sitter-description">{{searchResult.description| slice:0:150 }} ...</span>
+            <span class="sitter-location"><img src="/images/shared/sitter-location-icon.svg" alt="Иконка за местоположение"> Пазарджик</span>
+          </div>
+          <div class="service-price">
+            <span>цени от</span>
+            <div class="price">
+              <span>{{searchResult.servicePrice }}</span>
+              <span>лв.</span>
+            </div>
+          </div>
+        </div>
+        <div class="right-button-holder">
+          <button class="btn secondary-button-small" (click)="onSearch()">Виж повече</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right-side google-map"></div>
+</div>

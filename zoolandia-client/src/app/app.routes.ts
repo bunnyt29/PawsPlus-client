@@ -4,7 +4,7 @@ export const routes: Routes = [
   {
     path: "",
     pathMatch: "full",
-    redirectTo: "home"
+    redirectTo: "search"
   },
   {
     path: "home",
@@ -30,5 +30,10 @@ export const routes: Routes = [
     path: "post",
     // data: { preload: true },
     loadChildren: () => import("./pages/post/post.module").then((m) => m.PostModule)
-  }
+  },
+  {
+    path: "search",
+    // data: { preload: true },
+    loadChildren: () => import("./pages/search/search.module").then((m) => m.SearchModule)
+  },
 ];
