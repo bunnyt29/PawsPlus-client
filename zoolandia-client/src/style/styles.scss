@@ -183,6 +183,30 @@ textarea {
   padding: 20px;
 }
 
+.radio-button {
+  padding: 7px;
+  font-size: typography.$font-size-md;
+  font-weight: typography.$bold;
+  background-color: colors.$primary-background;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+
+  &.selected {
+    background-color: colors.$accent-color;
+  }
+
+  &:hover {
+    background-color: colors.$accent-color;
+    opacity: 0.8;
+  }
+
+  input.hidden-radio {
+    display: none;
+  }
+}
+
 //Profile
 
 .profile-decoration-right {
@@ -302,11 +326,6 @@ textarea {
         }
       }
     }
-  }
-
-  .complete-profile {
-    display: flex;
-    justify-content: flex-end;
   }
 }
 

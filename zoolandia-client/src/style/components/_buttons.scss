@@ -49,3 +49,8 @@
   background-color: colors.$secondary-background;
   border-radius: 5px;
 }
+
+.right-button-holder {
+  display: flex;
+  justify-content: flex-end;
+}
