@@ -8,14 +8,14 @@
           <div class="filter-options">
             <label class="radio-button"
                    [ngClass]="{ 'selected': searchParams.petType === 1 }"
-                   (click)="onPetTypeChange(1)">
+                   (click)="onPetTypeChange(1); onSearch()">
               <input type="radio" [(ngModel)]="searchParams.petType" [value]="1" class="hidden-radio"/>
               <img src="/images/shared/dog.svg" alt="Куче" />
             </label>
 
             <label class="radio-button"
                    [ngClass]="{ 'selected': searchParams.petType === 2 }"
-                   (click)="onPetTypeChange(2)">
+                   (click)="onPetTypeChange(2); onSearch()">
               <input type="radio" [(ngModel)]="searchParams.petType" [value]="2" class="hidden-radio"/>
               <img src="/images/shared/cat.svg" alt="Котка" />
             </label>
@@ -26,6 +26,7 @@
           <div class="filter-options">
             <p-calendar
               [(ngModel)]="searchParams.startDate"
+              (ngModelChange)="onStartDateChange($event); onSearch()"
               [showIcon]="true"
               [dateFormat]="'yy-mm-dd'"
               [minDate]="today"
@@ -42,9 +43,10 @@
           <div class="filter-options">
             <p-calendar
               [(ngModel)]="searchParams.endDate"
+              (ngModelChange)="onSearch()"
               [showIcon]="true"
               [dateFormat]="'yy-mm-dd'"
-              [minDate]="today"
+              [minDate]="minDateForEndDate"
               dataType="string"
               inputId="endDate"
               placeholder="29.09.2025"
@@ -68,7 +70,7 @@
                 <div
                   *ngFor="let option of serviceOptions"
                   class="dropdown-option"
-                  (click)="selectOption(option, $event)">
+                  (click)="selectOption(option, $event); onSearch()">
                   <img [src]="option.image" alt="Service icon" />
                   {{ option.text }}
                 </div>
@@ -84,7 +86,7 @@
             <p-slider
               [(ngModel)]="priceRange"
               [range]="true"
-              (onChange)="updatePriceRange($event)"
+              (onChange)="updatePriceRange($event); onSearch()"
             ></p-slider>
             <span>200</span>
           </div>
@@ -92,7 +94,7 @@
 
         <div class="filter">
           <span class="filter-text">Район:</span>
-          <google-autocomplete (placeSelected)="handlePlaceSelected($event)"></google-autocomplete>
+          <google-autocomplete (placeSelected)="handlePlaceSelected($event); onSearch()" ></google-autocomplete>
         </div>
       </div>
 
@@ -125,5 +127,7 @@
       </div>
     </div>
   </div>
-  <div class="right-side google-map"></div>
+  <div class="right-side google-map">
+    <google-map height="100vh" width="100%" [options]="mapOptions"> </google-map>
+  </div>
 </div>

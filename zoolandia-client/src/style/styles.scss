@@ -170,6 +170,20 @@ input::-webkit-inner-spin-button {
   background-color: colors.$accent-color;
 }
 
+.google-autocomplete-input {
+
+}
+
+.google-autocomplete-input:focus {
+  outline: none;
+  border: none;
+}
+
+.google-autocomplete-input:focus::-webkit-input-placeholder {
+    font-weight: typography.$semi-bold;
+    color: colors.$primary-text-color;
+}
+
 textarea {
   width: 100%;
 }

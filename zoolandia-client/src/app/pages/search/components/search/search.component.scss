@@ -2,7 +2,7 @@
 @use '../../../../../style/abstracts/typography';
 
 .search-holder {
-  padding-inline: 63px 20px;
+  padding-inline: 63px 0;
   display: flex;
   gap: 100px;
 
@@ -186,6 +186,10 @@
         }
       }
     }
+  }
+
+  .right-side {
+    width: 40%;
   }
 }
 

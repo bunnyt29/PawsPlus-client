@@ -1,0 +1,5 @@
+@use '../../../../style/abstracts/typography';
+
+input {
+  font-weight: typography.$semi-bold;
+}
