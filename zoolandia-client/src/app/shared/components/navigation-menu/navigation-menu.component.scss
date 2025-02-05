@@ -101,36 +101,84 @@
 
     .nav-profile-image {
 
-      img {
-        position: relative;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        object-fit: cover;
-        cursor: pointer;
-      }
-
       .profile-options {
         position: absolute;
         top: 100px;
-        right: calc((100% - 1140px) / 2);
-        padding: 20px 0;
-        display: block;
-        background-color: colors.$accent-color;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
+        right: calc((100% - 1196px) / 2);
+        padding: 25px 50px 50px 40px;
+        display: flex;
+        flex-direction: column;
+        background-color: colors.$primary-background;
+        border: 2px solid colors.$secondary-background;
+        box-shadow: 5px 0 10px colors.$secondary-background;
+        border-radius: 20px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+
+        &.visible {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+
+        &-heading {
+          margin-bottom: 30px;
+          padding-bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          border-bottom: 1px solid colors.$secondary-background;
+
+          .profile-details {
+            display: flex;
+            flex-direction: column;
+
+            span:first-child {
+              font-size: typography.$font-size-md;
+              font-weight: typography.$semi-bold;
+              color: colors.$primary-text-color;
+            }
+          }
+        }
 
         p {
-          padding-inline: 40px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 10px;
           font-size: typography.$font-size-md;
           font-weight: typography.$medium;
           cursor: pointer;
+          transition: all 0.4s ease;
+
+          img {
+            width: 24px;
+          }
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 30px;
+            width: 0;
+            height: 3px;
+            background: colors.$primary-text-color;
+            transition: width 0.4s ease-in-out;
+            border-radius: 2px;
+          }
+        }
+
+        p:not(:last-child) {
+          margin-bottom: 20px;
         }
 
         p:hover {
-          background-color: #F7621D;
-          color: #4A2A26;
+
+          &::after {
+            width: 70%;
+          }
         }
       }
     }

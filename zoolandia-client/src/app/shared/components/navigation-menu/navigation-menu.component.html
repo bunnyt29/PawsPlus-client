@@ -36,13 +36,42 @@
       </div>
       <div class="nav-profile-image">
         <img [src]="profile.photoUrl"
+             class="profile-image-small"
              alt="your image"
              (click)="toggleOptions()"/>
-        <div class="profile-options" [style.display]="optionsVisible ? 'block' : 'none'">
-          <p [routerLink]="'/profile/my-profile-details'">Моят профил</p>
-          <p [routerLink]="'/profile/my-profile-details/my-pets'">Моите животни</p>
-          <p [routerLink]="'/profile/my-profile-details/notifications'">Известия</p>
-          <p (click)="logout()">Излез</p>
+        <div class="profile-options" #profileOptions  [class.visible]="optionsVisible">
+          <div class="profile-options-heading">
+            <img [src]="profile.photoUrl"
+                 class="profile-image-small"
+                 alt="your image"
+                 (click)="toggleOptions()"/>
+            <div class="profile-details">
+              <span>{{profile.firstName}} {{profile.lastName}}</span>
+              <span>{{profile.email}}</span>
+            </div>
+          </div>
+          <p [routerLink]="'/profile/my-profile-details'">
+            <img src="/images/shared/home/dropdown-options/my-profile.png" alt="Иконка на потребител">
+            Моят профил
+          </p>
+          <p *ngIf="profile?.roles?.includes('Owner')"
+             [routerLink]="'/profile/my-profile-details/my-pets'">
+            <img src="/images/shared/home/dropdown-options/my-pets.png" alt="Иконка на лапичка">
+            Моите животни
+          </p>
+          <p *ngIf="profile?.roles?.includes('Sitter')"
+             [routerLink]="'/profile/my-profile-details/my-post'">
+            <img src="/images/shared/home/dropdown-options/my-post.png" alt="Иконка на календар">
+            Моята обява
+          </p>
+          <p [routerLink]="'/profile/my-profile-details/notifications'">
+            <img src="/images/shared/home/dropdown-options/notifications.png" alt="Иконка на камбанка">
+            Известия
+          </p>
+          <p (click)="logout()">
+            <img src="/images/shared/home/dropdown-options/logout.png" alt="Иконка на вратичка">
+            Излез
+          </p>
         </div>
       </div>
     </div>

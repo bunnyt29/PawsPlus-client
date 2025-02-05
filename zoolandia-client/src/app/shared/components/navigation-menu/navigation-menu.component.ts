@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../pages/auth/services/auth.service';
 import {ProfileService} from '../../../pages/profile/services/profile.service';
@@ -19,12 +19,14 @@ export class NavigationMenuComponent implements OnInit{
   profile!: Profile;
   isLogged: boolean = false;
   optionsVisible: boolean = false;
+  @ViewChild('profileOptions') profileOptionsRef!: ElementRef;
 
   constructor(
     private profileService: ProfileService,
     private authService: AuthService,
     private router: Router,
     private cd: ChangeDetectorRef,
+    private eRef: ElementRef
   ) { }
 
   ngOnInit(): void {
@@ -32,8 +34,28 @@ export class NavigationMenuComponent implements OnInit{
   }
 
   toggleOptions(): void {
-    this.optionsVisible = !this.optionsVisible;
-    this.cd.detectChanges();
+    if (this.optionsVisible) {
+      setTimeout(() => {
+        this.optionsVisible = false;
+        this.cd.detectChanges();
+      }, 200);
+    } else {
+      this.optionsVisible = true;
+      this.cd.detectChanges();
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleOutsideClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+
+    if (
+      this.optionsVisible &&
+      !this.eRef.nativeElement.contains(target)
+    ) {
+      this.optionsVisible = false;
+      this.cd.detectChanges();
+    }
   }
 
   checkAuthentication() : void {
