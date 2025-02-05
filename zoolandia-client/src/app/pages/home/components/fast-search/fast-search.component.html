@@ -1,22 +1,82 @@
-<!--<section class="hero">-->
-<!--  <div class="fast-search">-->
-<!--    <form>-->
-<!--      <div class="filter">-->
-<!--        <span class="filter-heading">Какъв е твоят домашен любимец?</span>-->
-<!--        <div class="filter-elements">-->
-<!--          <div *ngFor="let pet of pets; let i=index" class="col-md-2">-->
-<!--            <label>-->
-<!--              <input type="checkbox" [value]="pet.value" (change)="onPetChange($event)">-->
-<!--              {{pet.name}}-->
-<!--            </label>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
-<!--  <div class="hero-heading">-->
-<!--    <span>Удобно, лесно и бързо</span>-->
-<!--    <h1>Лапички+</h1>-->
-<!--    <p>всичко необходимо за грижата за вашия домашен любимец, събрано на едно място. С него лесно ще откриете човек, който да разходи вашето куче, когато сте заети, или да му осигури уютен дом, докато сте на почивка. Освен това, ако обичате животните, можете да предложите своите услуги и да си осигурите допълнителен доход!</p>-->
-<!--  </div>-->
-<!--</section>-->
+<section class="hero-holder">
+  <div class="hero container">
+    <div class="fast-search">
+      <div class="filter">
+        <span class="filter-heading">Какъв е твоят домашен любимец?</span>
+        <div class="filter-elements fields-container">
+          <div *ngFor="let pet of pets">
+            <label
+              class="field"
+              [ngClass]="{ 'selected': searchParams.petType === pet.id }"
+              (click)="onPetTypeChange(pet.id)">
+              <img [src]="pet.imagePath" [alt]="pet.name">
+              <input
+                type="checkbox"
+                [value]="pet.id"
+              />
+              {{ pet.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="filter">
+        <span class="filter-heading">Каква услуга търсиш?</span>
+        <div class="fields-container">
+          <div *ngFor="let service of services">
+            <label
+              class="field"
+              [ngClass]="{ 'selected': searchParams.serviceType === service.id }"
+              (click)="onServiceTypeChange(service.id)">
+              <img [src]="service.imagePath" [alt]="service.name">
+              <input
+                type="checkbox"
+                [value]="service.id"
+              />
+              {{ service.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="filter">
+        <span class="filter-heading">Избери дати</span>
+        <div class="filter-dates">
+          <div class="date">
+            <img src="/images/desktop/home/calendar.svg" alt="Календар">
+            <p-calendar
+              [(ngModel)]="searchParams.startDate"
+              (ngModelChange)="onStartDateChange($event)"
+              [dateFormat]="'yy-mm-dd'"
+              [minDate]="today"
+              dataType="string"
+              inputId="startDate"
+              class="custom-calendar"
+              placeholder="Начална дата"
+            ></p-calendar>
+          </div>
+          <div class="date">
+            <img src="/images/desktop/home/calendar.svg" alt="Календар">
+            <p-calendar
+              [(ngModel)]="searchParams.endDate"
+              [dateFormat]="'yy-mm-dd'"
+              [minDate]="minDateForEndDate"
+              dataType="string"
+              inputId="endDate"
+              placeholder="Крайна дата"
+            ></p-calendar>
+          </div>
+        </div>
+      </div>
+      <div class="filter">
+        <span class="filter-heading">Избери район</span>
+        <google-autocomplete></google-autocomplete>
+      </div>
+      <button class="btn primary-button" (click)="onSearch()">Търси гледач</button>
+    </div>
+    <div class="hero-heading">
+      <span>Удобно, лесно и бързо</span>
+      <h1>Лапички+</h1>
+      <p>всичко необходимо за грижата за вашия домашен любимец, събрано на едно място. С него лесно ще откриете човек, който да разходи вашето куче, когато сте заети, или да му осигури уютен дом, докато сте на почивка. Освен това, ако обичате животните, можете да предложите своите услуги и да си осигурите допълнителен доход!</p>
+    </div>
+  </div>
+  <img class="hero-image" src="/images/desktop/home/hero-image.svg" alt="Деца, играещи с домашните си любимци.">
+</section>
