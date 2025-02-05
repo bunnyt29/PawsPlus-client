@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, HostListener, NgZone} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, NgZone, OnInit} from '@angular/core';
 import {CalendarModule} from 'primeng/calendar';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SliderModule} from 'primeng/slider';
@@ -10,6 +10,7 @@ import {
 } from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
 import {GoogleMapsModule} from '@angular/google-maps';
 import {debounceTime, Subject} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -27,7 +28,7 @@ import {debounceTime, Subject} from 'rxjs';
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit{
   private searchSubject = new Subject<void>();
   dropdownOpen = false;
   selectedOption: any = null;
@@ -36,6 +37,8 @@ export class SearchComponent {
   priceRange: number[] = [0, 200];
   today: Date;
   minDateForEndDate!: Date;
+  paramsObject: { [key: string]: any } = {};
+
 
   serviceOptions = [
     { value: 1, text: 'Разходки', image: '/images/desktop/post/service-walking.svg' },
@@ -51,25 +54,25 @@ export class SearchComponent {
   };
 
   searchParams: {
-    petType: number;
-    serviceType: number;
+    petType: string | null;
+    serviceType: string | null;
     startDate: string | null;
     endDate: string | null;
-    minPrice: number;
-    maxPrice: number;
+    minPrice: string | null;
+    maxPrice: string | null;
   } = {
-    petType: 1,
-    serviceType: 1,
+    petType: null,
+    serviceType: null,
     startDate: null,
     endDate: null,
-    minPrice: 1,
-    maxPrice: 100,
+    minPrice: null,
+    maxPrice: null,
   };
 
   constructor(
     private cdr: ChangeDetectorRef,
     private postService: PostService,
-    public zone: NgZone
+    private route: ActivatedRoute
   )
   {
     this.today = new Date();
@@ -78,7 +81,15 @@ export class SearchComponent {
     });
   }
 
-  onPetTypeChange(value: number) {
+  ngOnInit() {
+    this.route.queryParams.subscribe(queryParams => {
+      this.paramsObject = { ...this.paramsObject, ...queryParams };
+      this.searchParams = Object.assign(this.searchParams, queryParams);
+      this.selectedOption = this.searchParams.serviceType;
+    });
+  }
+
+  onPetTypeChange(value: string) {
     this.searchParams.petType = value;
     this.cdr.detectChanges();
   }
@@ -90,6 +101,7 @@ export class SearchComponent {
       this.minDateForEndDate = this.today;
     }
   }
+
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
@@ -115,12 +127,13 @@ export class SearchComponent {
 
   handlePlaceSelected(place: google.maps.places.PlaceResult) {
     this.selectedPlace = place;
+    console.log(place)
     if (place.geometry && place.geometry.location) {
       const location = place.geometry.location;
       this.mapOptions = {
         ...this.mapOptions,
         center: { lat: location.lat(), lng: location.lng() },
-        zoom: 12
+        zoom: 15
       };
     }
   }

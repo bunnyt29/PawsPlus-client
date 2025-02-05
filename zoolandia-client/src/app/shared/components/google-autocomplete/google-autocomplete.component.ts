@@ -42,7 +42,6 @@ export class GoogleAutocompleteComponent  implements AfterViewInit{
 
   initAutocomplete() {
     const autocomplete = new google.maps.places.Autocomplete(this.autocompleteInput.nativeElement, {
-      types: ['(regions)'],
       componentRestrictions: { country: ['BG'] },
       fields: ['address_components', 'geometry', 'icon', 'name']
     });
