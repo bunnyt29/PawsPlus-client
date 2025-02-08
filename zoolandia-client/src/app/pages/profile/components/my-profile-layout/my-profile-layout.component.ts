@@ -27,7 +27,7 @@ export class MyProfileLayoutComponent implements OnInit{
   }
 
   fetchData(): void {
-    this.profileService.getProfile().subscribe( res => {
+    this.profileService.getMine().subscribe( res => {
       this.profile = res;
     })
   }

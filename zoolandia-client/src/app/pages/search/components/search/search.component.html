@@ -7,7 +7,7 @@
           <span class="filter-text">Търсене за:</span>
           <div class="filter-options">
             <label class="radio-button"
-Slight                   [ngClass]="{ 'selected': searchParams.petType === '1' }"
+                   [ngClass]="{ 'selected': searchParams.petType === '1' }"
                    (click)="onPetTypeChange('1'); onSearch()">
               <input type="radio" [(ngModel)]="searchParams.petType" [value]="'1'" class="hidden-radio"/>
               <img src="/images/shared/dog.svg" alt="Куче" />
@@ -116,13 +116,13 @@ Slight                   [ngClass]="{ 'selected': searchParams.petType === '1' }
           <div class="service-price">
             <span>цени от</span>
             <div class="price">
-              <span>{{searchResult.servicePrice }}</span>
+              <span>{{ searchResult.servicePrice }}</span>
               <span>лв.</span>
             </div>
           </div>
         </div>
         <div class="right-button-holder">
-          <button class="btn secondary-button-small" (click)="onSearch()">Виж повече</button>
+          <button class="btn secondary-button-small" (click)="viewProfile(searchResult.id)">Виж повече</button>
         </div>
       </div>
     </div>

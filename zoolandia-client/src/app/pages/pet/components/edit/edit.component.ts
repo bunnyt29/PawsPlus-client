@@ -150,7 +150,7 @@ export class EditComponent implements OnInit{
   }
 
   fetchData() {
-    this.profileService.getProfile().subscribe(res => {
+    this.profileService.getMine().subscribe(res => {
       this.profileId = res.id;
       this.petService.get(this.profileId).subscribe(res => {
         this.pet = res;

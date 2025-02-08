@@ -13,10 +13,15 @@ export class ProfileService {
     private http: HttpClient
   ) { }
 
-  getProfile():Observable<any> {
+  getMine():Observable<any> {
     return this.http.get<any>(this.userPath + '/mine');
   }
-  editProfile(id:string, data:any) {
+
+  get(profileId: string): Observable<any> {
+    return this.http.get<any>(this.userPath + '/' + profileId);
+  }
+
+  edit(id:string, data:any) {
     return this.http.put(this.userPath + '/' + id, data);
   }
 }

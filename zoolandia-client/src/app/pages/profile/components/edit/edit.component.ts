@@ -48,7 +48,7 @@ export class EditComponent implements OnInit {
   }
 
   fetchProfile(){
-    this.profileService.getProfile().subscribe(res => {
+    this.profileService.getMine().subscribe(res => {
       this.profile = res;
       this.profileForm.patchValue({
         'id': this.profile.id,
@@ -87,7 +87,7 @@ export class EditComponent implements OnInit {
   }
 
   editProfile(){
-    this.profileService.editProfile(this.profile.id, this.profileForm.value).subscribe( () => {
+    this.profileService.edit(this.profile.id, this.profileForm.value).subscribe( () => {
       this.toastr.success("Успешно редактира профила си!");
       this.router.navigate(['/profile/my-profile-details'])
     });

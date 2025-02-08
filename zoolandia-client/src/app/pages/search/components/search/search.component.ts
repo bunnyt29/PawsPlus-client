@@ -5,12 +5,10 @@ import {SliderModule} from 'primeng/slider';
 import {CommonModule} from '@angular/common';
 import {SharedModule} from '../../../../shared/shared.module';
 import {PostService} from '../../../post/services/post.service';
-import {
-  GoogleAutocompleteComponent
-} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
+import {GoogleAutocompleteComponent} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
 import {GoogleMapsModule} from '@angular/google-maps';
 import {debounceTime, Subject} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -51,6 +49,7 @@ export class SearchComponent implements OnInit{
     mapId: "4186b8dc6f3cfdc8",
     center: { lat: 42.6977, lng: 23.3219 },
     zoom: 8,
+    disableDefaultUI: true
   };
 
   searchParams: {
@@ -72,7 +71,8 @@ export class SearchComponent implements OnInit{
   constructor(
     private cdr: ChangeDetectorRef,
     private postService: PostService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   )
   {
     this.today = new Date();
@@ -147,5 +147,9 @@ export class SearchComponent implements OnInit{
 
   onSearch() {
     this.searchSubject.next();
+  }
+
+  viewProfile(profileId: string) {
+    this.router.navigate(['profile/details'], { queryParams: { id: profileId }});
   }
 }

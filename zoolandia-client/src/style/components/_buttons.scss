@@ -14,14 +14,19 @@
   font-weight: typography.$medium;
   background-color: colors.$accent-color;
   border-radius: 5px;
+  transition: all 0.3s ease-in-out;
 }
 
 .primary-button:hover {
-  border: 1px solid colors.$primary-text-color;
+  //border: 1px solid colors.$primary-text-color;
+  //font-weight: typography.$bold;
+  //background-color: #F7621D;
+  //color: #4A2A26;
+  //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-weight: typography.$bold;
-  background-color: #F7621D;
-  color: #4A2A26;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: darken(colors.$accent-color, 10%);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .secondary-button {

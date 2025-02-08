@@ -115,7 +115,7 @@ export class MultiStepFormComponent {
   }
 
   submitForm() {
-    this.profileService.getProfile().subscribe(res => {
+    this.profileService.getMine().subscribe(res => {
       this.profileId = res.id;
 
       this.postForm.patchValue({

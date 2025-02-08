@@ -114,7 +114,6 @@
         border-radius: 20px;
         opacity: 0;
         visibility: hidden;
-        transform: translateY(-10px);
         transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
 
         &.visible {
@@ -163,7 +162,7 @@
             bottom: -10px;
             left: 30px;
             width: 0;
-            height: 3px;
+            height: 2px;
             background: colors.$primary-text-color;
             transition: width 0.4s ease-in-out;
             border-radius: 2px;

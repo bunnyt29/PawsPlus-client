@@ -343,6 +343,75 @@ textarea {
   }
 }
 
+.my-profile-holder {
+  position: relative;
+  padding: 70px 116px 0 130px;
+
+  .my-profile-head {
+    padding-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    border-bottom: 1px solid colors.$primary-text-color;
+
+    .my-profile-names {
+      display: flex;
+      flex-direction: column;
+      span {
+        font-size: typography.$font-size-xl;
+        font-weight: typography.$bold;
+      }
+    }
+  }
+
+  .my-profile-main {
+    margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    &-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      &-title {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+
+        h2 {
+          font-size: typography.$font-size-lg;
+        }
+      }
+
+      p {
+        width: 80%;
+        text-align: justify;
+      }
+
+      .contacts {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+
+        .contact {
+          display: flex;
+          flex-direction: column;
+
+          h3 {
+            font-size: typography.$font-size-md;
+          }
+        }
+      }
+    }
+  }
+}
+
+address {
+  font-size: typography.$font-size-md;
+}
+
 //Pet
 .add-animal {
   display: flex;
@@ -485,4 +554,17 @@ textarea {
     background-color: colors.$accent-color;
     border-radius: 50%;
   }
+}
+
+//Calendar
+p-calendar .p-datepicker-calendar td {
+  padding: 2px;
+}
+
+.p-datepicker table td > span.p-highlight {
+  background-color: colors.$accent-color;
+}
+
+.p-inputtext {
+  padding: 0;
 }

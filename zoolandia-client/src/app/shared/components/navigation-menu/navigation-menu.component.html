@@ -50,21 +50,21 @@
               <span>{{profile.email}}</span>
             </div>
           </div>
-          <p [routerLink]="'/profile/my-profile-details'">
+          <p [routerLink]="'/profile/my-details'">
             <img src="/images/shared/home/dropdown-options/my-profile.png" alt="Иконка на потребител">
             Моят профил
           </p>
           <p *ngIf="profile?.roles?.includes('Owner')"
-             [routerLink]="'/profile/my-profile-details/my-pets'">
+             [routerLink]="'/profile/my-details/my-pets'">
             <img src="/images/shared/home/dropdown-options/my-pets.png" alt="Иконка на лапичка">
             Моите животни
           </p>
           <p *ngIf="profile?.roles?.includes('Sitter')"
-             [routerLink]="'/profile/my-profile-details/my-post'">
+             [routerLink]="'/profile/my-details/my-post'">
             <img src="/images/shared/home/dropdown-options/my-post.png" alt="Иконка на календар">
             Моята обява
           </p>
-          <p [routerLink]="'/profile/my-profile-details/notifications'">
+          <p [routerLink]="'/profile/my-details/notifications'">
             <img src="/images/shared/home/dropdown-options/notifications.png" alt="Иконка на камбанка">
             Известия
           </p>

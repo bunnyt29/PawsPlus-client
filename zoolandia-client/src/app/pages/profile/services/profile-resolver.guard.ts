@@ -11,6 +11,6 @@ export class ProfileResolver implements Resolve<Profile> {
   constructor(private profileService: ProfileService) {}
 
   resolve(): Observable<Profile> {
-    return this.profileService.getProfile();
+    return this.profileService.getMine();
   }
 }

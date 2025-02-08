@@ -14,6 +14,11 @@ const routes: Routes = [
       import('./components/edit/edit.component').then((m) => m.EditComponent)
   },
   {
+    path: 'details',
+    loadComponent: () =>
+      import('./components/details/details.component').then((m) => m.DetailsComponent)
+  },
+  {
     path: 'my-profile-details',
     component: MyProfileLayoutComponent,
     children: [
