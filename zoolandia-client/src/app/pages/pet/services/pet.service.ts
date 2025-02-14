@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PetService {
-  private petPath = environment.apiUrl + "/pets"
-  private userPath = environment.apiUrl + "/profiles"
+  private petPath = environment.apiUrl + "/pets";
+  private breedPath = environment.apiUrl + "/breeds";
+  private userPath = environment.apiUrl + "/profiles";
   constructor(
     private http: HttpClient
   ) { }
@@ -27,5 +28,11 @@ export class PetService {
 
   delete(id: string): Observable<any> {
     return this.http.delete(this.petPath + '/' + id);
+  }
+
+  getBreeds(petType: number): Observable<any> {
+    const httpParams = new HttpParams().set('petType', petType);
+
+    return this.http.get<any>(this.breedPath, { params: httpParams });
   }
 }

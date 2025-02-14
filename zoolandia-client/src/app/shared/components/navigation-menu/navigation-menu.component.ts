@@ -31,6 +31,7 @@ export class NavigationMenuComponent implements OnInit{
 
   ngOnInit(): void {
     this.checkAuthentication();
+    console.log(this.isLogged)
   }
 
   toggleOptions(): void {

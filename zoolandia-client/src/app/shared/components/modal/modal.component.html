@@ -236,4 +236,144 @@
       </div>
     </div>
   </div>
+  <!-- Modal for booking sitter-->
+  <div class="modal-dialog edit-service" role="document"  *ngIf="isBookAction()">
+    <button
+      type="button"
+      class="close btn"
+      data-dismiss="modal"
+      aria-label="Close"
+      (click)="discardWrapper($event)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="modal-content" [formGroup]="serviceForm">
+      <div class="modal-header">
+        <h3 class="modal-title">{{ config.title }}</h3>
+        <p>{{ config.description }}</p>
+      </div>
+      <div class="modal-body">
+        <div class="filter">
+          <span class="filter-heading">Каква услуга търсиш?</span>
+          <div class="fields-container">
+            <div *ngFor="let service of services">
+              <label
+                class="field">
+                <img [src]="service.imagePath" [alt]="service.name">
+                <input
+                  type="checkbox"
+                  [value]="service.id"
+                />
+                {{ service.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="filters-row">
+          <div class="filter">
+            <span class="filter-heading">Избери дати</span>
+            <div class="filter-dates">
+              <div class="date">
+                <img src="/images/desktop/home/calendar.svg" alt="Календар">
+                <p-calendar
+                  [dateFormat]="'yy-mm-dd'"
+                  dataType="string"
+                  inputId="startDate"
+                  class="custom-calendar"
+                  placeholder="Начална дата"
+                ></p-calendar>
+              </div>
+              <div class="date">
+                <img src="/images/desktop/home/calendar.svg" alt="Календар">
+                <p-calendar
+                  [dateFormat]="'yy-mm-dd'"
+                  dataType="string"
+                  inputId="endDate"
+                  placeholder="Крайна дата"
+                ></p-calendar>
+              </div>
+            </div>
+          </div>
+          <div class="filter">
+            <span class="filter-heading">Избери часове</span>
+            <div class="filter-dates">
+              <div class="date">
+                <img src="/images/desktop/home/calendar.svg" alt="Календар">
+                <p-calendar
+                  [dateFormat]="'yy-mm-dd'"
+                  dataType="string"
+                  inputId="startDate"
+                  class="custom-calendar"
+                  placeholder="Начална дата"
+                ></p-calendar>
+              </div>
+              <div class="date">
+                <img src="/images/desktop/home/calendar.svg" alt="Календар">
+                <p-calendar
+                  [dateFormat]="'yy-mm-dd'"
+                  dataType="string"
+                  inputId="endDate"
+                  placeholder="Крайна дата"
+                ></p-calendar>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="filters-row">
+          <div class="filter">
+            <span class="filter-heading">Избери начин за взимане на животното</span>
+            <div class="fields-container">
+              <div>
+                <label
+                  class="field">
+                  <input
+                    type="checkbox"
+                    [value]="1"
+                  />
+                  Вземане от дома ви
+                </label>
+              </div>
+              <div>
+                <label
+                  class="field">
+                  <input
+                    type="checkbox"
+                    [value]="2"
+                  />
+                  Вземане от трето място
+                </label>
+              </div>
+              <div>
+                <label
+                  class="field">
+                  <input
+                    type="checkbox"
+                    [value]="3"
+                  />
+                  Оставене в дома на гледача
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="filter">
+            <span class="filter-heading">Избери място на среща</span>
+            <google-autocomplete></google-autocomplete>
+          </div>
+        </div>
+        <div class="filter">
+          <span class="filter-heading">Допълнително съобщение</span>
+          <textarea class="main-textarea"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn secondary-button"
+          data-dismiss="modal"
+        >
+          Резервирай
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

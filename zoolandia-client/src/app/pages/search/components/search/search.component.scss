@@ -8,7 +8,7 @@
 
   .left-side {
     width: 60%;
-    margin-top: 57px;
+    margin-top: 30px;
 
     h1 {
       margin-bottom: 40px;
@@ -225,10 +225,11 @@
 ::ng-deep p-calendar {
   .p-calendar {
      .p-inputtext {
-      background-color: #f3f3f3;
-      border: 1px solid colors.$primary-text-color;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
+       padding-left: 10px;
+       background-color: #f3f3f3;
+       border: 1px solid colors.$primary-text-color;
+       border-top-right-radius: 0;
+       border-bottom-right-radius: 0;
     }
 
     .p-button {

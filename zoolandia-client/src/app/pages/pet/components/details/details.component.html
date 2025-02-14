@@ -18,14 +18,16 @@
         </div>
       </div>
       <div class="personality-item">
-        <img *ngIf="activityLevel === 0"
+        <img *ngIf="activityLevel === 0 && pet.petType === 1"
              src="/images/desktop/pet/activity-level-low.svg" alt="Няма информация">
-        <img *ngIf="activityLevel > 0 && activityLevel < 5"
+        <img *ngIf="activityLevel > 0 && activityLevel < 5 && pet.petType === 1"
              src="/images/desktop/pet/activity-level-low.svg" alt="Спящо куче">
-        <img *ngIf="activityLevel > 4 && activityLevel < 8"
+        <img *ngIf="activityLevel > 4 && activityLevel < 8 && pet.petType === 1"
              src="/images/desktop/pet/activity-level-medium.svg" alt="Спокойно куче">
-        <img *ngIf="activityLevel > 7"
+        <img *ngIf="activityLevel > 7 && pet.petType === 1"
              src="/images/desktop/pet/activity-level-high.svg" alt="Игриво куче">
+        <img *ngIf="pet.petType === 2"
+             src="/images/desktop/pet/cat-activity-level.png" alt="Коте">
         <div class="personality-item-description">
           <span class="personality-item-description-title">Ниво на активност</span>
           <span *ngIf="activityLevel === 0">Липсват данни</span>
@@ -36,6 +38,7 @@
       </div>
       <div class="personality-item">
         <img *ngIf="pet.petType === 1" src="/images/desktop/pet/frightened-dog.svg" alt="Уплашено куче">
+        <img *ngIf="pet.petType === 2" src="/images/desktop/pet/frightened-cat.png" alt="Уплашено коте">
         <div class="personality-item-description">
           <span class="personality-item-description-title">Страхове</span>
           <span *ngIf="pet.personality?.hasFears === null">Липсва информация</span>
@@ -44,7 +47,8 @@
         </div>
       </div>
       <div class="personality-item">
-        <img *ngIf="pet.petType === 1" src="/images/desktop/pet/is-trained.svg" alt="Трениращо куче">
+        <img *ngIf="pet.petType === 1" src="/images/desktop/pet/is-trained-dog.svg" alt="Трениращо куче">
+        <img *ngIf="pet.petType === 2" src="/images/desktop/pet/is-trained-cat.png" alt="Трениращо куче">
         <div class="personality-item-description">
           <span class="personality-item-description-title">Дресировка</span>
           <span *ngIf="pet.personality?.isTrained === null">Липсва информация</span>
@@ -118,8 +122,16 @@
           </div>
           <div class="health-status-answer">
             <span *ngIf="pet.healthStatus?.hasEatingSchedule === ''"><img src="/images/shared/no-info.png" alt="Липсват данни"> Няма информация</span>
-            <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'once'"><img src="/images/desktop/pet/dog.svg" alt="Куче"> {{ pet.name }} се храни веднъж за деня.</span>
-            <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'twice'"><img src="/images/desktop/pet/dog.svg" alt="Куче"> {{ pet.name }} се храни два пъти дневно.</span>
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'once'">
+              <img *ngIf="pet.petType === 1" src="/images/desktop/pet/dog.svg" alt="Куче">
+              <img *ngIf="pet.petType === 2" src="/images/desktop/pet/cat.svg" alt="Котка">
+              {{ pet.name }} се храни веднъж за деня.
+            </span>
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'twice'">
+              <img *ngIf="pet.petType === 1" src="/images/desktop/pet/dog.svg" alt="Куче">
+              <img *ngIf="pet.petType === 2" src="/images/desktop/pet/cat.svg" alt="Котка">
+              {{ pet.name }} се храни два пъти дневно.
+            </span>
             <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'other'">Друг</span>
           </div>
         </div>

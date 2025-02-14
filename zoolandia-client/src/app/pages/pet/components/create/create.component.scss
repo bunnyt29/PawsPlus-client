@@ -177,6 +177,27 @@
           .breed-field-holder {
             display: flex;
             flex-direction: column;
+
+            ::ng-deep.p-autocomplete-multiple {
+              height: 50px;
+
+              .p-autocomplete-multiple-container {
+                padding-inline: 10px;
+                border: 1px solid colors.$secondary-background;
+
+                .p-autocomplete-input-token {
+                  padding-inline: 10px;
+                }
+
+                .p-autocomplete-token {
+                  padding: 5px;
+                  font-size: typography.$font-size-sm;
+                  background-color: colors.$accent-color;
+                  border-radius: 10px;
+                  gap: 5px;
+                }
+              }
+            }
           }
         }
       }
@@ -242,6 +263,14 @@
 
               textarea {
                 width: 100%;
+              }
+
+              .radio-button {
+                background-color: colors.$secondary-background;
+
+                &.selected {
+                  background-color: colors.$accent-color;
+                }
               }
 
             }

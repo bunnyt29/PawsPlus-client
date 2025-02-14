@@ -37,7 +37,6 @@ export class SearchComponent implements OnInit{
   minDateForEndDate!: Date;
   paramsObject: { [key: string]: any } = {};
 
-
   serviceOptions = [
     { value: 1, text: 'Разходки', image: '/images/desktop/post/service-walking.svg' },
     { value: 2, text: 'Дневни грижи', image: '/images/desktop/post/service-daily-care.svg' },
@@ -127,7 +126,6 @@ export class SearchComponent implements OnInit{
 
   handlePlaceSelected(place: google.maps.places.PlaceResult) {
     this.selectedPlace = place;
-    console.log(place)
     if (place.geometry && place.geometry.location) {
       const location = place.geometry.location;
       this.mapOptions = {

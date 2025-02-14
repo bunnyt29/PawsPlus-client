@@ -9,6 +9,9 @@ import {SharedModule} from '../../../../shared/shared.module';
 import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
 import {FileService} from '../../../../core/services/file.service';
 import {ToastrService} from 'ngx-toastr';
+import {
+  GoogleAutocompleteComponent
+} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
 
 @Component({
   selector: 'app-edit',
@@ -16,7 +19,8 @@ import {ToastrService} from 'ngx-toastr';
   imports: [
     SharedModule,
     ImageUploadComponent,
-    RouterLink
+    RouterLink,
+    GoogleAutocompleteComponent
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
@@ -40,6 +44,7 @@ export class EditComponent implements OnInit {
       'firstName': ['', [Validators.required, Validators.minLength(2)]],
       'lastName': ['', [Validators.required, Validators.minLength(2)]],
       'description': [''],
+      'location': [null],
       'phoneNumber': ['', [Validators.required, Validators.pattern('^[+]?[0-9]{9,15}$')]],
       'photoUrl': ['']
     });
@@ -56,6 +61,7 @@ export class EditComponent implements OnInit {
         'lastName': this.profile.lastName,
         'description': this.profile.description,
         'phoneNumber': this.profile.phoneNumber,
+        'location': this.profile.location,
         'photoUrl': this.profile.photoUrl
       });
       this.defaultImage = this.profile.photoUrl;
@@ -85,11 +91,28 @@ export class EditComponent implements OnInit {
   get phoneNumber() {
     return this.profileForm.get('phoneNumber');
   }
+  handlePlaceSelected(place: google.maps.places.PlaceResult) {
+    if (place.geometry && place.geometry.location) {
+      const location = place.geometry.location;
+
+      const latitude = location.lat();
+      const longitude = location.lng();
+
+      this.profileForm.patchValue({
+        location: {
+          placeId: place.place_id,
+          latitude: latitude,
+          longitude: longitude
+        }
+      });
+
+    }
+  }
 
   editProfile(){
     this.profileService.edit(this.profile.id, this.profileForm.value).subscribe( () => {
       this.toastr.success("Успешно редактира профила си!");
-      this.router.navigate(['/profile/my-profile-details'])
+      this.router.navigate(['/profile/my-profile-details']);
     });
   }
 }

@@ -76,7 +76,7 @@
               <span>Местоположение</span>
             </div>
             <div class="location-holder">
-              <input type="text" class="main-input">
+              <google-autocomplete (placeSelected)="handlePlaceSelected($event)"></google-autocomplete>
             </div>
           </div>
         </div>

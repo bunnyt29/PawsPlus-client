@@ -6,6 +6,10 @@ import {CalendarModule} from 'primeng/calendar';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GoogleMap} from '@angular/google-maps';
 import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
+import {Post} from '../../../../shared/models/Post';
+import {ModalService} from '../../../../shared/services/modal.service';
+import {ModalComponent} from '../../../../shared/components/modal/modal.component';
+import {GoogleMapsService} from '../../../../shared/services/google-maps.service';
 
 @Component({
   selector: 'app-details',
@@ -17,7 +21,8 @@ import {NavigationMenuComponent} from '../../../../shared/components/navigation-
     FormsModule,
     ReactiveFormsModule,
     GoogleMap,
-    NavigationMenuComponent
+    NavigationMenuComponent,
+    ModalComponent
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
@@ -31,9 +36,22 @@ export class DetailsComponent implements OnInit {
     zoom: 13,
     disableDefaultUI: true
   };
+
+  mapsParams: {
+    place_id: string | null;
+    fields: string | null;
+    key: string
+  } = {
+    place_id: null,
+    fields: 'geometry/location,place_id,formatted_address',
+    key: 'AIzaSyBtnT3myHIQx-EwUs6cDSIXnNkhNRdJpU4'
+  };
+
   constructor(
     private route: ActivatedRoute,
     private profileService: ProfileService,
+    private modalService: ModalService,
+    private googleMapsService: GoogleMapsService,
     private cd: ChangeDetectorRef
   ) { }
 
@@ -58,12 +76,25 @@ export class DetailsComponent implements OnInit {
           return service;
         });
       }
+
+      this.mapsParams.place_id = this.data.placeId;
+      console.log(this.mapsParams)
     })
   }
 
   toggleAvailability(service: any) {
     service.showAvailability = !service.showAvailability;
     this.cd.detectChanges();
+  }
+
+  openBookModal() {
+    this.modalService.open({
+      title: 'Резервирай услуга',
+      description: 'Попълни формата и изпрати заявка до избрания от теб гледач',
+      action: 'book',
+      type: 'addPet',
+      discard: () => console.log('Delete cancelled'),
+    });
   }
 
 }

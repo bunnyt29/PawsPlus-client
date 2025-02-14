@@ -44,7 +44,7 @@ export class GoogleAutocompleteComponent  implements AfterViewInit{
     const autocomplete = new google.maps.places.Autocomplete(this.autocompleteInput.nativeElement, {
       types: ['route'],
       componentRestrictions: { country: ['BG'] },
-      fields: ['address_components', 'geometry', 'icon', 'name']
+      fields: ['place_id', 'address_components', 'geometry', 'icon', 'name']
     });
 
     autocomplete.addListener('place_changed', () => {

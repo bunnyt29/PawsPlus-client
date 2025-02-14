@@ -1,6 +1,5 @@
-<navigation-menu></navigation-menu>
 <div class="my-profile-holder container">
-  <button class="btn floating-book-button">Резервирай гледач</button>
+  <button class="btn floating-book-button" (click)="openBookModal()">Резервирай гледач</button>
   <div class="my-profile-head">
     <div class="profile-image">
       <img [src]="data.photoUrl" alt="Your profile image">
@@ -186,4 +185,5 @@
 <!--    </div>-->
   </div>
 </div>
+<app-modal></app-modal>
 

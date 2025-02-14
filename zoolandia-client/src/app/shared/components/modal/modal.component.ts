@@ -11,6 +11,7 @@ import {SharedModule} from '../../shared.module';
 import {PostServiceService} from '../../../pages/post/post-services/services/post-service.service';
 import {PostService} from '../../models/PostService';
 import {Post} from '../../models/Post';
+import {GoogleAutocompleteComponent} from '../google-autocomplete/google-autocomplete.component';
 
 export class ModalConfig {
   title?: string = '';
@@ -18,8 +19,8 @@ export class ModalConfig {
   save?: Function = () => {};
   discard?: Function = () => {};
   data?: any = null;
-  type: string = '';
-  action?: 'delete' | 'edit' | 'add'| 'details' = 'delete';
+  type?: string = '';
+  action?: 'delete' | 'edit' | 'add'| 'details' | 'book' = 'delete';
 
   constructor(
     title: string = '',
@@ -28,7 +29,7 @@ export class ModalConfig {
     discard: Function | null = null,
     data: any = null,
     type: string = '',
-    action: 'delete' | 'edit'| 'add'| 'details' = 'delete'
+    action: 'delete' | 'edit'| 'add'| 'details' | 'book' = 'delete'
   ) {
     if (title) this.title = title;
     if (description) this.description = description;
@@ -46,7 +47,8 @@ export class ModalConfig {
     CommonModule,
     SharedModule,
     CalendarModule,
-    FormsModule
+    FormsModule,
+    GoogleAutocompleteComponent
   ],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './modal.component.html',
@@ -64,6 +66,11 @@ export class ModalComponent implements OnInit {
     { id: 2, name: 'DailyCare', imagePath: '/images/desktop/post/service-daily-care.svg' },
     { id: 3, name: 'PetSitting', imagePath: '/images/desktop/post/service-pet-boarding.svg' },
     { id: 4, name: 'Training', imagePath: '/images/desktop/post/service-pet-training.svg' },
+  ];
+
+  pets = [
+    { id: 1, name: 'Куче', imagePath: '/images/shared/dog.svg' },
+    { id: 2, name: 'Котка', imagePath: '/images/shared/cat.svg' },
   ];
 
   constructor(
@@ -135,6 +142,10 @@ export class ModalComponent implements OnInit {
 
   isAddAction(): boolean {
     return this.config.action === 'add';
+  }
+
+  isBookAction(): boolean {
+    return this.config.action === 'book';
   }
 
   selectService(serviceId: number): void {

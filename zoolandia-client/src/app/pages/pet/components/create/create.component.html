@@ -1,8 +1,7 @@
 <img src="/images/desktop/pet/pet-create-left-blob.svg" class="pet-left-decoration" alt="decoration">
-<navigation-menu></navigation-menu>
 <section class="container pet-create-holder">
   <h2>Разкажи ни за твоя домашен любимец</h2>
-  <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="petForm">
     <div class="pet-main-details-holder">
       <h3>Основна информация</h3>
       <div class="main-details-holder">
@@ -112,8 +111,17 @@
             </div>
 
             <div *ngIf="dynamicFields.includes('breed')" class="breed-field-holder">
-              <label for="breed" class="pet-label">Порода</label>
-              <input id="breed" type="text" class="secondary-input" formControlName="breed">
+                  <span class="p-fluid">
+                    <p-autoComplete
+                      class="custom-autocomplete"
+                      formControlName="breeds"
+                      [suggestions]="items"
+                      (completeMethod)="search($event)"
+                      [field]="'name'"
+                      [multiple]="true"
+                      placeholder="Избери порода...">
+                    </p-autoComplete>
+                  </span>
             </div>
           </div>
         </div>
@@ -380,7 +388,7 @@
       </div>
     </div>
     <div class="save-pet">
-      <button type="submit" class="btn secondary-button">Запази</button>
+      <button type="submit" class="btn secondary-button" (click)="onSubmit()">Запази</button>
     </div>
   </form>
 </section>

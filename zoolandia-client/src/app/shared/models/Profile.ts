@@ -6,5 +6,10 @@ export interface Profile {
   phoneNumber: string;
   photoUrl?: string;
   description?: string;
+  location?: {
+    placeId: string,
+    latitude: number,
+    longitude: number
+  }
   roles?: Array<string>;
 }

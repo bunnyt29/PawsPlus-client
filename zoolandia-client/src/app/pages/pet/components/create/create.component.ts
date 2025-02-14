@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
 
 import { ImageUploadComponent } from '../../../../shared/components/image-upload/image-upload.component';
 import { FileService } from '../../../../core/services/file.service';
@@ -12,11 +12,12 @@ import {ProfileService} from '../../../profile/services/profile.service';
 import {ToastrService} from 'ngx-toastr';
 import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
 import {Router} from '@angular/router';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [SharedModule, CommonModule, ImageUploadComponent, NavigationMenuComponent],
+  imports: [SharedModule, CommonModule, ImageUploadComponent, NavigationMenuComponent, FormsModule, AutoCompleteModule],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -31,6 +32,8 @@ export class CreateComponent implements OnInit{
   Gender = Gender;
   profileId!: string;
   steps = Array(10).fill(0);
+  breeds: { id: string; name: string }[] = [];
+  items: any[] = [];
 
   petTranslations: { [key: string]: string } = {
     dog: 'Куче',
@@ -55,7 +58,7 @@ export class CreateComponent implements OnInit{
         months: [0, Validators.required]
       }),
       gender: [Gender.Male, Validators.required],
-      breed: ['', Validators.required],
+      breeds: [null, Validators.required],
       weight: ['', Validators.required],
       personality: this.fb.group({
         temperament: [''],
@@ -78,6 +81,7 @@ export class CreateComponent implements OnInit{
   ngOnInit(): void {
     this.updateFormFields();
     this.setupAgeAdjuster();
+    this.getBreeds();
   }
   previousPet(): void {
     this.currentIndex = (this.currentIndex - 1 + this.pets.length) % this.pets.length;
@@ -89,6 +93,7 @@ export class CreateComponent implements OnInit{
     this.currentIndex = (this.currentIndex + 1) % this.pets.length;
     this.selectedPet = this.pets[this.currentIndex];
     this.updateFormFields();
+    this.getBreeds();
   }
 
   updateFormFields(): void {
@@ -139,6 +144,26 @@ export class CreateComponent implements OnInit{
 
   setActivityLevel(level: number) {
     this.petForm.get('personality.activityLevel')?.setValue(level.toString());
+  }
+
+  getBreeds() {
+    const petType = PetType[this.selectedPet.charAt(0).toUpperCase() + this.selectedPet.slice(1).toLowerCase() as keyof typeof PetType];
+    this.petService.getBreeds(petType).subscribe(res => {
+      if (Array.isArray(res)) {
+        this.breeds = res.map(breed => ({ id: breed.id, name: breed.name }));
+        this.items = this.breeds;
+      } else {
+        console.error('Unexpected response format:', res);
+        this.breeds = [];
+      }
+    }, error => {
+      console.error('Error fetching breeds:', error);
+    });
+  }
+
+  search(event: any) {
+    let query = event.query.toLowerCase();
+    this.items = this.breeds.filter(breed => breed.name.toLowerCase().includes(query));
   }
 
   onSubmit(): void {

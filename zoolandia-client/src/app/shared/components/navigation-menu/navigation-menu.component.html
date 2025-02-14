@@ -1,5 +1,5 @@
-<div class="container navigation-menu-anonymous-user" *ngIf="!isLogged">
-  <div class="nav-wrapper">
+<div class="navigation-menu-anonymous-user nav-holder" *ngIf="!isLogged">
+  <div class="nav-wrapper container">
     <picture>
       <source media="(max-width:1100px)" srcset="/images/desktop/logo.svg">
       <img src="/images/desktop/logo.svg" alt="logo">
@@ -24,12 +24,18 @@
   </div>
 </div>
 
-<div class="container navigation-menu-logged-user" *ngIf="isLogged">
+<div class="navigation-menu-logged-user nav-holder" *ngIf="isLogged">
   <div class="nav-wrapper">
-    <picture>
-      <source media="(max-width:1100px)" srcset="/images/desktop/logo.svg">
-      <img src="/images/desktop/logo.svg" alt="logo">
-    </picture>
+    <div class="left-side">
+      <picture routerLink="/home">
+        <source media="(max-width:1100px)" srcset="/images/desktop/logo.svg">
+        <img src="/images/desktop/logo.svg" alt="logo">
+      </picture>
+      <nav class="nav-links">
+        <a routerLink="/search"><img src="/images/shared/navbar-search.svg" alt="Лупичка с лапа">Търси</a>
+        <a routerLink="['/search']" *ngIf="profile?.roles?.includes('Owner')"><img src="/images/shared/become-sitter.png" alt="Иконка на лапички">Стани гледач</a>
+      </nav>
+    </div>
     <div class="profile-info">
       <div class="profile-info-name">
         <span>Здравей, {{ profile!.firstName }}!</span>
@@ -50,21 +56,21 @@
               <span>{{profile.email}}</span>
             </div>
           </div>
-          <p [routerLink]="'/profile/my-details'">
+          <p [routerLink]="'/profile/my-profile-details'">
             <img src="/images/shared/home/dropdown-options/my-profile.png" alt="Иконка на потребител">
             Моят профил
           </p>
           <p *ngIf="profile?.roles?.includes('Owner')"
-             [routerLink]="'/profile/my-details/my-pets'">
+             [routerLink]="'/profile/my-profile-details/my-pets'">
             <img src="/images/shared/home/dropdown-options/my-pets.png" alt="Иконка на лапичка">
             Моите животни
           </p>
           <p *ngIf="profile?.roles?.includes('Sitter')"
-             [routerLink]="'/profile/my-details/my-post'">
+             [routerLink]="'/profile/my-profile-details/my-post'">
             <img src="/images/shared/home/dropdown-options/my-post.png" alt="Иконка на календар">
             Моята обява
           </p>
-          <p [routerLink]="'/profile/my-details/notifications'">
+          <p [routerLink]="'/profile/my-profile-details/notifications'">
             <img src="/images/shared/home/dropdown-options/notifications.png" alt="Иконка на камбанка">
             Известия
           </p>
