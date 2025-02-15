@@ -11,6 +11,7 @@ import {PetType} from '../../../../shared/models/PetType';
 import {Pet} from '../../../../shared/models/Pet';
 import {Gender} from '../../../../shared/models/Gender';
 import {Router} from '@angular/router';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-edit',
@@ -21,7 +22,8 @@ import {Router} from '@angular/router';
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    AutoCompleteModule
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
@@ -38,6 +40,8 @@ export class EditComponent implements OnInit{
   Gender = Gender;
   profileId!: string;
   steps = Array(10).fill(0);
+  breeds: { id: string; name: string }[] = [];
+  items: any[] = [];
 
   petTranslations: { [key: string]: string } = {
     dog: 'Куче',
@@ -62,7 +66,7 @@ export class EditComponent implements OnInit{
         months: [null, Validators.required]
       }),
       gender: [Gender.Male, Validators.required],
-      breed: ['', Validators.required],
+      breeds: [null, Validators.required],
       weight: ['', Validators.required],
       personality: this.fb.group({
         temperament: [''],
@@ -86,17 +90,20 @@ export class EditComponent implements OnInit{
     this.updateFormFields();
     this.setupAgeAdjuster();
     this.fetchData();
+    this.getBreeds();
   }
   previousPet(): void {
     this.currentIndex = (this.currentIndex - 1 + this.pets.length) % this.pets.length;
     this.selectedPet = this.pets[this.currentIndex];
     this.updateFormFields();
+    this.getBreeds();
   }
 
   nextPet(): void {
     this.currentIndex = (this.currentIndex + 1) % this.pets.length;
     this.selectedPet = this.pets[this.currentIndex];
     this.updateFormFields();
+    this.getBreeds();
   }
 
   updateFormFields(): void {
@@ -145,6 +152,26 @@ export class EditComponent implements OnInit{
     return this.petTranslations[this.selectedPet];
   }
 
+  getBreeds() {
+    const petType = PetType[this.selectedPet.charAt(0).toUpperCase() + this.selectedPet.slice(1).toLowerCase() as keyof typeof PetType];
+    this.petService.getBreeds(petType).subscribe(res => {
+      if (Array.isArray(res)) {
+        this.breeds = res.map(breed => ({ id: breed.id, name: breed.name }));
+        this.items = this.breeds;
+      } else {
+        console.error('Unexpected response format:', res);
+        this.breeds = [];
+      }
+    }, error => {
+      console.error('Error fetching breeds:', error);
+    });
+  }
+
+  search(event: any) {
+    let query = event.query.toLowerCase();
+    this.items = this.breeds.filter(breed => breed.name.toLowerCase().includes(query));
+  }
+
   setActivityLevel(level: number) {
     this.petForm.get('personality.activityLevel')?.setValue(level.toString());
   }
@@ -165,7 +192,7 @@ export class EditComponent implements OnInit{
             months: this.pet.age?.months,
           },
           gender: this.pet.gender,
-          breed: this.pet.breed,
+          breeds: this.pet.breeds,
           weight: this.pet.weight,
           personality: {
             temperament: this.pet.personality?.temperament,
@@ -188,6 +215,9 @@ export class EditComponent implements OnInit{
         } else {
           this.selectedPet = 'cat';
         }
+
+        this.updateFormFields();
+        this.getBreeds();
       })
     })
   }
@@ -199,7 +229,7 @@ export class EditComponent implements OnInit{
 
     this.petService.edit(this.petId, formData).subscribe(res => {
       this.toastr.success("Успешно редактира домашния си любимец!");
-      this.router.navigate(['/profile/my-profile-details'])
+      //this.router.navigate(['/profile/my-profile-details/my-pets'])
     })
   }
 }

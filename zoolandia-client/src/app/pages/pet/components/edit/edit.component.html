@@ -1,5 +1,4 @@
 <img src="/images/desktop/pet/pet-create-left-blob.svg" class="pet-left-decoration" alt="decoration">
-<navigation-menu></navigation-menu>
 <section class="container pet-create-holder">
   <h2>Разкажи ни за твоя домашен любимец</h2>
   <form [formGroup]="petForm">
@@ -22,7 +21,7 @@
         <div class="main-details">
           <div class="details-holder">
             <div class="common-fields">
-              <app-image-upload [defaultImage]="defaultImage"
+              <app-image-upload [defaultImage]="pet.photoUrl"
                                 (fileSelected)="onFileUpload($event)"
                                 [width]="'100px'"
                                 [height]="'100px'"></app-image-upload>
@@ -112,8 +111,17 @@
             </div>
 
             <div *ngIf="dynamicFields.includes('breed')" class="breed-field-holder">
-              <label for="breed" class="pet-label">Порода</label>
-              <input id="breed" type="text" class="secondary-input" formControlName="breed">
+                  <span class="p-fluid">
+                    <p-autoComplete
+                      class="custom-autocomplete"
+                      formControlName="breeds"
+                      [suggestions]="items"
+                      (completeMethod)="search($event)"
+                      [field]="'name'"
+                      [multiple]="true"
+                      placeholder="Избери порода...">
+                    </p-autoComplete>
+                  </span>
             </div>
           </div>
         </div>
