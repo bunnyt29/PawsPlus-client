@@ -94,7 +94,10 @@
 
         <div class="filter">
           <span class="filter-text">Район:</span>
-          <google-autocomplete (placeSelected)="handlePlaceSelected($event); onSearch()"></google-autocomplete>
+          <google-autocomplete
+            [inputValue]="formattedAddress"
+            (placeSelected)="handlePlaceSelected($event);">
+          ></google-autocomplete>
         </div>
       </div>
 

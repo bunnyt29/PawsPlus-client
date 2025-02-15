@@ -35,6 +35,7 @@ export class SearchComponent implements OnInit{
   priceRange: number[] = [0, 200];
   today: Date;
   minDateForEndDate!: Date;
+  formattedAddress: string | undefined = '';
   paramsObject: { [key: string]: any } = {};
 
   serviceOptions = [
@@ -47,7 +48,7 @@ export class SearchComponent implements OnInit{
   mapOptions: google.maps.MapOptions = {
     mapId: "4186b8dc6f3cfdc8",
     center: { lat: 42.6977, lng: 23.3219 },
-    zoom: 8,
+    zoom: 15,
     disableDefaultUI: true
   };
 
@@ -58,6 +59,9 @@ export class SearchComponent implements OnInit{
     endDate: string | null;
     minPrice: string | null;
     maxPrice: string | null;
+    latitude: number;
+    longitude: number;
+    formattedAddress: string | undefined;
   } = {
     petType: null,
     serviceType: null,
@@ -65,17 +69,21 @@ export class SearchComponent implements OnInit{
     endDate: null,
     minPrice: null,
     maxPrice: null,
+    latitude: 0,
+    longitude: 0,
+    formattedAddress: undefined
   };
 
   constructor(
     private cdr: ChangeDetectorRef,
     private postService: PostService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   )
   {
     this.today = new Date();
-    this.searchSubject.pipe(debounceTime(300)).subscribe(() => {
+    this.searchSubject.pipe(debounceTime(100)).subscribe(() => {
       this.performSearch();
     });
   }
@@ -85,6 +93,22 @@ export class SearchComponent implements OnInit{
       this.paramsObject = { ...this.paramsObject, ...queryParams };
       this.searchParams = Object.assign(this.searchParams, queryParams);
       this.selectedOption = this.searchParams.serviceType;
+      const latitude = parseFloat(queryParams['latitude']);
+      const longitude = parseFloat(queryParams['longitude']);
+
+      if(this.searchParams.formattedAddress) {
+        this.formattedAddress = this.searchParams.formattedAddress;
+      }
+
+      if (!isNaN(latitude) && !isNaN(longitude)) {
+        this.searchParams.latitude = latitude;
+        this.searchParams.longitude = longitude;
+
+        this.mapOptions = {
+          ...this.mapOptions,
+          center: { lat: latitude, lng: longitude }
+        };
+      }
     });
   }
 
@@ -128,11 +152,18 @@ export class SearchComponent implements OnInit{
     this.selectedPlace = place;
     if (place.geometry && place.geometry.location) {
       const location = place.geometry.location;
+      this.searchParams.latitude = location.lat();
+      this.searchParams.longitude = location.lng();
+
       this.mapOptions = {
         ...this.mapOptions,
         center: { lat: location.lat(), lng: location.lng() },
         zoom: 15
       };
+
+      this.ngZone.run(() => {
+        this.onSearch();
+      });
     }
   }
 

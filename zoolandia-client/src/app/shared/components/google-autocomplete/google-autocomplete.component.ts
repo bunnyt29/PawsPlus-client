@@ -3,7 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Inject,
+  Inject, Input,
   Output,
   PLATFORM_ID,
   ViewChild
@@ -26,6 +26,7 @@ import {GoogleMapsService} from '../../services/google-maps.service';
 export class GoogleAutocompleteComponent  implements AfterViewInit{
   @ViewChild('autocompleteInput', { static: false }) autocompleteInput!: ElementRef;
   @Output() placeSelected = new EventEmitter<any>();
+  @Input() inputValue: string | undefined = '';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
@@ -42,10 +43,12 @@ export class GoogleAutocompleteComponent  implements AfterViewInit{
 
   initAutocomplete() {
     const autocomplete = new google.maps.places.Autocomplete(this.autocompleteInput.nativeElement, {
-      types: ['route'],
+      // types: ['route'],
       componentRestrictions: { country: ['BG'] },
-      fields: ['place_id', 'address_components', 'geometry', 'icon', 'name']
+      fields: ['place_id', 'formatted_address', 'geometry', 'icon', 'name']
     });
+
+    this.autocompleteInput.nativeElement.value = this.inputValue;
 
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
