@@ -47,6 +47,9 @@ export class FastSearchComponent {
     endDate: string | null;
     minPrice: number;
     maxPrice: number;
+    latitude: number;
+    longitude: number;
+    formattedAddress: string | undefined;
   } = {
     petType: 0,
     serviceType: 0,
@@ -54,6 +57,9 @@ export class FastSearchComponent {
     endDate: null,
     minPrice: 1,
     maxPrice: 100,
+    latitude: 0,
+    longitude: 0,
+    formattedAddress: undefined
   };
 
   constructor(
@@ -82,6 +88,14 @@ export class FastSearchComponent {
     }
   }
 
+  onPlaceSelected(place: google.maps.places.PlaceResult) {
+    this.searchParams.formattedAddress = place.formatted_address;
+    if (place.geometry && place.geometry.location) {
+      const location = place.geometry.location;
+      this.searchParams.latitude = location.lat();
+      this.searchParams.longitude = location.lng();
+    }
+  }
   onSearch(){
     this.router.navigate(['/search'], { queryParams: this.searchParams })
   }

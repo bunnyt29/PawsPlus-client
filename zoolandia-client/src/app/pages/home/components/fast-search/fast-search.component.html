@@ -68,7 +68,7 @@
       </div>
       <div class="filter">
         <span class="filter-heading">Избери район</span>
-        <google-autocomplete></google-autocomplete>
+        <google-autocomplete (placeSelected)="onPlaceSelected($event)"></google-autocomplete>
       </div>
       <button class="btn primary-button" (click)="onSearch()">Търси гледач</button>
     </div>
