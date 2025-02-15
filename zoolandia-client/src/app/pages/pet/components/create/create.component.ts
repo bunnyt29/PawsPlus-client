@@ -180,7 +180,7 @@ export class CreateComponent implements OnInit{
         this.petService.create(formData).subscribe({
           next: (response) => {
             this.toastr.success("Успешно създаде твоя домашен любимец");
-            this.router.navigate(['/my-profile-details/my-pets'])
+            this.router.navigate(['/profile/my-profile-details/my-pets']);
           },
           error: (err) => {
             this.toastr.error("Неуспешно създаване. Опитайте отново.");
