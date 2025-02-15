@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  <div class="add-pet">
+  <div class="add-pet" *ngIf="pets.length < 1">
     <div routerLink="/pet/create"
          class="add">
       <img src="/images/shared/add-animal.svg" alt="Add button">
