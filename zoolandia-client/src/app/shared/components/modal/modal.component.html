@@ -35,13 +35,17 @@
             <span>Цена за услугата</span>
           </div>
           <div class="service-price">
-            <input type="number"
-                   min="1"
-                   step="any"
-                   placeholder="50"
-                   class="price-input"
-                   formControlName="price"/>
-            <span>лв.</span>
+            <span>{{postService.price}} лв.</span>
+          </div>
+        </div>
+        <div class="modal-body-item choose-price">
+          <div class="modal-body-item-title">
+            <span>Опции за вземане на животното</span>
+          </div>
+          <div *ngFor="let meetingPlace of postService.meetingPlaces">
+            <span *ngIf="meetingPlace === 1">Вземане лично от дома на собственика</span>
+            <span *ngIf="meetingPlace === 2">Вземане от дома на гледача</span>
+            <span *ngIf="meetingPlace === 3">Вземане от трето място</span>
           </div>
         </div>
       </div>
@@ -144,6 +148,22 @@
               <span>лв.</span>
             </div>
         </div>
+        <div class="modal-body-item choose-meeting-place">
+          <div class="modal-body-item-title">
+            <span class="step">3</span>
+            <span>Избери място за вземане на животното</span>
+          </div>
+          <div class="meeting-place-options">
+            <label *ngFor="let option of meetingPlaceOptions; let i = index">
+              <input
+                type="checkbox"
+                [value]="option.id"
+                [checked]="serviceForm.get('meetingPlaces')?.value.includes(option.id)"
+                (change)="onMeetingPlaceChange($event, option.id)">
+              {{ option.name }}
+            </label>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button
@@ -222,6 +242,21 @@
               <span>лв.</span>
             </div>
           </div>
+          <div class="modal-body-item choose-meeting-place">
+            <div class="modal-body-item-title">
+              <span class="step">3</span>
+              <span>Избери място за вземане на животното</span>
+            </div>
+            <div class="meeting-place-options">
+              <label *ngFor="let option of meetingPlaceOptions; let i = index">
+                <input
+                  type="checkbox"
+                  [value]="option.id"
+                  (change)="onMeetingPlaceChange($event, option.id)">
+                {{ option.name }}
+              </label>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer" *ngIf="selectedService">
@@ -237,7 +272,7 @@
     </div>
   </div>
   <!-- Modal for booking sitter-->
-  <div class="modal-dialog edit-service" role="document"  *ngIf="isBookAction()">
+  <div class="modal-dialog edit-service" role="document" *ngIf="isBookAction()">
     <button
       type="button"
       class="close btn"
@@ -252,24 +287,25 @@
         <h3 class="modal-title">{{ config.title }}</h3>
         <p>{{ config.description }}</p>
       </div>
-      <div class="modal-body">
-        <div class="filter">
-          <span class="filter-heading">Каква услуга търсиш?</span>
-          <div class="fields-container">
-            <div *ngFor="let service of services">
+      <div class="modal-body" [formGroup]="bookingForm">
+        <div class="modal-body-side">
+          <div class="filter">
+            <span class="filter-heading">Каква услуга търсиш?</span>
+            <div class="fields-container">
               <label
-                class="field">
+                class="field"
+                *ngFor="let service of services"
+                [ngClass]="{ 'selected': bookingForm.value.serviceType === service.id }">
                 <img [src]="service.imagePath" [alt]="service.name">
                 <input
-                  type="checkbox"
+                  type="radio"
+                  formControlName="serviceType"
                   [value]="service.id"
                 />
                 {{ service.name }}
               </label>
             </div>
           </div>
-        </div>
-        <div class="filters-row">
           <div class="filter">
             <span class="filter-heading">Избери дати</span>
             <div class="filter-dates">
@@ -277,6 +313,7 @@
                 <img src="/images/desktop/home/calendar.svg" alt="Календар">
                 <p-calendar
                   [dateFormat]="'yy-mm-dd'"
+                  formControlName="startDay"
                   dataType="string"
                   inputId="startDate"
                   class="custom-calendar"
@@ -287,6 +324,7 @@
                 <img src="/images/desktop/home/calendar.svg" alt="Календар">
                 <p-calendar
                   [dateFormat]="'yy-mm-dd'"
+                  formControlName="endDay"
                   dataType="string"
                   inputId="endDate"
                   placeholder="Крайна дата"
@@ -300,69 +338,51 @@
               <div class="date">
                 <img src="/images/desktop/home/calendar.svg" alt="Календар">
                 <p-calendar
-                  [dateFormat]="'yy-mm-dd'"
-                  dataType="string"
-                  inputId="startDate"
-                  class="custom-calendar"
-                  placeholder="Начална дата"
+                  formControlName="startTime"
+                  [timeOnly]="true"
+                  [hourFormat]="'24'"
+                  placeholder="Начален час"
+                  (onSelect)="formatTime('startTime')"
                 ></p-calendar>
               </div>
               <div class="date">
                 <img src="/images/desktop/home/calendar.svg" alt="Календар">
                 <p-calendar
-                  [dateFormat]="'yy-mm-dd'"
-                  dataType="string"
-                  inputId="endDate"
-                  placeholder="Крайна дата"
+                  formControlName="endTime"
+                  [timeOnly]="true"
+                  [hourFormat]="'24'"
+                  placeholder="Краен час"
+                  (onSelect)="formatTime('endTime')"
                 ></p-calendar>
               </div>
             </div>
           </div>
         </div>
-        <div class="filters-row">
-          <div class="filter">
-            <span class="filter-heading">Избери начин за взимане на животното</span>
-            <div class="fields-container">
-              <div>
-                <label
-                  class="field">
+        <div class="modal-body-side">
+          <div class="filters-row">
+            <div class="filter">
+              <span class="filter-heading">Избери начин за взимане на животното</span>
+              <div class="fields-container">
+                <label class="field" *ngFor="let meetingPlace of meetingPlaceOptions"
+                       [ngClass]="{ 'selected': bookingForm.value.meetingPlaceType === meetingPlace.id }">
                   <input
-                    type="checkbox"
-                    [value]="1"
+                    type="radio"
+                    formControlName="meetingPlaceType"
+                    [value]="meetingPlace.id"
                   />
-                  Вземане от дома ви
-                </label>
-              </div>
-              <div>
-                <label
-                  class="field">
-                  <input
-                    type="checkbox"
-                    [value]="2"
-                  />
-                  Вземане от трето място
-                </label>
-              </div>
-              <div>
-                <label
-                  class="field">
-                  <input
-                    type="checkbox"
-                    [value]="3"
-                  />
-                  Оставене в дома на гледача
+                  {{ meetingPlace.name }}
                 </label>
               </div>
             </div>
+            <div class="filter" *ngIf="bookingForm.value.meetingPlaceType === 3">
+              <span class="filter-heading">Избери място на среща</span>
+              <google-autocomplete></google-autocomplete>
+            </div>
           </div>
           <div class="filter">
-            <span class="filter-heading">Избери място на среща</span>
-            <google-autocomplete></google-autocomplete>
+            <span class="filter-heading">Допълнително съобщение</span>
+            <textarea class="main-textarea" formControlName="additionalDescription"></textarea>
           </div>
-        </div>
-        <div class="filter">
-          <span class="filter-heading">Допълнително съобщение</span>
-          <textarea class="main-textarea"></textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -370,6 +390,7 @@
           type="button"
           class="btn secondary-button"
           data-dismiss="modal"
+          (click)="submitBookingForm()"
         >
           Резервирай
         </button>

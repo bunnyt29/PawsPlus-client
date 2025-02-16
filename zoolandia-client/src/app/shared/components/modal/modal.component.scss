@@ -17,6 +17,7 @@
     position: relative;
     padding: 20px 30px;
     max-width: 90%;
+    height: 90%;
     background-color: white;
     border-radius: 20px;
     border: 1px solid rgb(227, 227, 227);
@@ -71,7 +72,13 @@
 
       .modal-body {
         display: flex;
-        flex-direction: column;
+        gap: 50px;
+
+        &-side {
+          display: flex;
+          flex-direction: column;
+          gap: 50px;
+        }
 
         p {
           text-align: center;
@@ -107,6 +114,7 @@
               border-radius: 15px;
               text-align: center;
               transition: background-color 0.3s ease-in-out;
+              background-color: colors.$secondary-background;
 
               img {
                 width: 50px;
@@ -200,8 +208,6 @@
 
       .modal-body {
         margin-block: 30px;
-        display: flex;
-        gap: 50px;
 
         &-item {
           display: flex;
@@ -245,6 +251,16 @@
 
             span {
               font-size: typography.$font-size-2xl;
+            }
+          }
+
+          .meeting-place-options {
+            padding-left: 40px;
+            display: flex;
+            flex-direction: column;
+
+            label {
+              font-size: typography.$font-size-md;
             }
           }
         }

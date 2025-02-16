@@ -10,10 +10,12 @@
         <div class="left">
           <span class="pet-name">{{pet.name}}</span>
           <span class="main-detail">
-          <img *ngIf="pet.petType == 1" src="/images/shared/dog.svg" alt="Иконка на куче">
-          <img *ngIf="pet.petType == 2" src="/images/shared/cat.svg" alt="Иконка на котка">
-            {{ pet.breed }}
-        </span>
+            <img *ngIf="pet.petType == 1" src="/images/shared/dog.svg" alt="Иконка на куче">
+            <img *ngIf="pet.petType == 2" src="/images/shared/cat.svg" alt="Иконка на котка">
+            <div *ngFor="let breed of pet.breeds; let i = index">
+              <span class="pet-breed">{{ breed.name }}</span>
+            </div>
+          </span>
         </div>
         <div class="right">
           <span class="main-detail"><img src="/images/shared/gender.png" alt="Иконка за пол"> {{ getGenderTranslation(pet.gender) }}</span>

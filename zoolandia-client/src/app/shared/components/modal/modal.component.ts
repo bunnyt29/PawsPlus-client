@@ -5,13 +5,14 @@ import {ModalService} from '../../services/modal.service';
 import {PetService} from '../../../pages/pet/services/pet.service';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
 import {CalendarModule} from 'primeng/calendar';
 import {SharedModule} from '../../shared.module';
 import {PostServiceService} from '../../../pages/post/post-services/services/post-service.service';
 import {PostService} from '../../models/PostService';
 import {Post} from '../../models/Post';
 import {GoogleAutocompleteComponent} from '../google-autocomplete/google-autocomplete.component';
+import {BookingService} from '../../services/booking.service';
 
 export class ModalConfig {
   title?: string = '';
@@ -56,6 +57,7 @@ export class ModalConfig {
 })
 export class ModalComponent implements OnInit {
   serviceForm!: FormGroup;
+  bookingForm!: FormGroup;
   today: Date;
   postService!: PostService;
   post!: Post;
@@ -73,12 +75,19 @@ export class ModalComponent implements OnInit {
     { id: 2, name: 'Котка', imagePath: '/images/shared/cat.svg' },
   ];
 
+  meetingPlaceOptions = [
+    { id: 1, name: 'Взимане лично от собственика' },
+    { id: 2, name: 'Оставяне в дома на гледача' },
+    { id: 3, name: 'Взимане от трето място' },
+  ];
+
   constructor(
     private fb: FormBuilder,
     private modalService: ModalService,
     private cdr: ChangeDetectorRef,
     private petService: PetService,
     private postServicesService: PostServiceService,
+    private bookingService: BookingService,
     private toastr: ToastrService,
     private router: Router
   ) {
@@ -86,14 +95,38 @@ export class ModalComponent implements OnInit {
       id: ['', Validators.required],
       price: [0, Validators.required],
       availableDates: [[], [Validators.required, Validators.minLength(1)]],
+      meetingPlaces: this.fb.array([], Validators.required),
       serviceType: [null, Validators.required],
       postId: ['', Validators.required]
-    })
+    });
+
+    this.bookingForm = this.fb.group({
+      startDay: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endDay: ['', Validators.required],
+      endTime: ['', Validators.required],
+      meetingPlaceType: [null, Validators.required],
+      meetingPlaceLocation: ['', Validators.required],
+      additionalDescription: [''],
+      serviceType: [null, Validators.required],
+      sitterId: ['', Validators.required]
+    });
     this.today = new Date();
   }
 
+  ngOnInit() {
+    this.modalService.open = this.modalService.open.bind(this.modalService);
+    const originalOpen = this.modalService.open;
+    this.modalService.open = (config: ModalConfig) => {
+      originalOpen(config);
+      this.getService();
+      this.getPost();
+      this.cdr.detectChanges();
+    };
+  }
+
+
   get open() {
-    console.log('Modal open:', this.modalService.isOpen);
     return this.modalService.isOpen;
   }
 
@@ -116,18 +149,6 @@ export class ModalComponent implements OnInit {
   //   }
   //   this.cdr.detectChanges();
   // }
-
-  ngOnInit() {
-    this.modalService.open = this.modalService.open.bind(this.modalService);
-    const originalOpen = this.modalService.open;
-    this.modalService.open = (config: ModalConfig) => {
-      originalOpen(config);
-      this.cdr.detectChanges();
-      this.getService();
-      this.getPost();
-    };
-  }
-
   isDetailsAction(): boolean {
     return this.config.action === 'details';
   }
@@ -181,7 +202,16 @@ export class ModalComponent implements OnInit {
   getService() {
     this.postServicesService.get(this.config.data).subscribe(res => {
       this.postService = res;
-      const formattedDates = this.postService.availableDates.map(date => new Date(date));
+      const formattedDates = this.postService.availableDates.map((dateStr: string) => {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day); // Month is 0-based in JS Dates
+      });
+
+      const meetingPlacesArray = this.serviceForm.get('meetingPlaces') as FormArray;
+      meetingPlacesArray.clear();
+      this.postService.meetingPlaces.forEach((place: number) => {
+        meetingPlacesArray.push(new FormControl(place));
+      });
 
       this.serviceForm.patchValue({
         price: this.postService.price,
@@ -194,9 +224,8 @@ export class ModalComponent implements OnInit {
   deletePet(petId: string) {
     this.petService.delete(petId).subscribe( () => {
       this.toastr.success("Успешно изтри домашния си любимец!")
-    })
-    this.modalService.close();
-    this.router.navigate(['/my-profile-details/my-pets']);
+      this.router.navigate(['/profile/my-profile-details/my-pets']);
+    });
   }
   deleteService(serviceId: string) {
     this.postServicesService.delete(serviceId).subscribe(() => {
@@ -205,13 +234,62 @@ export class ModalComponent implements OnInit {
     this.modalService.close()
     location.reload();
   }
+
   editService(serviceId: string) {
+    let formData = this.serviceForm.value;
+
+    const uniqueMeetingPlaces = [...new Set(formData.meetingPlaces)];
+
     this.serviceForm.patchValue({
-      id: serviceId
-    })
+      id: serviceId,
+      availableDates: formData.availableDates.map((date: Date) =>
+        date.toISOString().split('T')[0]
+      ),
+      meetingPlaces: uniqueMeetingPlaces
+    });
+
     this.postServicesService.edit(serviceId, this.serviceForm.value).subscribe(() => {
       this.toastr.success("Успешно редактира своята услуга!");
       this.modalService.close();
+    });
+  }
+
+  onMeetingPlaceChange(event: any, place: number) {
+    const meetingPlaces: FormArray = this.serviceForm.get('meetingPlaces') as FormArray;
+
+    if (event.target.checked) {
+      if (!meetingPlaces.value.includes(place)) {
+        meetingPlaces.push(new FormControl(place));
+      }
+    } else {
+      const index = meetingPlaces.controls.findIndex(control => control.value === place);
+      if (index !== -1) {
+        meetingPlaces.removeAt(index);
+      }
+    }
+  }
+
+  formatTime(controlName: string) {
+    let selectedTime: Date = this.bookingForm.get(controlName)?.value;
+    if (selectedTime) {
+      const formattedTime = this.formatToHHMM(selectedTime);
+      this.bookingForm.patchValue({ [controlName]: formattedTime });
+    }
+  }
+
+  formatToHHMM(date: Date): string {
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
+  submitBookingForm() {
+    this.bookingForm.patchValue({
+      sitterId: this.config.data
+    })
+
+    this.bookingService.create(this.bookingForm.value).subscribe( res => {
+      this.toastr.success("Успешно изпрати своята заявка! Очаквай потвърждение скоро!");
     })
   }
 }

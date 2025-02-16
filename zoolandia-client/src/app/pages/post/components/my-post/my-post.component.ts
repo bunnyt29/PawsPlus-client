@@ -38,6 +38,7 @@ export class MyPostComponent implements OnInit {
   fetchData() {
     this.postService.get(this.profile.id).subscribe(res => {
       this.post = res;
+      console.log(this.post)
       this.postId = res.id;
     })
   }
