@@ -132,7 +132,7 @@
               <img *ngIf="pet.petType === 2" src="/images/desktop/pet/cat.svg" alt="Котка">
               {{ pet.name }} се храни два пъти дневно.
             </span>
-            <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'other'">Друг</span>
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'other'">{{ pet.healthStatus?.otherDietaryNeeds }}</span>
           </div>
         </div>
         <div *ngIf="pet.healthStatus?.otherDietaryNeeds == 'other'" class="health-status-item">
@@ -181,7 +181,9 @@
           <img [src]="pet.photoUrl"  alt="Your pet photo">
         </div>
         <span class="pet-name">{{ pet.name }}</span>
-        <span class="pet-breed">{{ pet.breed }}</span>
+        <div *ngFor="let breed of pet.breeds; let i = index">
+          <span class="pet-breed">{{ breed.name }}</span>
+        </div>
       </div>
       <div class="main-details">
         <div class="main-detail-holder">
@@ -192,7 +194,7 @@
           <span class="main-detail">{{ pet.age.years }} г. {{ pet.age.months }} м.</span>
           <span>Години</span>
         </div>
-        <div class="main-detail-holder">
+        <div *ngIf="pet.petType === 1" class="main-detail-holder">
           <span class="main-detail">50 кг.</span>
           <span>Тегло</span>
         </div>
