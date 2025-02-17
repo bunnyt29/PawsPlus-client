@@ -20,9 +20,6 @@ export class PostService {
     return this.http.get<any>(this.userPath + '/' + id + '/myPost');
   }
 
-  // delete(id: string): Observable<any> {
-  // }
-
   search(params: any): Observable<any> {
     let httpParams = new HttpParams();
 

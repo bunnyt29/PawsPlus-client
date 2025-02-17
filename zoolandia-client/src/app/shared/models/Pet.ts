@@ -10,7 +10,7 @@ export interface Pet {
     months: number;
   };
   gender: Gender;
-  breed: number;
+  breeds: Array<any>;
   weight: string;
   personality?: {
     temperament: string;

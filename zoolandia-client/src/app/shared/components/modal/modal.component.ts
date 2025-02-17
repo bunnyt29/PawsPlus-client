@@ -119,7 +119,9 @@ export class ModalComponent implements OnInit {
     const originalOpen = this.modalService.open;
     this.modalService.open = (config: ModalConfig) => {
       originalOpen(config);
-      this.getService();
+      if (config.action && ['delete', 'edit', 'add'].includes(config.action)) {
+        this.getService();
+      }
       this.getPost();
       this.cdr.detectChanges();
     };

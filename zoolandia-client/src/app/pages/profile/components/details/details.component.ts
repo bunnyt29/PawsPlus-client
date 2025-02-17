@@ -3,7 +3,7 @@ import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ProfileService} from '../../services/profile.service';
 import {CommonModule} from '@angular/common';
 import {CalendarModule} from 'primeng/calendar';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {GoogleMap} from '@angular/google-maps';
 import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
 import {Post} from '../../../../shared/models/Post';
@@ -92,6 +92,7 @@ export class DetailsComponent implements OnInit {
       title: 'Резервирай услуга',
       description: 'Попълни формата и изпрати заявка до избрания от теб гледач',
       action: 'book',
+      data: this.profileId,
       type: 'addPet',
       discard: () => console.log('Delete cancelled'),
     });

@@ -359,25 +359,23 @@
           </div>
         </div>
         <div class="modal-body-side">
-          <div class="filters-row">
-            <div class="filter">
-              <span class="filter-heading">Избери начин за взимане на животното</span>
-              <div class="fields-container">
-                <label class="field" *ngFor="let meetingPlace of meetingPlaceOptions"
-                       [ngClass]="{ 'selected': bookingForm.value.meetingPlaceType === meetingPlace.id }">
-                  <input
-                    type="radio"
-                    formControlName="meetingPlaceType"
-                    [value]="meetingPlace.id"
-                  />
-                  {{ meetingPlace.name }}
-                </label>
-              </div>
+          <div class="filter">
+            <span class="filter-heading">Избери начин за взимане на животното</span>
+            <div class="fields-container">
+              <label class="field" *ngFor="let meetingPlace of meetingPlaceOptions"
+                     [ngClass]="{ 'selected': bookingForm.value.meetingPlaceType === meetingPlace.id }">
+                <input
+                  type="radio"
+                  formControlName="meetingPlaceType"
+                  [value]="meetingPlace.id"
+                />
+                {{ meetingPlace.name }}
+              </label>
             </div>
-            <div class="filter" *ngIf="bookingForm.value.meetingPlaceType === 3">
-              <span class="filter-heading">Избери място на среща</span>
-              <google-autocomplete></google-autocomplete>
-            </div>
+          </div>
+          <div class="filter" *ngIf="bookingForm.value.meetingPlaceType === 3">
+            <span class="filter-heading">Избери място на среща</span>
+            <google-autocomplete></google-autocomplete>
           </div>
           <div class="filter">
             <span class="filter-heading">Допълнително съобщение</span>

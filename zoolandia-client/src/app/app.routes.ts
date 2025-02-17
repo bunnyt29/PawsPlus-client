@@ -5,7 +5,7 @@ export const routes: Routes = [
   {
     path: "",
     pathMatch: "full",
-    redirectTo: "search"
+    redirectTo: "home"
   },
   {
     path: "home",
@@ -28,14 +28,14 @@ export const routes: Routes = [
     // data: { preload: true },
     loadChildren: () => import("./pages/pet/pet.module").then((m) => m.PetModule),
     canActivate: [AuthGuard],
-    data: { allowedRoles: ['owner'] }
+    // data: { allowedRoles: ['Owner'] }
   },
   {
     path: "post",
     // data: { preload: true },
     loadChildren: () => import("./pages/post/post.module").then((m) => m.PostModule),
     canActivate: [AuthGuard],
-    data: {allowedRoles: ['sitter']}
+    // data: {allowedRoles: ['Sitter']}
   },
   {
     path: "search",

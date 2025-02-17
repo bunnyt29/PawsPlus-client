@@ -33,7 +33,7 @@
       </picture>
       <nav class="nav-links">
         <a routerLink="/search"><img src="/images/shared/navbar-search.svg" alt="Лупичка с лапа">Търси</a>
-        <a routerLink="['/search']" *ngIf="profile?.roles?.includes('Owner')"><img src="/images/shared/become-sitter.png" alt="Иконка на лапички">Стани гледач</a>
+        <a routerLink="/search" *ngIf="profile?.roles?.includes('Owner')"><img src="/images/shared/become-sitter.png" alt="Иконка на лапички">Стани гледач</a>
       </nav>
     </div>
     <div class="profile-info">

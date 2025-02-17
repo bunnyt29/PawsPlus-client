@@ -17,7 +17,6 @@
     position: relative;
     padding: 20px 30px;
     max-width: 90%;
-    height: 90%;
     background-color: white;
     border-radius: 20px;
     border: 1px solid rgb(227, 227, 227);
@@ -196,7 +195,7 @@
 
   .edit-service {
     min-width: 600px;
-    min-height: 600px;
+    min-height: 850px;
     padding-inline: 50px;
 
     .modal-content {
@@ -272,3 +271,4 @@
     }
   }
 }
+

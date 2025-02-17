@@ -21,6 +21,7 @@ export const AuthGuard: CanActivateFn = (
   return profileService.getMine().pipe(
     map((profile: any): boolean | UrlTree => {
       const userRole: string = profile.roles;
+      console.log(profile.roles)
       const allowedRoles: string[] = route.data['allowedRoles'] || [];
 
       if (allowedRoles.length > 0 && !allowedRoles.includes(userRole)) {

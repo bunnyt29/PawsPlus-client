@@ -87,6 +87,7 @@ export class CreateComponent implements OnInit{
     this.currentIndex = (this.currentIndex - 1 + this.pets.length) % this.pets.length;
     this.selectedPet = this.pets[this.currentIndex];
     this.updateFormFields();
+    this.getBreeds();
   }
 
   nextPet(): void {
@@ -180,7 +181,8 @@ export class CreateComponent implements OnInit{
         this.petService.create(formData).subscribe({
           next: (response) => {
             this.toastr.success("Успешно създаде твоя домашен любимец");
-            this.router.navigate(['/profile/my-profile-details/my-pets']);
+            console.log(formData)
+            //this.router.navigate(['/profile/my-profile-details/my-pets']);
           },
           error: (err) => {
             this.toastr.error("Неуспешно създаване. Опитайте отново.");

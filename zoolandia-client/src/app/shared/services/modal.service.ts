@@ -10,9 +10,8 @@ export class ModalService {  isOpen = false;
   constructor() {}
 
   open(config: ModalConfig) {
-    this.config = { ...this.config, ...config }; // Merge the new config
+    this.config = { ...this.config, ...config };
     this.isOpen = true;
-    console.log('ModalService: Opened with config:', this.config);
   }
 
   close() {

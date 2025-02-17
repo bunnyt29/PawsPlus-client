@@ -229,7 +229,7 @@ export class EditComponent implements OnInit{
 
     this.petService.edit(this.petId, formData).subscribe(res => {
       this.toastr.success("Успешно редактира домашния си любимец!");
-      //this.router.navigate(['/profile/my-profile-details/my-pets'])
+      this.router.navigate(['/profile/my-profile-details/my-pets'])
     })
   }
 }

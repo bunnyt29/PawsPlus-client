@@ -604,6 +604,10 @@ p-calendar .p-datepicker-calendar td {
       }
     }
 
+    .field:hover {
+      background-color: colors.$accent-color;
+    }
+
     .field.selected {
       border: none;
       background-color: colors.$accent-color;
