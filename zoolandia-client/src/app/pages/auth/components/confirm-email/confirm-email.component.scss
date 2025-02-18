@@ -1,0 +1,27 @@
+@use '../../../../../style/abstracts/typography';
+
+.confirm-email-holder {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/images/desktop/auth/role-selection-background.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .confirm-email {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+
+    img {
+      width: 100%;
+    }
+
+    &-text {
+      font-size: typography.$font-size-2xl;
+      font-weight: typography.$semi-bold;
+    }
+  }
+}
