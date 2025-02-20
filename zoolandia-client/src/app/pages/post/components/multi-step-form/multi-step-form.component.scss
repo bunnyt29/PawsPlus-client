@@ -7,6 +7,25 @@
   justify-content: center;
   align-items: center;
 
+  .decoration {
+    position: absolute;
+    z-index: -20;
+  }
+  .decoration-1 {
+    top: 0;
+    left: 0;
+  }
+
+  .decoration-2 {
+    bottom: 30px;
+    left: 110px;
+  }
+
+  .decoration-3 {
+    bottom: 130px;
+    right: 0;
+  }
+
   .multi-step-form {
     padding: 60px 41px;
     min-width: 500px;
