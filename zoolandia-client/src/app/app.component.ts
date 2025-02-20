@@ -14,7 +14,7 @@ export class AppComponent {
   title = 'zoolandia-client';
   hideNavbar = false;
 
-  private hiddenRoutes: string[] = ['/auth/login', '/auth/role-selection', '/profile/edit', '/post/multi-step-form', '/pet/create', '/access-denied', '/404'];
+  private hiddenRoutes: string[] = ['/auth/login', '/auth/role-selection', '/auth/confirm-email', '/profile/edit', '/post/multi-step-form', '/pet/create', '/access-denied', '/404'];
   private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/auth/register'];
 
   constructor(private router: Router) {

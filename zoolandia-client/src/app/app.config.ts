@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {provideRouter, withComponentInputBinding} from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -14,6 +14,7 @@ import {TokenInterceptorService} from './core/interceptors/token-interceptor.ser
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideToastr} from 'ngx-toastr';
 import {ErrorInterceptor} from './core/interceptors/error-interceptor.service';
+import {AuthGuard} from './core/guards/auth.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [

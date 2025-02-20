@@ -47,4 +47,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./shared/components/access-denied/access-denied.component').then((m) => m.AccessDeniedComponent)
   },
+  {
+    path: 'not-found',
+    loadComponent: () =>
+      import('./shared/components/not-found/not-found.component').then((m) => m.NotFoundComponent)
+  }
 ];

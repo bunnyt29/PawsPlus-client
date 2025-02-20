@@ -7,13 +7,17 @@ import {SharedModule} from '../../../../shared/shared.module';
 import {ActivatedRoute} from '@angular/router';
 import {ModalService} from '../../../../shared/services/modal.service';
 import {ModalComponent} from '../../../../shared/components/modal/modal.component';
+import {TranslateServicePipe} from '../../../../shared/pipes/translate-service.pipe';
+import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 
 @Component({
   selector: 'app-my-post',
   standalone: true,
   imports: [
     SharedModule,
-    ModalComponent
+    ModalComponent,
+    TranslateServicePipe,
+    WrapperModalComponent
   ],
   templateUrl: './my-post.component.html',
   styleUrl: './my-post.component.scss'
@@ -22,6 +26,7 @@ export class MyPostComponent implements OnInit {
   profile!: Profile;
   post!: Post;
   postId!: string;
+  incompleteServices: string[] = [];
 
   constructor(
     private profileService: ProfileService,
@@ -38,9 +43,28 @@ export class MyPostComponent implements OnInit {
   fetchData() {
     this.postService.get(this.profile.id).subscribe(res => {
       this.post = res;
-      console.log(this.post)
       this.postId = res.id;
+      this.checkIncompleteServices();
     })
+  }
+  checkIncompleteServices() {
+    this.incompleteServices = this.post.services
+      .filter(service => service.price == 0 || service.availableDates == null)
+      .map(service => this.getServiceName(service.name));
+  }
+
+  getServiceName(serviceName: string): string {
+    const serviceMap: { [key: string]: string } = {
+      'DogWalking': 'Разходки',
+      'DailyCare': 'Дневна грижа',
+      'PetSitting': 'Престой',
+      'Training': 'Тренировки'
+    };
+    return serviceMap[serviceName] || serviceName;
+  }
+
+  isServiceIncomplete(service: any): boolean {
+    return !service.price || !service.availableDates || service.availableDates.length === 0;
   }
 
   openDeleteModal(serviceId: string) {

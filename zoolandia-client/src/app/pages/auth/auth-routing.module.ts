@@ -17,10 +17,15 @@ const routes: Routes = [
     loadComponent: () =>
       import('./components/role-selection/role-selection.component').then((m) => m.RoleSelectionComponent),
   },
+  // {
+  //   path: 'multi-step-form',
+  //   loadComponent: () =>
+  //     import('./components/multi-step-form/multi-step-form.component').then((m) => m.MultiStepFormComponent),
+  // },
   {
-    path: 'multi-step-form',
+    path: 'confirm-email',
     loadComponent: () =>
-      import('./components/multi-step-form/multi-step-form.component').then((m) => m.MultiStepFormComponent),
+      import('./components/confirm-email/confirm-email.component').then((m) => m.ConfirmEmailComponent),
   }
 ];
 

@@ -6,8 +6,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TranslateServicePipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  private translations: { [key: string]: string } = {
+    'DogWalking': 'Разхождане на куче',
+    'DailyCare': 'Дневна грижа',
+    'PetSitting': 'Престой',
+    'Training': 'Тренировки'
+  };
+
+  transform(value: string): string {
+    return this.translations[value] || value;
   }
 
 }

@@ -10,6 +10,7 @@ import {Post} from '../../../../shared/models/Post';
 import {ModalService} from '../../../../shared/services/modal.service';
 import {ModalComponent} from '../../../../shared/components/modal/modal.component';
 import {GoogleMapsService} from '../../../../shared/services/google-maps.service';
+import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 
 @Component({
   selector: 'app-details',
@@ -22,7 +23,8 @@ import {GoogleMapsService} from '../../../../shared/services/google-maps.service
     ReactiveFormsModule,
     GoogleMap,
     NavigationMenuComponent,
-    ModalComponent
+    ModalComponent,
+    WrapperModalComponent
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'

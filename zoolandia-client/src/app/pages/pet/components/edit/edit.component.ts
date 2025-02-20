@@ -133,7 +133,7 @@ export class EditComponent implements OnInit{
   }
 
   onKilogramSelect(value: number): void {
-    this.petForm.patchValue({ weight: value.toString() });
+    this.petForm.patchValue({ weight: value });
   }
 
   onFileUpload(file: File): void {

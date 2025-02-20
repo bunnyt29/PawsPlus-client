@@ -1,20 +1,34 @@
 import { Injectable } from '@angular/core';
-import {ModalConfig} from '../components/modal/modal.component';
-
+import {ModalConfig} from '../models/ModalConfig';
 @Injectable({
   providedIn: 'root'
 })
-export class ModalService {  isOpen = false;
-  config = new ModalConfig();
+export class ModalService {
+  // isOpen = false;
+  // config = new ModalConfig();
+  //
+  // constructor() {}
+  //
+  // open(config: ModalConfig) {
+  //   this.config = { ...this.config, ...config };
+  //   this.isOpen = true;
+  // }
+  //
+  // close() {
+  //   this.isOpen = false;
+  // }
 
-  constructor() {}
+  public config: ModalConfig = new ModalConfig();
 
-  open(config: ModalConfig) {
-    this.config = { ...this.config, ...config };
+  // Flag to control whether the modal is visible
+  public isOpen: boolean = false;
+
+  open(config: ModalConfig): void {
+    this.config = config;
     this.isOpen = true;
   }
 
-  close() {
+  close(): void {
     this.isOpen = false;
   }
 }

@@ -105,3 +105,23 @@
     }
   }
 }
+
+.alert-warning {
+  background: colors.$danger-color;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  p {
+    img {
+      width: 15px;
+    }
+  }
+}

@@ -1,79 +1,123 @@
+<!--<section class="my-post-holder">-->
+<!--  <div class="my-post-details-holder services">-->
+<!--    <h2>Моите услуги</h2>-->
+<!--    <div *ngFor="let service of post.services">-->
+<!--      <div *ngIf="isServiceIncomplete(service)" class="alert alert-warning">-->
+<!--        Добави цена и дати към своята услуга!-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="my-post-details">-->
+<!--      <div *ngFor="let service of post.services">-->
+<!--        <div *ngIf="service.name == 'DogWalking'"-->
+<!--             class="my-post-detail">-->
+<!--          <div class="overlay"></div>-->
+<!--          <img src="/images/desktop/post/service-walking.svg" alt="Разходки">-->
+<!--          <span>Разходки</span>-->
+<!--          <div class="action-buttons">-->
+<!--            <button class="btn" (click)="openEditModal(service.id, 'своите разходки')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>-->
+<!--            <button class="btn" (click)="openViewDetailsModal(service.id, 'Разходки')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>-->
+<!--            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div *ngIf="service.name == 'DailyCare'"-->
+<!--             class="my-post-detail">-->
+<!--          <div class="overlay"></div>-->
+<!--          <img src="/images/desktop/post/service-daily-care.svg" alt="Днавна грижа">-->
+<!--          <span>Дневна грижа</span>-->
+<!--          <div class="action-buttons">-->
+<!--            <button class="btn" (click)="openEditModal(service.id, 'дневната грижа')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>-->
+<!--            <button class="btn" (click)="openViewDetailsModal(service.id, 'Дневна грижа')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>-->
+<!--            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div *ngIf="service.name == 'PetSitting'"-->
+<!--             class="my-post-detail">-->
+<!--          <div class="overlay"></div>-->
+<!--          <img src="/images/desktop/post/service-pet-boarding.svg" alt="Престой">-->
+<!--          <span>Престой</span>-->
+<!--          <div class="action-buttons">-->
+<!--            <button class="btn" (click)="openEditModal(service.id, 'престой')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>-->
+<!--            <button class="btn" (click)="openViewDetailsModal(service.id, 'Престой')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>-->
+<!--            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div *ngIf="service.name == 'Training'"-->
+<!--             class="my-post-detail">-->
+<!--          <div class="overlay"></div>-->
+<!--          <img src="/images/desktop/post/service-pet-training.svg" alt="Тренировки">-->
+<!--          <span>Тренировки</span>-->
+<!--          <div class="action-buttons">-->
+<!--            <button class="btn" (click)="openEditModal(service.id, 'своите тренировки')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>-->
+<!--            <button class="btn" (click)="openViewDetailsModal(service.id, 'Тренировки')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>-->
+<!--            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div *ngIf="post.services.length < 4" (click)="openAddNewServiceModal(post)" class="add">-->
+<!--        <img src="/images/shared/add-service.png" alt="Добави">-->
+<!--        <span>Добави услуга</span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="my-post-details-holder services">-->
+<!--    <h2>Предлагам грижи за:</h2>-->
+<!--    <div class="my-post-details">-->
+<!--      <div *ngFor="let pet of post.pets">-->
+<!--        <div *ngIf="pet == 1"-->
+<!--             class="my-post-detail">-->
+<!--          <img src="/images/shared/dog.svg" alt="Куче">-->
+<!--          <span>Куче</span>-->
+<!--        </div>-->
+<!--        <div *ngIf="pet == 2"-->
+<!--             class="my-post-detail">-->
+<!--          <img src="/images/shared/cat.svg" alt="Котка">-->
+<!--          <span>Котка</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div *ngIf="post.pets.length < 2 " (click)="openAddNewPetModal(post)" class="add">-->
+<!--        <img src="/images/shared/add-animal.svg" alt="Добави">-->
+<!--        <span>Добави домашен любимец</span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
 <section class="my-post-holder">
   <div class="my-post-details-holder services">
     <h2>Моите услуги</h2>
+    <div *ngIf="incompleteServices.length > 0" class="alert-warning">
+      <p>Завърши своята обява като добавиш цена и свободни дати към услуги - {{ incompleteServices.join(', ') }}. Това става лесно чрез бутон <img src="/images/shared/edit.svg" alt="Иконка за редактирай">
+      </p>
+    </div>
     <div class="my-post-details">
-      <div *ngFor="let service of post.services">
-        <div *ngIf="service.name == 'DogWalking'"
-             class="my-post-detail">
+      <div *ngFor="let service of post.services" class="service-block">
+        <div class="my-post-detail">
           <div class="overlay"></div>
-          <img src="/images/desktop/post/service-walking.svg" alt="Разходки">
-          <span>Разходки</span>
+          <img *ngIf="service.name == 'DogWalking'" src="/images/desktop/post/service-walking.svg" alt="Разходки">
+          <img *ngIf="service.name == 'DailyCare'" src="/images/desktop/post/service-daily-care.svg" alt="Дневна грижа">
+          <img *ngIf="service.name == 'PetSitting'" src="/images/desktop/post/service-pet-boarding.svg" alt="Престой">
+          <img *ngIf="service.name == 'Training'" src="/images/desktop/post/service-pet-training.svg" alt="Тренировки">
+          <span>{{ getServiceName(service.name) | translateService }}</span>
+
           <div class="action-buttons">
-            <button class="btn" (click)="openEditModal(service.id, 'своите разходки')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
-            <button class="btn" (click)="openViewDetailsModal(service.id, 'Разходки')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
-            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
-          </div>
-        </div>
-        <div *ngIf="service.name == 'DailyCare'"
-             class="my-post-detail">
-          <div class="overlay"></div>
-          <img src="/images/desktop/post/service-daily-care.svg" alt="Днавна грижа">
-          <span>Дневна грижа</span>
-          <div class="action-buttons">
-            <button class="btn" (click)="openEditModal(service.id, 'дневната грижа')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
-            <button class="btn" (click)="openViewDetailsModal(service.id, 'Дневна грижа')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
-            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
-          </div>
-        </div>
-        <div *ngIf="service.name == 'PetSitting'"
-             class="my-post-detail">
-          <div class="overlay"></div>
-          <img src="/images/desktop/post/service-pet-boarding.svg" alt="Престой">
-          <span>Престой</span>
-          <div class="action-buttons">
-            <button class="btn" (click)="openEditModal(service.id, 'престой')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
-            <button class="btn" (click)="openViewDetailsModal(service.id, 'Престой')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
-            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
-          </div>
-        </div>
-        <div *ngIf="service.name == 'Training'"
-             class="my-post-detail">
-          <div class="overlay"></div>
-          <img src="/images/desktop/post/service-pet-training.svg" alt="Тренировки">
-          <span>Тренировки</span>
-          <div class="action-buttons">
-            <button class="btn" (click)="openEditModal(service.id, 'своите тренировки')"><img src="/images/shared/edit.svg" alt="Редактирай"></button>
-            <button class="btn" (click)="openViewDetailsModal(service.id, 'Тренировки')"><img src="/images/shared/view-more.svg" alt="Виж повече"></button>
-            <button class="btn" (click)="openDeleteModal(service.id)"><img src="/images/shared/delete.svg" alt="Изтрий"></button>
+            <button class="btn" (click)="openEditModal(service.id, service.name)">
+              <img src="/images/shared/edit.svg" alt="Редактирай">
+            </button>
+            <button class="btn" (click)="openViewDetailsModal(service.id, service.name)">
+              <img src="/images/shared/view-more.svg" alt="Виж повече">
+            </button>
+            <button class="btn" (click)="openDeleteModal(service.id)">
+              <img src="/images/shared/delete.svg" alt="Изтрий">
+            </button>
           </div>
         </div>
       </div>
+
       <div *ngIf="post.services.length < 4" (click)="openAddNewServiceModal(post)" class="add">
         <img src="/images/shared/add-service.png" alt="Добави">
         <span>Добави услуга</span>
       </div>
     </div>
   </div>
-  <div class="my-post-details-holder services">
-    <h2>Предлагам грижи за:</h2>
-    <div class="my-post-details">
-      <div *ngFor="let pet of post.pets">
-        <div *ngIf="pet == 1"
-             class="my-post-detail">
-          <img src="/images/shared/dog.svg" alt="Куче">
-          <span>Куче</span>
-        </div>
-        <div *ngIf="pet == 2"
-             class="my-post-detail">
-          <img src="/images/shared/cat.svg" alt="Котка">
-          <span>Котка</span>
-        </div>
-      </div>
-      <div *ngIf="post.pets.length < 2 " (click)="openAddNewPetModal(post)" class="add">
-        <img src="/images/shared/add-animal.svg" alt="Добави">
-        <span>Добави домашен любимец</span>
-      </div>
-    </div>
-  </div>
 </section>
-<app-modal></app-modal>
+
+<app-wrapper-modal></app-wrapper-modal>

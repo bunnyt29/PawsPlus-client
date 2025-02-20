@@ -124,7 +124,7 @@ export class CreateComponent implements OnInit{
   }
 
   onKilogramSelect(value: number): void {
-    this.petForm.patchValue({ weight: value.toString() });
+    this.petForm.patchValue({ weight: value });
   }
 
   onFileUpload(file: File): void {
@@ -181,8 +181,7 @@ export class CreateComponent implements OnInit{
         this.petService.create(formData).subscribe({
           next: (response) => {
             this.toastr.success("Успешно създаде твоя домашен любимец");
-            console.log(formData)
-            //this.router.navigate(['/profile/my-profile-details/my-pets']);
+            this.router.navigate(['/profile/my-profile-details/my-pets']);
           },
           error: (err) => {
             this.toastr.error("Неуспешно създаване. Опитайте отново.");
