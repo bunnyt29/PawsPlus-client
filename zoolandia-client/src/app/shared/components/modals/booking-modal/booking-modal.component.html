@@ -1,0 +1,124 @@
+<div class="modal-dialog booking" role="document">
+  <button
+    type="button"
+    class="close btn"
+    data-dismiss="modal"
+    aria-label="Close"
+    (click)="closeModal.emit()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">{{ config.title }}</h3>
+      <p>{{ config.description }}</p>
+    </div>
+    <div class="modal-body" [formGroup]="bookingForm">
+      <div class="modal-body-side">
+        <div class="filter">
+          <span class="filter-heading">Каква услуга търсиш?</span>
+          <div class="fields-container">
+            <label
+              class="field"
+              *ngFor="let service of services"
+              [ngClass]="{ 'selected': bookingForm.value.serviceType === service.id }">
+              <img [src]="service.imagePath" [alt]="service.name">
+              <input
+                type="radio"
+                formControlName="serviceType"
+                [value]="service.id"
+              />
+              {{ service.name | translateService}}
+            </label>
+          </div>
+        </div>
+        <div class="filter">
+          <span class="filter-heading">Избери дати</span>
+          <div class="filter-dates">
+            <div class="date">
+              <img src="/images/desktop/home/calendar.svg" alt="Календар">
+              <p-calendar
+                [dateFormat]="'yy-mm-dd'"
+                formControlName="startDay"
+                dataType="string"
+                inputId="startDate"
+                class="custom-calendar"
+                placeholder="Начална дата"
+              ></p-calendar>
+            </div>
+            <div class="date">
+              <img src="/images/desktop/home/calendar.svg" alt="Календар">
+              <p-calendar
+                [dateFormat]="'yy-mm-dd'"
+                formControlName="endDay"
+                dataType="string"
+                inputId="endDate"
+                placeholder="Крайна дата"
+              ></p-calendar>
+            </div>
+          </div>
+        </div>
+        <div class="filter">
+          <span class="filter-heading">Избери часове</span>
+          <div class="filter-dates">
+            <div class="date">
+              <img src="/images/desktop/home/calendar.svg" alt="Календар">
+              <p-calendar
+                formControlName="startTime"
+                [timeOnly]="true"
+                [hourFormat]="'24'"
+                placeholder="Начален час"
+                (onSelect)="formatTime('startTime')"
+              ></p-calendar>
+            </div>
+            <div class="date">
+              <img src="/images/desktop/home/calendar.svg" alt="Календар">
+              <p-calendar
+                formControlName="endTime"
+                [timeOnly]="true"
+                [hourFormat]="'24'"
+                placeholder="Краен час"
+                (onSelect)="formatTime('endTime')"
+              ></p-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body-side">
+        <div class="filter">
+          <span class="filter-heading">Избери начин за взимане на животното</span>
+          <div class="fields-container">
+            <label class="field" *ngFor="let meetingPlace of meetingPlaceOptions"
+                   [ngClass]="{ 'selected': bookingForm.value.meetingPlaceType === meetingPlace.id }">
+              <input
+                type="radio"
+                formControlName="meetingPlaceType"
+                [value]="meetingPlace.id"
+              />
+              {{ meetingPlace.name }}
+            </label>
+          </div>
+        </div>
+
+        <div class="filter" [ngStyle]="{'display': bookingForm.value.meetingPlaceType === 3 ? 'flex' : 'none'}">
+          <span class="filter-heading">Избери място на среща</span>
+          <google-autocomplete (placeSelected)="handlePlaceSelected($event)"></google-autocomplete>
+        </div>
+        <div class="filter">
+          <span class="filter-heading">Допълнително съобщение</span>
+          <textarea class="main-textarea" formControlName="additionalDescription"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn secondary-button"
+        data-dismiss="modal"
+        (click)="submitBookingForm()"
+      >
+        Резервирай
+      </button>
+    </div>
+  </div>
+</div>
