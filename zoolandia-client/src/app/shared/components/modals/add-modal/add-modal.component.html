@@ -1,0 +1,92 @@
+<div class="modal-dialog edit-service" role="document">
+  <button
+    type="button"
+    class="close btn"
+    data-dismiss="modal"
+    aria-label="Close"
+    (click)="closeModal.emit()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="modal-content" [formGroup]="serviceForm">
+    <div class="modal-header">
+      <h3 class="modal-title">+ {{ config.title }}</h3>
+    </div>
+    <div class="modal-body-with-choosing-service">
+      <div class="fields-container">
+        <div *ngFor="let service of services">
+          <label
+            class="field"
+            [ngClass]="{'selected': selectedService === service.id}"
+            (click)="selectService(service.id)">
+            <img [src]="service.imagePath" [alt]="service.name">
+            <input
+              type="radio"
+              [value]="service.id"
+              [checked]="selectedService === service.id"
+            />
+            {{ service.name | translateService }}
+          </label>
+        </div>
+      </div>
+      <div class="modal-body" *ngIf="selectedService">
+        <div class="modal-body-item choose-available-dates">
+          <div class="modal-body-item-title">
+            <span class="step">1</span>
+            <span>Направи свой график</span>
+          </div>
+          <p-calendar
+            formControlName="availableDates"
+            selectionMode="multiple"
+            dataType="string"
+            [dateFormat]="'yy-mm-dd'"
+            [readonlyInput]="true"
+            [inline]="true"
+            [minDate]="today"
+            class="custom-calendar">
+          </p-calendar>
+        </div>
+        <div class="modal-body-item choose-price">
+          <div class="modal-body-item-title">
+            <span class="step">2</span>
+            <span>Постави цена</span>
+          </div>
+          <div class="service-price">
+            <input type="number"
+                   min="1"
+                   step="any"
+                   placeholder="50"
+                   class="price-input"
+                   formControlName="price"/>
+            <span>лв.</span>
+          </div>
+        </div>
+        <div class="modal-body-item choose-meeting-place">
+          <div class="modal-body-item-title">
+            <span class="step">3</span>
+            <span>Избери място за вземане на животното</span>
+          </div>
+          <div class="meeting-place-options">
+            <label *ngFor="let option of meetingPlaceOptions; let i = index">
+              <input
+                type="checkbox"
+                [value]="option.id"
+                (change)="onMeetingPlaceChange($event, option.id)">
+              {{ option.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" *ngIf="selectedService">
+      <button
+        type="button"
+        class="btn secondary-button"
+        data-dismiss="modal"
+        (click)="createService(config.data)"
+      >
+        Запази
+      </button>
+    </div>
+  </div>
+</div>
