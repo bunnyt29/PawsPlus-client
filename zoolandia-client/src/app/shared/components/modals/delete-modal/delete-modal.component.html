@@ -1,0 +1,49 @@
+<div class="modal-dialog" role="document">
+  <button
+    type="button"
+    class="close btn"
+    data-dismiss="modal"
+    aria-label="Close"
+    (click)="closeModal.emit()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="modal-image">
+    <img src="/images/shared/are-you-sure.png" alt="Объркан домашен любимец">
+  </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">{{ config.title }}</h3>
+    </div>
+    <div class="modal-body">
+      <p>{{ config.description }}</p>
+    </div>
+    <div class="modal-footer">
+      <button
+        *ngIf="config.action === 'delete' && config.type === 'deletePet'"
+        type="button"
+        class="btn modal-button approve"
+        (click)="deletePet(config.data)"
+      >
+        Да
+      </button>
+      <button
+        *ngIf="config.action === 'delete' && config.type === 'deleteService'"
+        type="button"
+        class="btn modal-button approve"
+        (click)="deleteService(config.data)"
+      >
+        Да
+      </button>
+
+      <button
+        type="button"
+        class="btn modal-button disapprove"
+        data-dismiss="modal"
+        (click)="closeModal.emit()"
+      >
+        Не
+      </button>
+    </div>
+  </div>
+</div>
