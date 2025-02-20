@@ -1,0 +1,9 @@
+<div class="modal" tabindex="-1" role="dialog" *ngIf="isOpen">
+  <ng-container [ngSwitch]="config.action">
+    <app-details-modal *ngSwitchCase="'details'" [config]="config" (closeModal)="closeModal()"></app-details-modal>
+    <app-delete-modal *ngSwitchCase="'delete'" [config]="config" (closeModal)="closeModal()"></app-delete-modal>
+    <app-edit-modal *ngSwitchCase="'edit'" [config]="config" (closeModal)="closeModal()"></app-edit-modal>
+    <app-add-modal *ngSwitchCase="'add'" [config]="config" (closeModal)="closeModal()"></app-add-modal>
+    <app-booking-modal *ngSwitchCase="'book'" [config]="config" (closeModal)="closeModal()"></app-booking-modal>
+  </ng-container>
+</div>
