@@ -492,7 +492,7 @@ address {
 
 //Choose service
 .fields-container {
-  margin-top: 54px;
+  margin-top: 30px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -630,3 +630,282 @@ p-calendar .p-datepicker-calendar td {
     }
   }
 }
+
+//Modal styling
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.52);
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-dialog {
+    position: relative;
+    padding: 20px 30px;
+    max-width: 90%;
+    background-color: white;
+    border-radius: 20px;
+    border: 1px solid rgb(227, 227, 227);
+    overflow: auto;
+    z-index: 1060;
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      background-color: transparent;
+
+      span {
+        font-size: typography.$font-size-xl;
+      }
+    }
+
+    .modal-image {
+      width: 100%;
+
+      img {
+        margin: 0 auto;
+        width: 400px;
+      }
+    }
+
+    .modal-content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+      .modal-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .modal-title {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: typography.$font-size-xl;
+        }
+      }
+
+      .modal-body-with-choosing-service {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+      }
+
+      .modal-body {
+        display: flex;
+        gap: 50px;
+
+        &-side {
+          display: flex;
+          flex-direction: column;
+          gap: 50px;
+        }
+
+        p {
+          text-align: center;
+          font-size: typography.$font-size-md;
+        }
+
+        .filters-row {
+          display: flex;
+          gap: 50px;
+        }
+
+        .filter {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+
+          &-heading {
+            font-size: typography.$font-size-md;
+            font-weight: typography.$semi-bold
+          }
+
+          .fields-container {
+            margin: 0;
+            justify-content: flex-start;
+
+            .field {
+              padding: 0 5px;
+              width: 120px;
+              height: 120px;
+              justify-content: center;
+              align-items: center;
+              gap: 5px;
+              border-radius: 15px;
+              text-align: center;
+              transition: background-color 0.3s ease-in-out;
+              background-color: colors.$secondary-background;
+
+              img {
+                width: 50px;
+              }
+
+              input {
+                display: none;
+              }
+            }
+
+            .field.selected {
+              border: none;
+              background-color: colors.$accent-color;
+            }
+
+            .field.selected::after {
+              content: '';
+            }
+          }
+
+          &-dates {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .date {
+              display: flex;
+              align-items: center;
+              gap: 5px;
+            }
+          }
+        }
+      }
+
+      .modal-footer {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+
+        .modal-button {
+          width: 100px;
+          padding: 10px 30px;
+          display: flex;
+          justify-content: center;
+          background-color: transparent;
+          border: 1px solid grey;
+          font-weight: typography.$semi-bold;
+        }
+
+        button:first-child {
+          border-right: none;
+        }
+
+        .approve {
+          background-color: colors.$approve-color;
+          color: white;
+          border-top-left-radius: 2px;
+          border-bottom-left-radius: 2px;
+        }
+
+        .approve:hover {
+          opacity: 0.8;
+        }
+
+        .disapprove {
+          background-color: colors.$danger-darker-color;
+          color: white;
+          border-top-right-radius: 2px;
+          border-bottom-right-radius: 2px;
+        }
+
+        .disapprove:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  .edit-service {
+    min-width: 600px;
+    min-height: 850px;
+    padding-inline: 50px;
+
+    .modal-content {
+      margin-top: 50px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .modal-body {
+        margin-block: 30px;
+
+        &-item {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          &-title {
+            display: flex;
+            gap: 5px;
+
+            .step {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 30px;
+              height: 30px;
+              background-color: colors.$accent-color;
+              border-radius: 50%;
+            }
+          }
+
+          span {
+            font-size: typography.$font-size-md;
+            font-weight: typography.$semi-bold;
+          }
+
+          .service-price {
+            display: flex;
+            align-items: flex-end;
+
+            input {
+              width: 100px;
+              height: auto;
+              border: none;
+              font-size: typography.$font-size-2xl;
+            }
+
+            input::placeholder {
+              font-size: typography.$font-size-2xl;
+            }
+
+            span {
+              font-size: typography.$font-size-2xl;
+            }
+          }
+
+          .meeting-place-options {
+            padding-left: 40px;
+            display: flex;
+            flex-direction: column;
+
+            label {
+              font-size: typography.$font-size-md;
+            }
+          }
+        }
+      }
+
+      .modal-footer {
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .booking {
+    min-width: 70vw;
+    padding-block: 100px;
+  }
+}
+
