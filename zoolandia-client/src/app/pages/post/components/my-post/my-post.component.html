@@ -85,8 +85,7 @@
   <div class="my-post-details-holder services">
     <h2>Моите услуги</h2>
     <div *ngIf="incompleteServices.length > 0" class="alert-warning">
-      <p>Завърши своята обява като добавиш цена и свободни дати към услуги - {{ incompleteServices.join(', ') }}. Това става лесно чрез бутон <img src="/images/shared/edit.svg" alt="Иконка за редактирай">
-      </p>
+      <p>Завърши своята обява като добавиш цена и свободни дати към съответните услуги - {{ incompleteServices.join(', ') }}, използвайки бутона за редакция.</p>
     </div>
     <div class="my-post-details">
       <div *ngFor="let service of post.services" class="service-block">
@@ -96,10 +95,10 @@
           <img *ngIf="service.name == 'DailyCare'" src="/images/desktop/post/service-daily-care.svg" alt="Дневна грижа">
           <img *ngIf="service.name == 'PetSitting'" src="/images/desktop/post/service-pet-boarding.svg" alt="Престой">
           <img *ngIf="service.name == 'Training'" src="/images/desktop/post/service-pet-training.svg" alt="Тренировки">
-          <span>{{ getServiceName(service.name) | translateService }}</span>
+          <span>{{ getServiceName(service.name) }}</span>
 
           <div class="action-buttons">
-            <button class="btn" (click)="openEditModal(service.id, service.name)">
+            <button class="btn" (click)="openEditModal(service.id)">
               <img src="/images/shared/edit.svg" alt="Редактирай">
             </button>
             <button class="btn" (click)="openViewDetailsModal(service.id, service.name)">
@@ -118,6 +117,26 @@
       </div>
     </div>
   </div>
+  <div class="my-post-details-holder services">
+    <h2>Предлагам грижи за:</h2>
+    <div class="my-post-details">
+      <div *ngFor="let pet of post.pets">
+        <div *ngIf="pet == 1"
+             class="my-post-detail">
+          <img src="/images/shared/dog.svg" alt="Куче">
+          <span>Куче</span>
+        </div>
+        <div *ngIf="pet == 2"
+             class="my-post-detail">
+          <img src="/images/shared/cat.svg" alt="Котка">
+          <span>Котка</span>
+        </div>
+      </div>
+      <div *ngIf="post.pets.length < 2 " (click)="openAddNewPetModal(post)" class="add">
+        <img src="/images/shared/add-animal.svg" alt="Добави">
+        <span>Добави домашен любимец</span>
+      </div>
+    </div>
+  </div>
 </section>
-
 <app-wrapper-modal></app-wrapper-modal>

@@ -1,5 +1,5 @@
 export class ModalConfig {
-  title?: string = '';
+  title: string = '';
   description?: string = '';
   // A callback that receives form data when saving
   save?: (data: any) => void = () => {};

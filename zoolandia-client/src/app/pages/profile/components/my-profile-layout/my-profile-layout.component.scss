@@ -12,6 +12,25 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 
+    .go-back {
+      margin-bottom: 30px;
+      padding-left: 37px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+
+      img {
+        margin-top: -5px;
+        width: 25px;
+      }
+
+      span {
+        font-size: typography.$font-size-md;
+        font-weight: typography.$semi-bold;
+      }
+    }
+
     picture {
       padding-left: 37px;
       cursor: pointer;
