@@ -31,7 +31,7 @@ export class PetService {
   }
 
   getBreeds(petType: number): Observable<any> {
-    const httpParams = new HttpParams().set('petType', petType);
+    const httpParams = new HttpParams().set('animalTypeId', petType);
 
     return this.http.get<any>(this.breedPath, { params: httpParams });
   }
