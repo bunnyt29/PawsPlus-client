@@ -124,7 +124,7 @@ export class MultiStepFormComponent {
 
       if (this.postForm.valid) {
         this.postService.create(this.postForm.value).subscribe(() => {
-          this.router.navigate(['/profile/my-profile-details']);
+          this.router.navigate(['/profile/edit']);
         });
       } else {
         this.toastr.error("Моля, попълнете всички необходими полета преди да изпратите формата!");
