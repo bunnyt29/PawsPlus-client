@@ -5,15 +5,17 @@ import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} fr
 import {PostService} from '../../../models/PostService';
 import {PostServiceService} from '../../../../pages/post/post-services/services/post-service.service';
 import {ModalConfig} from '../../../models/ModalConfig';
+import {TranslateServicePipe} from '../../../pipes/translate-service.pipe';
 
 @Component({
   selector: 'app-details-modal',
   standalone: true,
-    imports: [
-      CommonModule,
-      CalendarModule,
-      ReactiveFormsModule
-    ],
+  imports: [
+    CommonModule,
+    CalendarModule,
+    ReactiveFormsModule,
+    TranslateServicePipe
+  ],
   templateUrl: './details-modal.component.html',
   styleUrl: './details-modal.component.scss'
 })

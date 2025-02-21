@@ -7,7 +7,6 @@ import {SharedModule} from '../../../../shared/shared.module';
 import {ActivatedRoute} from '@angular/router';
 import {ModalService} from '../../../../shared/services/modal.service';
 import {ModalComponent} from '../../../../shared/components/modal/modal.component';
-import {TranslateServicePipe} from '../../../../shared/pipes/translate-service.pipe';
 import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 
 @Component({
@@ -16,7 +15,6 @@ import {WrapperModalComponent} from '../../../../shared/components/modals/wrappe
   imports: [
     SharedModule,
     ModalComponent,
-    TranslateServicePipe,
     WrapperModalComponent
   ],
   templateUrl: './my-post.component.html',
@@ -89,9 +87,9 @@ export class MyPostComponent implements OnInit {
     });
   }
 
-  openEditModal(serviceId: string, serviceName: string) {
+  openEditModal(serviceId: string) {
     this.modalService.open({
-      title: 'Редактирай ' + serviceName,
+      title: `Редактирай услуга`,
       description: 'Сигурен ли си, че искаш да изтриеш тази услуга?',
       action: 'edit',
       data: serviceId,

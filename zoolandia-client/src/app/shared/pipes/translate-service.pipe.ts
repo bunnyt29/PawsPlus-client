@@ -16,5 +16,4 @@ export class TranslateServicePipe implements PipeTransform {
   transform(value: string): string {
     return this.translations[value] || value;
   }
-
 }

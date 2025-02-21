@@ -3,7 +3,6 @@ import {SharedModule} from '../../../../shared/shared.module';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {ProfileService} from '../../services/profile.service';
 import {Profile} from '../../../../shared/models/Profile';
-
 @Component({
   selector: 'app-my-profile-layout',
   standalone: true,

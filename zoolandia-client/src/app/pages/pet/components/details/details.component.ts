@@ -7,6 +7,7 @@ import {NavigationMenuComponent} from '../../../../shared/components/navigation-
 import {CommonModule} from '@angular/common';
 import {ModalService} from '../../../../shared/services/modal.service';
 import {ModalComponent} from '../../../../shared/components/modal/modal.component';
+import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 
 @Component({
   selector: 'app-details',
@@ -15,7 +16,8 @@ import {ModalComponent} from '../../../../shared/components/modal/modal.componen
     CommonModule,
     NavigationMenuComponent,
     RouterLink,
-    ModalComponent
+    ModalComponent,
+    WrapperModalComponent
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'

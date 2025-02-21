@@ -501,7 +501,7 @@ address {
   margin-top: 30px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   gap: 18px;
 
   label {
@@ -698,6 +698,7 @@ p-calendar .p-datepicker-calendar td {
           align-items: center;
           gap: 10px;
           font-size: typography.$font-size-xl;
+          text-align: center;
         }
       }
 
@@ -832,8 +833,8 @@ p-calendar .p-datepicker-calendar td {
   }
 
   .edit-service {
-    min-width: 600px;
-    min-height: 850px;
+    min-width: 70vw;
+    min-height: 800px;
     padding-inline: 50px;
 
     .modal-content {
@@ -911,6 +912,7 @@ p-calendar .p-datepicker-calendar td {
 
   .booking {
     min-width: 70vw;
+    min-height: 850px;
     padding-block: 100px;
   }
 }

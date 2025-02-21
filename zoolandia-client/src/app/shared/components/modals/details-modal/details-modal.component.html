@@ -10,58 +10,7 @@
   </button>
   <div class="modal-content" [formGroup]="serviceForm">
     <div class="modal-header">
-      <h3 class="modal-title">{{ config.title }}</h3>
-    </div>
-    <div class="modal-body">
-      <div class="modal-body-item choose-available-dates">
-        <div class="modal-body-item-title">
-          <span>Твоят график</span>
-        </div>
-        <p-calendar
-          formControlName="availableDates"
-          selectionMode="multiple"
-          dataType="string"
-          [dateFormat]="'yy-mm-dd'"
-          [readonlyInput]="true"
-          [inline]="true"
-          [minDate]="today"
-          class="custom-calendar">
-        </p-calendar>
-      </div>
-      <div class="modal-body-item choose-price">
-        <div class="modal-body-item-title">
-          <span>Цена за услугата</span>
-        </div>
-        <div class="service-price">
-          <span>{{postService.price}} лв.</span>
-        </div>
-      </div>
-      <div class="modal-body-item choose-price">
-        <div class="modal-body-item-title">
-          <span>Опции за вземане на животното</span>
-        </div>
-        <div *ngFor="let meetingPlace of postService.meetingPlaces">
-          <span *ngIf="meetingPlace === 1">Вземане лично от дома на собственика</span>
-          <span *ngIf="meetingPlace === 2">Вземане от дома на гледача</span>
-          <span *ngIf="meetingPlace === 3">Вземане от трето място</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal-dialog edit-service" role="document">
-  <button
-    type="button"
-    class="close btn"
-    data-dismiss="modal"
-    aria-label="Close"
-    (click)="closeModal.emit()"
-  >
-    <span aria-hidden="true">&times;</span>
-  </button>
-  <div class="modal-content" [formGroup]="serviceForm">
-    <div class="modal-header">
-      <h3 class="modal-title">{{ config.title }}</h3>
+      <h3 class="modal-title">{{ config.title | translateService }}</h3>
     </div>
     <div class="modal-body">
       <div class="modal-body-item choose-available-dates">

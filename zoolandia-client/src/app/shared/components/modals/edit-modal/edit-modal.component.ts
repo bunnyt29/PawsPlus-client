@@ -8,6 +8,7 @@ import {PetService} from '../../../../pages/pet/services/pet.service';
 import {PostServiceService} from '../../../../pages/post/post-services/services/post-service.service';
 import {PostService} from '../../../models/PostService';
 import {ModalService} from '../../../services/modal.service';
+import {TranslateServicePipe} from '../../../pipes/translate-service.pipe';
 
 @Component({
   selector: 'app-edit-modal',
@@ -15,7 +16,8 @@ import {ModalService} from '../../../services/modal.service';
   imports: [
     CommonModule,
     CalendarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateServicePipe
   ],
   templateUrl: './edit-modal.component.html',
   styleUrl: './edit-modal.component.scss'
