@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleMapsService {
-  private locationPath = 'https://maps.googleapis.com/maps/api/place/details/json';
   private apiLoaded = false;
 
-  constructor(
-    private http: HttpClient
-  ) {
+  constructor() {
     if (typeof google !== 'undefined' && google.maps) {
       this.apiLoaded = true;
     }
@@ -34,7 +30,7 @@ export class GoogleMapsService {
       }
 
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBtnT3myHIQx-EwUs6cDSIXnNkhNRdJpU4&libraries=places`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBtnT3myHIQx-EwUs6cDSIXnNkhNRdJpU4&libraries=places,geometry&language=bg`;
       script.async = true;
       script.defer = true;
 
@@ -46,17 +42,5 @@ export class GoogleMapsService {
 
       document.head.appendChild(script);
     });
-  }
-
-  getLocation(params: any): Observable<any> {
-    let httpParams = new HttpParams();
-
-    Object.keys(params).forEach(key => {
-      if (params[key] !== null && params[key] !== undefined) {
-        httpParams = httpParams.append(key, params[key]);
-      }
-    });
-
-    return this.http.get<any>(this.locationPath, { params: httpParams });
   }
 }

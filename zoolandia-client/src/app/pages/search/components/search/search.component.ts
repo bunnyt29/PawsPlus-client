@@ -47,7 +47,7 @@ export class SearchComponent implements OnInit{
 
   mapOptions: google.maps.MapOptions = {
     mapId: "4186b8dc6f3cfdc8",
-    center: { lat: 42.6977, lng: 23.3219 },
+    center: { lat: 42.68841949999999, lng: 23.2507638 },
     zoom: 15,
     disableDefaultUI: true
   };

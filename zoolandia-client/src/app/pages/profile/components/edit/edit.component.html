@@ -77,6 +77,9 @@
             </div>
             <div class="location-holder">
               <google-autocomplete (placeSelected)="handlePlaceSelected($event)"></google-autocomplete>
+              <google-map height="300px" width="500px" [options]="mapOptions">
+                <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
+              </google-map>
             </div>
           </div>
         </div>
@@ -84,7 +87,7 @@
       <div class="create-profile-main-right-side">
         <div class="sitter-owner-option-holder">
           <div *ngIf="profile.roles?.includes('Owner')"
-               routerLink="/pet/create"
+               (click)="navigateToPetCreation()"
                class="add">
             <img src="/images/shared/add-animal.svg" alt="Add button">
             <span>Добави домашен любимец</span>

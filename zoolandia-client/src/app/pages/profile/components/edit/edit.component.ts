@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
 
@@ -9,9 +9,9 @@ import {SharedModule} from '../../../../shared/shared.module';
 import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
 import {FileService} from '../../../../core/services/file.service';
 import {ToastrService} from 'ngx-toastr';
-import {
-  GoogleAutocompleteComponent
-} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
+import {GoogleAutocompleteComponent} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
+import {Observable} from 'rxjs';
+import {GoogleMap, MapMarker} from '@angular/google-maps';
 
 @Component({
   selector: 'app-edit',
@@ -20,15 +20,30 @@ import {
     SharedModule,
     ImageUploadComponent,
     RouterLink,
-    GoogleAutocompleteComponent
+    GoogleAutocompleteComponent,
+    GoogleMap,
+    MapMarker
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, AfterViewInit {
+  @ViewChild(GoogleMap) googleMap!: GoogleMap;
   profileForm!: FormGroup;
   profile!: Profile;
   defaultImage: string | undefined = '/images/shared/default-image-owner.svg';
+  placeId: string = '';
+  formattedAddress!: string | undefined;
+
+  markerPosition: google.maps.LatLngLiteral | null = null;
+
+  mapOptions: google.maps.MapOptions = {
+    mapId: "4186b8dc6f3cfdc8",
+    center: { lat: 42.68841949999999, lng: 23.2507638 },
+    zoom: 13,
+    disableDefaultUI: true
+  };
+
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
@@ -48,13 +63,45 @@ export class EditComponent implements OnInit {
       'phoneNumber': ['', [Validators.required, Validators.pattern('^[+]?[0-9]{9,15}$')]],
       'photoUrl': ['']
     });
-
     this.fetchProfile();
+  }
+
+  ngAfterViewInit() {
+    if (this.googleMap.googleMap) {
+      const mapInstance = this.googleMap.googleMap;
+
+      const service = new google.maps.places.PlacesService(mapInstance);
+
+      service.getDetails({
+        placeId: this.placeId,
+        fields: ['geometry', 'name', 'formatted_address']
+      }, (place, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && place?.geometry?.location) {
+          this.formattedAddress = place.formatted_address;
+          const location = place.geometry.location;
+          this.mapOptions = {
+            ...this.mapOptions,
+            center: location,
+            zoom: 15
+          };
+
+          this.markerPosition = { lat: location.lat(), lng: location.lng() };
+        } else {
+          console.error('Грешка при взимане на профила.', status);
+        }
+      });
+    }
   }
 
   fetchProfile(){
     this.profileService.getMine().subscribe(res => {
       this.profile = res;
+
+      let placeId =this.profile.location?.placeId;
+      if (placeId) {
+        this.placeId = placeId;
+      }
+
       this.profileForm.patchValue({
         'id': this.profile.id,
         'firstName': this.profile.firstName,
@@ -91,12 +138,22 @@ export class EditComponent implements OnInit {
   get phoneNumber() {
     return this.profileForm.get('phoneNumber');
   }
+
   handlePlaceSelected(place: google.maps.places.PlaceResult) {
     if (place.geometry && place.geometry.location) {
       const location = place.geometry.location;
 
       const latitude = location.lat();
       const longitude = location.lng();
+
+
+      this.mapOptions = {
+        ...this.mapOptions,
+        center: { lat: latitude, lng: longitude },
+        zoom: 15
+      };
+
+      this.markerPosition = { lat: latitude, lng: longitude };
 
       this.profileForm.patchValue({
         location: {
@@ -105,14 +162,27 @@ export class EditComponent implements OnInit {
           longitude: longitude
         }
       });
-
     }
   }
 
-  editProfile(){
-    this.profileService.edit(this.profile.id, this.profileForm.value).subscribe( () => {
-      this.toastr.success("Успешно редактира профила си!");
-      this.router.navigate(['/profile/my-profile-details']);
+  saveChanges(): Observable<any>{
+    return this.profileService.edit(this.profile.id, this.profileForm.value);
+  }
+
+  navigateToPetCreation() {
+    this.saveChanges().subscribe(  {
+      next: (res) => {
+        this.toastr.success('Успешно редактира профила си!');
+        this.router.navigate(['/pet/create']);
+      },
+        error: (err) => {
+        this.toastr.error('Невалидни данни!')
+      },
     });
+  }
+
+  editProfile(){
+    this.saveChanges();
+    this.router.navigate(['/profile/my-profile-details']);
   }
 }

@@ -38,8 +38,10 @@
         <img src="/images/shared/location-icon.svg" alt="location">
         <h2>Локация</h2>
       </div>
-      <address>Паталеница, Пазарджик
-        ул. “Зеленика“ №20</address>
+      <address>{{formattedAddress}}</address>
+      <google-map height="300px" width="500px" [options]="mapOptions">
+        <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
+      </google-map>
     </div>
   </div>
 </div>

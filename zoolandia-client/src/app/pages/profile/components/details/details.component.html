@@ -174,8 +174,13 @@
         <div class="post-item">
           <span class="post-item-heading">Местоположение</span>
           <div class="location">
-            <address>ул. Графиня, кв. Орландовци, град София</address>
-            <google-map height="300px" width="500px" [options]="mapOptions"> </google-map>
+            <google-map height="300px" width="500px" [options]="mapOptions">
+              <map-circle *ngIf="markerPosition"
+                          [center]="markerPosition"
+                          [radius]="circleRadius"
+                          [options]="circleOptions">
+              </map-circle>
+            </google-map>
           </div>
         </div>
       </div>
