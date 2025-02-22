@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 
 import {AuthService} from '../../../auth/services/auth.service';
 import {ProfileService} from '../../services/profile.service';
@@ -19,7 +19,6 @@ import {GoogleMap, MapMarker} from '@angular/google-maps';
   imports: [
     SharedModule,
     ImageUploadComponent,
-    RouterLink,
     GoogleAutocompleteComponent,
     GoogleMap,
     MapMarker
@@ -171,18 +170,21 @@ export class EditComponent implements OnInit, AfterViewInit {
 
   navigateToPetCreation() {
     this.saveChanges().subscribe(  {
-      next: (res) => {
+      next: () => {
         this.toastr.success('Успешно редактира профила си!');
         this.router.navigate(['/pet/create']);
       },
-        error: (err) => {
+        error: () => {
         this.toastr.error('Невалидни данни!')
       },
     });
   }
 
   editProfile(){
-    this.saveChanges();
-    this.router.navigate(['/profile/my-profile-details']);
+    this.saveChanges().subscribe( {
+      next: () => {
+        this.router.navigate(['/profile/my-profile-details']);
+    }
+    });
   }
 }
