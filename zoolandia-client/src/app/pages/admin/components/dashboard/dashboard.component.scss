@@ -1,0 +1,210 @@
+@use '../../../../../style/abstracts/colors';
+@use '../../../../../style/abstracts/typography';
+
+.nav-holder {
+  padding: 20px 60px 10px 60px;
+  border-bottom: 1px solid colors.$secondary-background;
+
+  .nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    picture {
+      cursor: pointer;
+
+      img {
+        height: 50px;
+      }
+    }
+
+    .left-side {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      &-name {
+        display: flex;
+
+        span {
+          font-size: typography.$font-size-sm;
+          font-weight: typography.$bold;
+        }
+      }
+
+      .nav-profile-image {
+        .profile-image-small {
+          background-color: colors.$secondary-background
+        }
+
+        .profile-options {
+          position: absolute;
+          top: 70px;
+          right: 60px;
+          padding: 25px 30px 30px 40px;
+          display: flex;
+          flex-direction: column;
+          background-color: colors.$primary-background;
+          border: 2px solid colors.$secondary-background;
+          box-shadow: 2px 0 3px colors.$secondary-background;
+          border-radius: 20px;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+          z-index: 2;
+
+          &.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+          }
+
+          &-heading {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid colors.$secondary-background;
+
+            .profile-details {
+              display: flex;
+              flex-direction: column;
+
+              span:first-child {
+                font-size: typography.$font-size-md;
+                font-weight: typography.$semi-bold;
+                color: colors.$primary-text-color;
+              }
+            }
+          }
+
+          p {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: typography.$font-size-md;
+            font-weight: typography.$medium;
+            cursor: pointer;
+            transition: all 0.4s ease;
+
+            img {
+              width: 24px;
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: -10px;
+              left: 30px;
+              width: 0;
+              height: 2px;
+              background: colors.$primary-text-color;
+              transition: width 0.4s ease-in-out;
+              border-radius: 2px;
+            }
+          }
+
+          p:not(:last-child) {
+            margin-bottom: 20px;
+          }
+
+          p:hover {
+
+            &::after {
+              width: 70%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.dashboard {
+  margin-top: 50px;
+  padding-inline: 100px;
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: colors.$primary-background;
+
+    thead {
+      background-color: colors.$accent-color;
+      color: colors.$primary-text-color;
+
+      tr {
+        th {
+          padding: 1rem;
+          text-align: left;
+        }
+
+        th:first-child {
+          border-top-left-radius: 10px;
+
+        }
+
+        th:last-child {
+          border-top-right-radius: 10px;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        background-color: lighten(colors.$secondary-background, 50%);
+
+        td {
+          padding: 1rem;
+
+          .options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            button {
+              background-color: transparent;
+
+              img {
+                width: 30px;
+              }
+            }
+          }
+        }
+
+        .author {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-weight: typography.$semi-bold;
+        }
+
+        //td:first-child {
+        //  border-top-left-radius: 20px;
+        //  border-bottom-left-radius: 20px;
+        //}
+        //
+        //td:last-child {
+        //  border-top-right-radius: 20px;
+        //  border-bottom-right-radius: 20px;
+        //}
+
+        &:hover {
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+}
+

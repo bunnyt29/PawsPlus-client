@@ -16,8 +16,13 @@ export class PostService {
   create(data:any): Observable<any> {
     return this.http.post<any>(this.postPath, data);
   }
+
   get(id: string):Observable<any> {
     return this.http.get<any>(this.userPath + '/' + id + '/myPost');
+  }
+
+  getPending():Observable<any> {
+    return this.http.get<any>(this.postPath + '/pending');
   }
 
   search(params: any): Observable<any> {
@@ -30,5 +35,13 @@ export class PostService {
     });
 
     return this.http.get<any>(this.postPath + '/search', { params: httpParams });
+  }
+
+  approve(id: string):Observable<any>{
+    return this.http.patch(this.postPath + '/' + id + '/approve', id)
+  }
+
+  disapprove(id: string, data: any):Observable<any>{
+    return this.http.patch(this.postPath + '/' + id + '/disapprove', data)
   }
 }

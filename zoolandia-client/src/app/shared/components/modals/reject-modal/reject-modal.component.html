@@ -1,0 +1,38 @@
+<div class="modal-dialog" role="document">
+  <button
+    type="button"
+    class="close btn"
+    data-dismiss="modal"
+    aria-label="Close"
+    (click)="closeModal.emit()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">{{ config.title }}</h3>
+    </div>
+    <div class="modal-body" [formGroup]="rejectForm">
+      <p>{{ config.description }}</p>
+      <textarea class="main-textarea" formControlName="stateReason"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn modal-button disapprove"
+        (click)="disapprove(config.data)"
+      >
+        Неодобри
+      </button>
+
+      <button
+        type="button"
+        class="btn"
+        data-dismiss="modal"
+        (click)="closeModal.emit()"
+      >
+        Затвори
+      </button>
+    </div>
+  </div>
+</div>

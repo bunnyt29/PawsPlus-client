@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TranslateServicePipe implements PipeTransform {
 
   private translations: { [key: string]: string } = {
-    'DogWalking': 'Разхождане на куче',
+    'DogWalking': 'Разходки',
     'DailyCare': 'Дневна грижа',
     'PetSitting': 'Престой',
     'Training': 'Тренировки'

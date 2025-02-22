@@ -15,7 +15,7 @@ export class AppComponent {
   hideNavbar = false;
 
   private hiddenRoutes: string[] = ['/auth/login', '/auth/role-selection', '/auth/confirm-email', '/profile/edit', '/post/multi-step-form', '/pet/create', '/access-denied', '/404'];
-  private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/auth/register'];
+  private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/auth/register', '/admin'];
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {

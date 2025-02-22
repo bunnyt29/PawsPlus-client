@@ -43,15 +43,18 @@ export class LoginComponent implements OnInit{
   login(): void {
     this.authService.login(this.loginForm.value).subscribe(res => {
       this.authService.saveToken(res['token']);
-      if (res.firstLogin) {
-        console.log(res);
-        if (res.roles == "Sitter") {
-          this.router.navigate(['/post/multi-step-form']);
-        } else {
-          this.router.navigate(['/profile/edit']);
-        }
+      if(res.roles == "Administrator") {
+        this.router.navigate(['/admin/dashboard'])
       } else {
-        this.router.navigate(['/profile/my-profile-details']);
+        if (res.firstLogin) {
+          if (res.roles == "Sitter") {
+            this.router.navigate(['/post/multi-step-form']);
+          } else {
+            this.router.navigate(['/profile/edit']);
+          }
+        } else {
+          this.router.navigate(['/profile/my-profile-details']);
+        }
       }
     })
   }

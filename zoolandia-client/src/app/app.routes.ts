@@ -18,6 +18,12 @@ export const routes: Routes = [
     loadChildren: () => import("./pages/auth/auth.module").then((m) => m.AuthModule)
   },
   {
+    path: "admin",
+    // data: { preload: true },
+    loadChildren: () => import("./pages/admin/admin.module").then((m) => m.AdminModule)
+    // data: { allowedRoles: ['Administrator'] }
+  },
+  {
     path: "profile",
     // data: { preload: true },
     loadChildren: () => import("./pages/profile/profile.module").then((m) => m.ProfileModule),

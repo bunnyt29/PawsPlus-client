@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       retry(1),
       catchError((err: any) => {
-        let message = "";
+        let message;
         if (err.status === 401) {
           message = "Неуспешен опит за вход!";
           this.router.navigate(['/auth/login']);
