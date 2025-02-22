@@ -1,0 +1,20 @@
+@use '../../../../../style/abstracts/colors';
+.dashboard {
+  padding-inline: 50px;
+
+  .pending {
+    color: grey;
+  }
+
+  .approved {
+    color: colors.$approve-color
+  }
+
+  .disapproved {
+    color: colors.$danger-darker-color
+  }
+
+  button {
+    background-color: transparent;
+  }
+}

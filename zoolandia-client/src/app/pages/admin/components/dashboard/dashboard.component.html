@@ -36,9 +36,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let pendingPost of pendingPosts">
-        <td class="author">
-          <img class="profile-image-small" [src]="pendingPost.photoUrl">
-          {{ pendingPost.firstName }} {{ pendingPost.lastName }}
+        <td>
+          <div class="author">
+            <img class="profile-image-small" [src]="pendingPost.photoUrl">
+            {{ pendingPost.firstName }} {{ pendingPost.lastName }}
+          </div>
         </td>
         <td>
           <ng-container *ngFor="let serviceName of pendingPost.serviceNames; let last = last">

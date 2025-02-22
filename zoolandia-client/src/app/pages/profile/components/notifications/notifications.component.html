@@ -1,1 +1,68 @@
-<p>notifications works!</p>
+<div class="dashboard">
+  <table>
+    <thead>
+    <tr>
+      <th scope="col">Автор</th>
+      <th scope="col">Услуга</th>
+      <th scope="col">Дати</th>
+      <th scope="col">Час</th>
+      <th scope="col">Вид среща</th>
+      <th scope="col">Локация</th>
+      <th scope="col">Съобщение</th>
+      <th scope="col">Животно</th>
+      <th scope="col">Статус</th>
+      <th scope="col">Опции</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let booking of bookings">
+      <td>
+        <div class="author">
+          <img class="profile-image-small" [src]="booking.photoUrl">
+          {{ booking.firstName }} {{ booking.lastName }}
+        </div>
+      </td>
+      <td>
+        {{ booking.serviceName | translateService }}
+      </td>
+      <td>
+        от {{ booking.startDay }} до {{ booking.endDay }}
+      </td>
+      <td>
+        {{ booking.startTime }} - {{ booking.endTime }}
+      </td>
+      <td>
+        <span *ngIf="booking.meetingPlaceType == 1" class="pending">Взимане от собственика</span>
+        <span *ngIf="booking.meetingPlaceType == 2" class="disapproved">Оставяне у гледача</span>
+        <span *ngIf="booking.meetingPlaceType == 3" class="disapproved">Неутрално място</span>
+      </td>
+      <td>
+        {{  booking.meetingPlaceAddress || 'Зареждане...' }}
+      </td>
+      <td>
+        {{ booking.additionalDescription }}
+      </td>
+      <td (click)="viewPet(booking.ownerId)">
+        <img *ngIf="booking.petType === 'Dog'" src="/images/shared/dog.svg" alt="Куче">
+        <img *ngIf="booking.petType === 'Cat'" src="/images/shared/cat.svg" alt="Котка">
+      </td>
+      <td>
+        <span *ngIf="booking.status == 'Pending'" class="pending">Чакаща</span>
+        <span *ngIf="booking.status == 'Canceled'" class="disapproved">Отхвърлен</span>
+        <span *ngIf="booking.status == 'Disapproved'" class="disapproved">Неприета</span>
+        <span *ngIf="booking.status == 'Approved'" class="approved">Приета</span>
+      </td>
+      <td>
+        <button class="btn"><img src="/images/shared/answer-yes.png" alt="Одобри"></button>
+        <button class="btn"><img src="/images/shared/answer-no.png" alt="Отхвърли"></button>
+      </td>
+    </tr>
+    </tbody>
+    <!--    <tfoot>-->
+    <!--    <tr>-->
+    <!--      <th scope="row" colspan="2">Average age</th>-->
+    <!--      <td>33</td>-->
+    <!--    </tr>-->
+    <!--    </tfoot>-->
+  </table>
+</div>

@@ -15,4 +15,8 @@ export class BookingService {
   create(data:any): Observable<any> {
     return this.http.post<any>(this.bookingPath, data);
   }
+
+  getPending():Observable<any> {
+    return this.http.get<any>(this.bookingPath + '/pending');
+  }
 }
