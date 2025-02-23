@@ -26,6 +26,11 @@ const routes: Routes = [
     path: 'confirm-email',
     loadComponent: () =>
       import('./components/confirm-email/confirm-email.component').then((m) => m.ConfirmEmailComponent),
+  },
+  {
+    path: 'change-password',
+    loadComponent: () =>
+      import('./components/change-password/change-password.component').then((m) => m.ChangePasswordComponent),
   }
 ];
 
