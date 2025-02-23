@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleMapsService {
   private apiLoaded = false;
-  private baseUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
+  //private baseUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
 
-  constructor(
-    private http: HttpClient
-  ) {
+  constructor() {
     if (typeof google !== 'undefined' && google.maps) {
       this.apiLoaded = true;
     }
@@ -46,9 +43,5 @@ export class GoogleMapsService {
 
       document.head.appendChild(script);
     });
-  }
-
-  getFormattedAddress(placeId: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}?place_id=${placeId}&key=AIzaSyBtnT3myHIQx-EwUs6cDSIXnNkhNRdJpU4`);
   }
 }

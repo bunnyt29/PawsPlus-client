@@ -1,8 +1,8 @@
 <div class="dashboard">
-  <table>
+  <table *ngIf="profile">
     <thead>
     <tr>
-      <th scope="col">Автор</th>
+      <th scope="col" *ngIf="profile?.roles?.includes('Sitter')">Автор</th>
       <th scope="col">Услуга</th>
       <th scope="col">Дати</th>
       <th scope="col">Час</th>
@@ -16,7 +16,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let booking of bookings">
-      <td>
+      <td *ngIf="profile?.roles?.includes('Sitter')">
         <div class="author">
           <img class="profile-image-small" [src]="booking.photoUrl">
           {{ booking.firstName }} {{ booking.lastName }}
@@ -32,9 +32,9 @@
         {{ booking.startTime }} - {{ booking.endTime }}
       </td>
       <td>
-        <span *ngIf="booking.meetingPlaceType == 1" class="pending">Взимане от собственика</span>
-        <span *ngIf="booking.meetingPlaceType == 2" class="disapproved">Оставяне у гледача</span>
-        <span *ngIf="booking.meetingPlaceType == 3" class="disapproved">Неутрално място</span>
+        <span *ngIf="booking.meetingPlaceType == 1">Взимане от собственика</span>
+        <span *ngIf="booking.meetingPlaceType == 2">Оставяне у гледача</span>
+        <span *ngIf="booking.meetingPlaceType == 3">Неутрално място</span>
       </td>
       <td>
         {{  booking.meetingPlaceAddress || 'Зареждане...' }}
@@ -53,16 +53,10 @@
         <span *ngIf="booking.status == 'Approved'" class="approved">Приета</span>
       </td>
       <td>
-        <button class="btn"><img src="/images/shared/answer-yes.png" alt="Одобри"></button>
+        <button class="btn"><img src="/images/shared/answer-yes.png" alt="Одобри" *ngIf="profile?.roles?.includes('Sitter')"></button>
         <button class="btn"><img src="/images/shared/answer-no.png" alt="Отхвърли"></button>
       </td>
     </tr>
     </tbody>
-    <!--    <tfoot>-->
-    <!--    <tr>-->
-    <!--      <th scope="row" colspan="2">Average age</th>-->
-    <!--      <td>33</td>-->
-    <!--    </tr>-->
-    <!--    </tfoot>-->
   </table>
 </div>

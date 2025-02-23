@@ -49,28 +49,44 @@ export class MyProfileComponent implements OnInit, AfterViewInit {
     if (this.googleMap.googleMap) {
       const mapInstance = this.googleMap.googleMap;
 
-      const service = new google.maps.places.PlacesService(mapInstance);
+      // const service = new google.maps.places.PlacesService(mapInstance);
 
-      service.getDetails({
-        placeId: this.placeId,
-        fields: ['geometry', 'name', 'formatted_address']
-      }, (place, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && place?.geometry?.location) {
-          this.formattedAddress = place.formatted_address;
-          console.log(place.formatted_address)
-          console.log(this.formattedAddress)
-          const location = place.geometry.location;
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ placeId: this.placeId }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
+          this.formattedAddress = results[0].formatted_address;
+          const location = results[0].geometry.location;
           this.mapOptions = {
             ...this.mapOptions,
             center: location,
             zoom: 15
           };
-
           this.markerPosition = { lat: location.lat(), lng: location.lng() };
         } else {
-          console.error('Грешка при взимане на профила.', status);
+          this.formattedAddress = 'Address not found';
         }
       });
+
+      // service.getDetails({
+      //   placeId: this.placeId,
+      //   fields: ['geometry', 'name', 'formatted_address']
+      // }, (place, status) => {
+      //   if (status === google.maps.places.PlacesServiceStatus.OK && place?.geometry?.location) {
+      //     this.formattedAddress = place.formatted_address;
+      //     console.log(place.formatted_address)
+      //     console.log(this.formattedAddress)
+      //     const location = place.geometry.location;
+      //     this.mapOptions = {
+      //       ...this.mapOptions,
+      //       center: location,
+      //       zoom: 15
+      //     };
+      //
+      //     this.markerPosition = { lat: location.lat(), lng: location.lng() };
+      //   } else {
+      //     console.error('Грешка при взимане на профила.', status);
+      //   }
+      // });
     }
   }
 }

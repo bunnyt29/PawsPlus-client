@@ -44,7 +44,8 @@ const routes: Routes = [
       },
       {
         path: 'notifications',
-        component: NotificationsComponent
+        component: NotificationsComponent,
+        resolve: { profile: ProfileResolver }
       }
     ]
   }
