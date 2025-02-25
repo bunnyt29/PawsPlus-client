@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit{
           } else {
             this.router.navigate(['/profile/edit']);
           }
-        } else {
+        }  else {
           this.router.navigate(['/profile/my-profile-details']);
         }
       }
