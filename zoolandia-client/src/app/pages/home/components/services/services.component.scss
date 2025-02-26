@@ -1,0 +1,116 @@
+@use '../../../../../style/abstracts/typography';
+@use '../../../../../style/abstracts/colors';
+
+.services-holder {
+  margin-bottom: 320px;
+  position: relative;
+
+  .heading {
+
+    h2 {
+      width: 20ch;
+
+      .orange {
+        color: colors.$accent-color;
+      }
+    }
+  }
+
+  .services {
+    display: flex;
+
+    .service {
+      background-color: colors.$secondary-text-color;
+      max-width: 468px;
+
+      padding: 37px 60px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .heading {
+        display: flex;
+        align-items: center;
+
+        .service-icon {
+          background-color: white;
+          border-radius: 50%;
+          padding: 15px;
+          width: 80px;
+          height: 80px;
+        }
+
+        .title {
+          display: flex;
+          flex-direction: column;
+          margin-left: 16px;
+          justify-content: center;
+          color: white;
+        }
+      }
+    }
+
+    .service-vertical {
+      max-width: 340px;
+      padding: 26px;
+
+      .heading {
+        flex-direction: column;
+        align-items: start;
+
+        .title {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .service-walking {
+      margin-top: 160px;
+    }
+
+    .service-daily-care {
+      background-color: #E29D50;
+      margin-bottom: 54px;
+      margin-left: 47px;
+      z-index: 20;
+    }
+
+    .service-boarding {
+      background-color: colors.$approve-color;
+      margin-bottom: 160px;
+      margin-top: -160px;
+      margin-left: 47px;
+    }
+
+    .service-training {
+      background-color: colors.$accent-color;
+      position: absolute;
+      bottom: -180px;
+      right: 360px;
+
+      .heading {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+
+        .title {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  h3 {
+    color: white;
+  }
+
+  span {
+    color: white;
+  }
+
+  p {
+    color: white;
+    font-weight: typography.$bold;
+    text-align: justify;
+  }
+}

@@ -1,0 +1,123 @@
+@use '../../../../../style/abstracts/typography';
+@use '../../../../../style/abstracts/colors';
+
+.become-sitter {
+  background-color: colors.$secondary-background;
+  position: relative;
+
+  .paw-decoration {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+  }
+
+  .become-sitter-container {
+    display: flex;
+    gap: 100px;
+    padding-block: 60px;
+
+    .left {
+      background-color: #BF632D;
+      border-radius: 30px;
+      padding: 40px 70px;
+      max-width: 465px;
+
+      .image-holder {
+        display: flex;
+        justify-content: center;
+        background-color: colors.$primary-background;
+        border-radius: 30px;
+        margin-bottom: 20px;
+
+        .sitter-image {
+          margin-bottom: -24px;
+        }
+      }
+
+      .sitter-name {
+        color: white;
+        font-size: typography.$font-size-2xl;
+        font-weight: typography.$bold;
+        margin-bottom: 12px;
+      }
+
+      p {
+        color: white;
+        font-weight: typography.$bold;
+        margin-bottom: 24px;
+        text-align: justify;
+      }
+
+      span {
+        color: white;
+      }
+
+      .specialties {
+        margin-top: 8px;
+        display: flex;
+        gap: 10px;
+
+        .service {
+          border-radius: 20px;
+          background-color: colors.$primary-text-color;
+          padding: 5px 10px;
+
+          span {
+            color: white;
+          }
+        }
+      }
+    }
+
+    .right {
+
+      .become-sitter-title {
+        font-size: typography.$font-size-2xl;
+        margin-bottom: 24px;
+      }
+
+      .become-sitter-description {
+        font-weight: typography.$bold;
+        margin-bottom: 24px;
+      }
+
+
+      .steps {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-left: 3px dashed colors.$accent-color;
+        gap: 48px;
+
+        .step {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          padding-left: 40px;
+
+          .step-number {
+            position: absolute;
+            top: calc(50% - 50px);
+            left: -26px;
+            display: grid;
+            place-items: center;
+            background-color: colors.$secondary-background;
+            border: 3px dashed colors.$accent-color;
+            width: 50px;
+            height: 50px;
+            padding-top: 3px;
+            border-radius: 50%;
+            z-index: 10;
+            font-size: typography.$font-size-lg;
+            color: colors.$primary-text-color;
+          }
+
+          .step-name {
+            font-size: typography.$font-size-md
+          }
+        }
+      }
+    }
+  }
+
+}
