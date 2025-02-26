@@ -60,7 +60,6 @@ export class NavigationMenuComponent implements OnInit{
 
   checkAuthentication() : void {
     this.isLogged = this.authService.isAuthenticated();
-    console.log(this.isLogged)
     if (this.isLogged) {
       this.profileService.getMine().subscribe(res => {
         this.profile = res;

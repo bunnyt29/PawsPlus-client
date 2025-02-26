@@ -27,7 +27,6 @@ export const routes: Routes = [
     path: "profile",
     // data: { preload: true },
     loadChildren: () => import("./pages/profile/profile.module").then((m) => m.ProfileModule),
-    canActivate: [AuthGuard]
   },
   {
     path: "pet",

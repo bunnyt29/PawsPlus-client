@@ -9,6 +9,7 @@ import {GoogleAutocompleteComponent} from '../../../../shared/components/google-
 import {GoogleMapsModule} from '@angular/google-maps';
 import {debounceTime, Subject} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-search',
@@ -46,7 +47,7 @@ export class SearchComponent implements OnInit{
   ];
 
   mapOptions: google.maps.MapOptions = {
-    mapId: "4186b8dc6f3cfdc8",
+    mapId: environment.googleMapsMapId,
     center: { lat: 42.68841949999999, lng: 23.2507638 },
     zoom: 15,
     disableDefaultUI: true
@@ -92,7 +93,8 @@ export class SearchComponent implements OnInit{
     this.route.queryParams.subscribe(queryParams => {
       this.paramsObject = { ...this.paramsObject, ...queryParams };
       this.searchParams = Object.assign(this.searchParams, queryParams);
-      this.selectedOption = this.searchParams.serviceType;
+      this.selectedOption = this.serviceOptions.find(option => option.value.toString() === this.searchParams.serviceType);
+
       const latitude = parseFloat(queryParams['latitude']);
       const longitude = parseFloat(queryParams['longitude']);
 
@@ -109,6 +111,8 @@ export class SearchComponent implements OnInit{
           center: { lat: latitude, lng: longitude }
         };
       }
+
+      this.onSearch();
     });
   }
 
