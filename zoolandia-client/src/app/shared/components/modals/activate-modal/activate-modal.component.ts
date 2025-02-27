@@ -36,6 +36,7 @@ export class ActivateModalComponent {
     this.postService.activate(data).subscribe( () => {
       this.toastr.success('Успешно активирахте профила си! Заявката е изпратена до администратор.');
       this.closeModal.emit();
+      location.reload();
     })
   }
 }

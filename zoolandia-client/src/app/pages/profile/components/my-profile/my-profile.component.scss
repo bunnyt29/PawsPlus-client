@@ -1,6 +1,40 @@
 @use '../../../../../style/abstracts/typography';
 @use '../../../../../style/abstracts/colors';
 
-.right-button-holder {
+.status {
   margin-bottom: 50px;
+  width: 100%;
+  padding: 5px;
+  border-radius: 3px;
+
+  span {
+    font-weight: typography.$semi-bold;
+  }
+}
+
+.not-activated {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pending {
+  background-color: #808080;
+  color: grey;
+}
+
+.approved {
+  display: flex;
+  align-items: center;
+}
+
+.approved::before {
+  content: "✔ ";
+  color: colors.$approve-color;
+  font-size: 24px;
+  margin-right: 5px;
+}
+
+.disapproved {
+  background-color: colors.$danger-color;
 }

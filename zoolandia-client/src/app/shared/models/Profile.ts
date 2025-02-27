@@ -12,4 +12,5 @@ export interface Profile {
     longitude: number
   }
   roles?: Array<string>;
+  postStatus?: number;
 }

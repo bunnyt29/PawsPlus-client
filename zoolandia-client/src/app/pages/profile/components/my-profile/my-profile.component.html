@@ -1,7 +1,21 @@
 <img class="profile-decoration-bottom-right" src="/images/desktop/profile/profile-bottom-right-blob.svg" alt="">
 <div class="my-profile-holder">
-  <div class="right-button-holder">
-    <button class="secondary-button-small" (click)="openActivateModal(profile.id)">Активирай профила</button>
+  <div class="profileStatus">
+    <div class="status not-activated" *ngIf="profile?.postStatus == 1">
+      <span>Профилът ти все още не е видим за собствениците на домашни любимци! Поправи тази грешка като го активираш!</span>
+      <div class="right-button-holder">
+        <button class="secondary-button-small" (click)="openActivateModal(profile.id)">Активирай профила</button>
+      </div>
+    </div>
+    <div class="status pending" *ngIf="profile?.postStatus == 2">
+      <span>Профилът ти е в процес на одобрение! Не се тревожи – съвсем скоро ще бъдеш готов да посрещнеш първите си клиенти!</span>
+    </div>
+    <div class="status disapproved" *ngIf="profile?.postStatus == 3">
+      <span>За съжаление, профилът ти не беше одобрен. Но не се отказвай! Помисли върху възможните причини и, ако смяташ, че е станало недоразумение, свържи се с нашия администратор – ще се радваме да помогнем!</span>
+    </div>
+    <div class="status approved" *ngIf="profile?.postStatus == 4">
+      <span>Одобрен</span>
+    </div>
   </div>
   <a routerLink="/profile/edit" class="edit"><img src="/images/shared/edit.svg" alt="edit"></a>
   <div class="my-profile-head">
