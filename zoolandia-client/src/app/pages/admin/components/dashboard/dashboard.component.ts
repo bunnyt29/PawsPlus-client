@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import {CommonModule, NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 import {PostService} from '../../../post/services/post.service';
 import {TranslateServicePipe} from '../../../../shared/pipes/translate-service.pipe';
@@ -72,12 +72,13 @@ export class DashboardComponent implements OnInit {
   }
 
   viewPost(profileId: string) {
-    this.router.navigate(['profile/details'], { queryParams: { id: profileId }});
+    this.router.navigate(['profile/preview'], { queryParams: { id: profileId }});
   }
 
   approve(postId: any) {
-    this.postService.approve(postId).subscribe(res => {
-      this.toastr.success('Активирахте профила!')
+    this.postService.approve(postId).subscribe(() => {
+      this.toastr.success('Активирахте профила!');
+      location.reload();
     });
   }
 
@@ -85,7 +86,7 @@ export class DashboardComponent implements OnInit {
     this.modalService.open({
       title: `Причина за неодобрение`,
       description: 'Опиши причините за неодобрение по ясен и конструктивен начин, така че получателят да разбере конкретно върху какво трябва да работи и как да подобри представянето си.',
-      action: 'disapprove',
+      action: 'disapprovePost',
       data: postId,
       discard: () => console.log('Delete cancelled'),
     });

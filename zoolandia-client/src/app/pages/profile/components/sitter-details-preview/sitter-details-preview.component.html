@@ -1,0 +1,194 @@
+<div class="my-profile-holder container" *ngIf="data">
+  <a routerLink="/admin/dashboard"><-- Обратно към администраторския панел</a>
+  <div class="my-profile-head">
+    <div class="profile-image">
+      <img [src]="data.photoUrl" alt="Your profile image">
+    </div>
+    <div class="my-profile-names">
+      <span>{{ data.firstName }}</span>
+      <span>{{ data.lastName }}</span>
+      <div class="short-services">
+        <span>Специалист по:</span>
+        <div *ngFor="let service of data.post.services">
+          <span *ngIf="service.name === 'DogWalking'" class="sitter-tag">разходки</span>
+          <span *ngIf="service.name === 'DailyCare'" class="sitter-tag">дневни грижи</span>
+          <span *ngIf="service.name === 'PetSitting'" class="sitter-tag">престой</span>
+          <span *ngIf="service.name === 'Training'" class="sitter-tag">тренировки</span>
+        </div>
+      </div>
+    </div>
+    <div class="my-profile-pets">
+      <span>Гледач на: </span>
+      <div class="sitter-pets">
+        <img *ngIf="data.post.pets.includes(1)" src="/images/shared/dog.svg" alt="Иконка за куче">
+        <img *ngIf="data.post.pets.includes(2)" src="/images/shared/cat.svg" alt="Иконка за котка">
+      </div>
+      <div class="sitter-pets-weights">
+        <span class="sitter-tag" *ngIf="data.post.weights.includes(1)">малки</span>
+        <span class="sitter-tag" *ngIf="data.post.weights.includes(2)">средни</span>
+        <span class="sitter-tag" *ngIf="data.post.weights.includes(3)">големи</span>
+        <span class="sitter-tag" *ngIf="data.post.weights.includes(4)">мноого големи</span>
+      </div>
+    </div>
+  </div>
+  <div class="my-profile-main">
+    <div class="heading">
+      <h1>Добре дошъл в профила на {{ data.firstName }}!</h1>
+      <p>{{ data.description }}</p>
+    </div>
+    <div class="post-information">
+      <div class="left-column">
+        <div class="post-item services">
+          <span class="post-item-heading">{{ data.firstName }} предлага</span>
+          <div class="services">
+            <div *ngFor="let service of data.post.services">
+              <div *ngIf="service.name === 'DogWalking'" (click)="toggleAvailability(service)" class="service">
+                <div class="service-top">
+                  <div class="service-top-item">
+                    <img src="/images/desktop/post/service-walking.svg" alt="Иконка на човек, разхождащ куче">
+                    <div class="service-text">
+                      <span class="text">Разходки</span>
+                      <span>в квартала</span>
+                    </div>
+                  </div>
+                  <div class="service-top-item">
+                    <div class="service-text service-price">
+                      <span class="text">{{ service.price }} лв.</span>
+                      <span>за разходка</span>
+                    </div>
+                    <img class="arrow-down" src="/images/shared/dropdown-arrow.svg" alt="Иконка за отваряне на услугата">
+                  </div>
+                </div>
+                <div class="sitter-availability" [class.visible]="service.showAvailability">
+                  <p-calendar
+                    [ngModel]="service.availableDates"
+                    selectionMode="multiple"
+                    [dateFormat]="'yy-mm-dd'"
+                    [readonlyInput]="true"
+                    [inline]="true">
+                  </p-calendar>
+                </div>
+              </div>
+              <div *ngIf="service.name === 'DailyCare'" (click)="toggleAvailability(service)" class="service">
+                <div class="service-top">
+                  <div class="service-top-item">
+                    <img src="/images/desktop/post/service-daily-care.svg" alt="Иконка за дневни грижи">
+                    <div class="service-text">
+                      <span class="text">Дневни грижи</span>
+                      <span>в твоя дом</span>
+                    </div>
+                  </div>
+                  <div class="service-top-item">
+                    <div class="service-text service-price">
+                      <span class="text">{{ service.price }} лв.</span>
+                      <span>за ден</span>
+                    </div>
+                    <img class="arrow-down" src="/images/shared/dropdown-arrow.svg" alt="Иконка за отваряне на услугата">
+                  </div>
+                </div>
+                <div class="sitter-availability" [class.visible]="service.showAvailability">
+                  <p-calendar
+                    [ngModel]="service.availableDates"
+                    selectionMode="multiple"
+                    [dateFormat]="'yy-mm-dd'"
+                    [readonlyInput]="true"
+                    [inline]="true">
+                  </p-calendar>
+                </div>
+              </div>
+              <div *ngIf="service.name === 'PetSitting'" (click)="toggleAvailability(service)" class="service">
+                <div class="service-top">
+                  <div class="service-top-item">
+                    <img src="/images/desktop/post/service-pet-boarding.svg" alt="Иконка за престой">
+                    <div class="service-text">
+                      <span class="text">Престой</span>
+                      <span>в дома на гледача</span>
+                    </div>
+                  </div>
+                  <div class="service-top-item">
+                    <div class="service-text service-price">
+                      <span class="text">{{ service.price }} лв.</span>
+                      <span>за ден</span>
+                    </div>
+                    <img class="arrow-down" src="/images/shared/dropdown-arrow.svg" alt="Иконка за отваряне на услугата">
+                  </div>
+                </div>
+                <div class="sitter-availability" [class.visible]="service.showAvailability">
+                  <p-calendar
+                    [ngModel]="service.availableDates"
+                    selectionMode="multiple"
+                    [dateFormat]="'yy-mm-dd'"
+                    [readonlyInput]="true"
+                    [inline]="true">
+                  </p-calendar>
+                </div>
+              </div>
+              <div *ngIf="service.name === 'Training'" (click)="toggleAvailability(service)" class="service">
+                <div class="service-top">
+                  <div class="service-top-item">
+                    <img src="/images/desktop/post/service-pet-training.svg" alt="Иконка за тренировки">
+                    <div class="service-text">
+                      <span class="text">Тренировка</span>
+                      <span>с опитен гледач</span>
+                    </div>
+                  </div>
+                  <div class="service-top-item">
+                    <div class="service-text service-price">
+                      <span class="text">{{ service.price }} лв.</span>
+                      <span>за тренировка</span>
+                    </div>
+                    <img class="arrow-down" src="/images/shared/dropdown-arrow.svg" alt="Иконка за отваряне на услугата">
+                  </div>
+                </div>
+                <div class="sitter-availability" [class.visible]="service.showAvailability">
+                  <p-calendar
+                    [ngModel]="service.availableDates"
+                    selectionMode="multiple"
+                    [dateFormat]="'yy-mm-dd'"
+                    [readonlyInput]="true"
+                    [inline]="true">
+                  </p-calendar>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-column">
+        <div class="post-item">
+          <span class="post-item-heading">Приема</span>
+          <div class="pets">
+            <img *ngIf="data.post.pets.includes(2)" src="/images/shared/cat.svg" alt="Иконка за котка">
+            <!--            <img *ngIf="data.post.pets.includes(1)" src="/images/shared/dog.svg" alt="Иконка за котка">-->
+            <div *ngIf="data.post.pets.includes(1)" class="pets-dog">
+              <img src="/images/shared/dog.svg" alt="Иконка за куче">
+              <div class="pets-dog-weights">
+                <span class="sitter-tag" *ngIf="data.post.weights.includes(1)">малки (0-7 кг.)</span>
+                <span class="sitter-tag" *ngIf="data.post.weights.includes(2)">средни (8-20 кг.)</span>
+                <span class="sitter-tag" *ngIf="data.post.weights.includes(3)">големи (21-50 кг.)</span>
+                <span class="sitter-tag" *ngIf="data.post.weights.includes(4)">мноого големи (50+ кг.)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="post-item">
+          <span class="post-item-heading">Местоположение</span>
+          <div class="location">
+            <google-map height="300px" width="500px" [options]="mapOptions">
+              <map-circle *ngIf="markerPosition"
+                          [center]="markerPosition"
+                          [radius]="circleRadius"
+                          [options]="circleOptions">
+              </map-circle>
+            </google-map>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="options">
+    <button class="btn approve" (click)="approve(data.post.id)">Одобри</button>
+    <button class="btn disapprove" (click)="openReasonForRejectModal(data.post.id)">Отхвърли заявката</button>
+  </div>
+</div>
+<app-wrapper-modal></app-wrapper-modal>

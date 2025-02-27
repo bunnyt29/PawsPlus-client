@@ -3,15 +3,16 @@ import {ProfileService} from '../../services/profile.service';
 import {Profile} from '../../../../shared/models/Profile';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {GoogleMap, MapMarker} from '@angular/google-maps';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
+import {ModalService} from '../../../../shared/services/modal.service';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
   imports: [
+    CommonModule,
     RouterLink,
     GoogleMap,
-    NgIf,
     MapMarker
   ],
   templateUrl: './my-profile.component.html',
@@ -34,6 +35,7 @@ export class MyProfileComponent implements OnInit, AfterViewInit {
 
   constructor(
     private profileService: ProfileService,
+    private modalService: ModalService,
     private route: ActivatedRoute
   ) {}
 
@@ -88,5 +90,14 @@ export class MyProfileComponent implements OnInit, AfterViewInit {
       //   }
       // });
     }
+  }
+
+  openActivateModal() {
+    this.modalService.open({
+      title: `Активирай профила си`,
+      description: 'Профилът ти ще бъде изпратен за одобрение! Администратор ще го прегледа и ще се свърже с теб по имейл, за да уговорите кратко интервю. Това е стандартна процедура за потвърждение на самоличността и проверка на съответствието с изискванията на платформата.',
+      action: 'activate',
+      discard: () => console.log('Delete cancelled'),
+    });
   }
 }

@@ -195,7 +195,10 @@
           <span>Години</span>
         </div>
         <div *ngIf="pet.petType === 1" class="main-detail-holder">
-          <span class="main-detail">50 кг.</span>
+          <span class="main-detail" *ngIf="pet.weight == 1">0-8 кг.</span>
+          <span class="main-detail" *ngIf="pet.weight == 2">8-20 кг.</span>
+          <span class="main-detail" *ngIf="pet.weight == 3">21-50 кг.</span>
+          <span class="main-detail" *ngIf="pet.weight == 4">50+ кг.</span>
           <span>Тегло</span>
         </div>
       </div>

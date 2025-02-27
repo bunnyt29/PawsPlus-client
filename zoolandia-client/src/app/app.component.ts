@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
   hideNavbar = false;
 
   private hiddenRoutes: string[] = ['/profile/edit', '/post/multi-step-form', '/pet/create', '/access-denied', '/404'];
-  private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/admin', '/auth'];
+  private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/admin', '/auth', '/profile/preview'];
 
   constructor(
     private router: Router,

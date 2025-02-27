@@ -9,7 +9,7 @@ export class ModalConfig {
   data?: any = null;
   type?: string = '';
   // Action determines which modal to show: 'delete', 'edit', 'add', 'details', or 'book'
-  action?: 'delete' | 'edit' | 'add' | 'details' | 'book' | 'disapprove' = 'add';
+  action?: 'delete' | 'edit' | 'add' | 'details' | 'book' | 'disapprovePost' | 'disapproveBooking'| 'cancel' | 'activate' = 'add';
 
   constructor(
     title: string = '',
@@ -18,7 +18,7 @@ export class ModalConfig {
     discard?: () => void,
     data?: any,
     type: string = '',
-    action: 'delete' | 'edit' | 'add' | 'details' | 'book'| 'disapprove' = 'add'
+    action: 'delete' | 'edit' | 'add' | 'details' | 'book'| 'disapprovePost'| 'disapproveBooking'| 'cancel' | 'activate' = 'add'
   ) {
     this.title = title;
     this.description = description;

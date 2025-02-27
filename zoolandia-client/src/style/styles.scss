@@ -393,6 +393,7 @@ textarea {
 
       p {
         width: 80%;
+        font-size: typography.$font-size-md;
         text-align: justify;
       }
 
@@ -654,7 +655,7 @@ p-calendar .p-datepicker-calendar td {
   &-dialog {
     position: relative;
     padding: 20px 30px;
-    max-width: 90%;
+    width: 50vw;
     background-color: white;
     border-radius: 20px;
     border: 1px solid rgb(227, 227, 227);
@@ -997,5 +998,265 @@ p-calendar .p-datepicker-calendar td {
         }
       }
     }
+  }
+}
+
+//Profile details
+
+.my-profile-holder {
+  position: relative;
+  padding-inline: 0;
+
+  .my-profile-head {
+
+    .short-services {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+
+      span {
+        font-size: typography.$font-size-sm;
+        font-weight: typography.$semi-bold;
+      }
+    }
+
+    .my-profile-pets {
+      position: absolute;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      span {
+        font-weight: typography.$semi-bold;
+      }
+
+      .sitter-pets {
+        display: flex;
+        gap: 25px;
+      }
+
+      .sitter-pets-weights {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+      }
+    }
+
+    .sitter-tag {
+      padding: 10px;
+      background: colors.$accent-color;
+      border-radius: 20px;
+    }
+  }
+
+  .my-profile-main {
+    margin-bottom: 60px;
+
+    .heading {
+      margin: 40px auto;
+      text-align: center;
+
+      h1 {
+        font-size: typography.$font-size-2xl;
+      }
+
+      p {
+        margin-top: 20px;
+        width: 70ch;
+        font-size: typography.$font-size-md;
+      }
+
+    }
+
+    .post-information {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+
+      .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: 80px;
+      }
+
+      .post-item {
+        display: flex;
+        flex-direction: column;
+
+        &-heading {
+          margin-bottom: 27px;
+          font-size: typography.$font-size-xl;
+          font-weight: typography.$bold;
+        }
+
+        .services {
+          display: flex;
+          flex-direction: column;
+          gap: 35px;
+
+          .service {
+            max-width: 400px;
+            padding: 30px 15px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid colors.$primary-text-color;
+            border-radius: 10px;
+            cursor: pointer;
+
+            &-top {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              img {
+                width: 50px;
+              }
+
+              &-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .arrow-down {
+                  width: 30px;
+                  cursor: pointer;
+                }
+              }
+
+              .service-text {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                .text {
+                  font-size: typography.$font-size-md;
+                  font-weight: typography.$bold;
+                }
+
+                span {
+                  font-size: typography.$font-size-sm;
+                  font-weight: typography.$medium;
+                }
+              }
+
+              .service-price {
+                align-items: flex-end;
+              }
+            }
+
+            .right-button-holder {
+              margin-top: 20px;
+
+              button {
+                position: relative;
+                font-weight: typography.$bold;
+                background: transparent;
+                color: colors.$primary-text-color;
+                transition: all 0.2s ease-in;
+
+                &::after {
+                  content: '';
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 0;
+                  height: 2px;
+                  background: colors.$accent-color;
+                  transition: width 0.4s ease-in-out;
+                  border-radius: 2px;
+                }
+              }
+
+              button:hover {
+
+                &::after {
+                  width: 100%;
+                }
+              }
+            }
+
+            .sitter-availability {
+              margin-top: 20px;
+              opacity: 0;
+              display: none;
+              visibility: hidden;
+              transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+
+              &.visible {
+                display: flex;
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+              }
+            }
+          }
+
+          .service:hover {
+            border: 1px solid colors.$accent-color;
+            box-shadow: 0 0 10px rgba(colors.$accent-color, 0.5);
+            transition: all 0.2s ease-in-out;
+          }
+        }
+
+        .pets {
+          display: flex;
+          gap: 10px;
+
+          &-dog {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            &-weights {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              font-weight: typography.$bold;
+            }
+          }
+
+          img {
+            width: 100px;
+          }
+        }
+
+        .location {
+          address {
+            margin-bottom: 20px;
+          }
+        }
+      }
+    }
+
+    .button-holder {
+      padding-block: 40px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+
+.floating-book-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 15px 30px;
+  font-size: typography.$font-size-md;
+  font-weight: typography.$bold;
+  background-color: colors.$accent-color;
+  color: colors.$primary-text-color;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken(colors.$accent-color, 10%);
+    transform: translateY(-5px);
   }
 }

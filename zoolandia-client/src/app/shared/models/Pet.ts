@@ -11,7 +11,7 @@ export interface Pet {
   };
   gender: Gender;
   breeds: Array<any>;
-  weight: string;
+  weight: number;
   personality?: {
     temperament: string;
     activityLevel: string;

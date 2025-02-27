@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import {FormArray, FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
 
 import { ImageUploadComponent } from '../../../../shared/components/image-upload/image-upload.component';
 import { FileService } from '../../../../core/services/file.service';
@@ -59,7 +59,7 @@ export class CreateComponent implements OnInit{
       }),
       gender: [Gender.Male, Validators.required],
       breeds: [null, Validators.required],
-      weight: ['', Validators.required],
+      weight: [null, Validators.required],
       personality: this.fb.group({
         temperament: [''],
         activityLevel: [''],

@@ -21,6 +21,12 @@ const routes: Routes = [
       import('./components/details/details.component').then((m) => m.DetailsComponent)
   },
   {
+    path: 'preview',
+    loadComponent: () =>
+      import('./components/sitter-details-preview/sitter-details-preview.component').then((m) => m.SitterDetailsPreviewComponent),
+    data: { allowedRoles: ['Administrator'] }
+  },
+  {
     path: 'my-profile-details',
     component: MyProfileLayoutComponent,
     children: [

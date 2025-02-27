@@ -44,6 +44,7 @@ export class DetailsComponent implements OnInit{
       this.pet = res;
       this.petId = res.id;
       this.activityLevel = Number(this.pet.personality?.activityLevel);
+      console.log(this.pet.weight)
     })
   }
 

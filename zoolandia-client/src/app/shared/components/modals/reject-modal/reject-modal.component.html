@@ -14,15 +14,31 @@
     </div>
     <div class="modal-body" [formGroup]="rejectForm">
       <p>{{ config.description }}</p>
-      <textarea class="main-textarea" formControlName="stateReason"></textarea>
+      <textarea *ngIf="config.action === 'disapprovePost'" class="main-textarea" formControlName="stateReason"></textarea>
     </div>
     <div class="modal-footer">
-      <button
+      <button *ngIf="config.action === 'disapprovePost'"
         type="button"
         class="btn modal-button disapprove"
-        (click)="disapprove(config.data)"
+        (click)="disapprovePost(config.data)"
       >
         Неодобри
+      </button>
+
+      <button *ngIf="config.action === 'disapproveBooking'"
+              type="button"
+              class="btn modal-button disapprove"
+              (click)="disapproveBooking(config.data)"
+      >
+        Неодобри
+      </button>
+
+      <button *ngIf="config.action === 'cancel'"
+              type="button"
+              class="btn modal-button disapprove"
+              (click)="cancelBooking(config.data)"
+      >
+        Откажи
       </button>
 
       <button

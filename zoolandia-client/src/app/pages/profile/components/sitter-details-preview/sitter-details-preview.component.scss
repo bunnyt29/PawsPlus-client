@@ -1,0 +1,34 @@
+@use '../../../../../style/abstracts/colors';
+@use '../../../../../style/abstracts/typography';
+
+.my-profile-holder {
+  padding-bottom: 50px;
+
+  .my-profile-head {
+    margin-top: 50px;
+  }
+
+  .options {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+
+    button {
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: typography.$semi-bold;
+      color: white;
+    }
+
+    .approve {
+      background-color: colors.$approve-color;
+    }
+
+    .disapprove {
+      background-color: colors.$danger-darker-color;
+    }
+
+  }
+}
+

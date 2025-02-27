@@ -53,10 +53,12 @@
         <span *ngIf="booking.status == 'Approved'" class="approved">Приета</span>
       </td>
       <td>
-        <button class="btn"><img src="/images/shared/answer-yes.png" alt="Одобри" *ngIf="profile?.roles?.includes('Sitter')"></button>
-        <button class="btn"><img src="/images/shared/answer-no.png" alt="Отхвърли"></button>
+        <button class="btn"><img src="/images/shared/answer-yes.png" alt="Одобри" *ngIf="profile?.roles?.includes('Sitter')" (click)="approve(booking.id, booking.ownerId)"></button>
+        <button class="btn"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Sitter')" (click)="openReasonForRejectModal('disapprove', booking.id, booking.ownerId)"></button>
+        <button class="btn"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Owner')" (click)="openReasonForRejectModal('cancel', booking.id, booking.sitterId)"></button>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
+<app-wrapper-modal></app-wrapper-modal>

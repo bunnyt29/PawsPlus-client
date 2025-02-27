@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "pawsplus-7129f"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }

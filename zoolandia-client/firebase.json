@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "dist/zoolandia-client/browser",
+    "site": "pawsplus-7129f",
     "ignore": [
       "firebase.json",
       "**/.*",
