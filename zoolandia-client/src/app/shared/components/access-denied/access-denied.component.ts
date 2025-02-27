@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-access-denied',
@@ -8,5 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './access-denied.component.scss'
 })
 export class AccessDeniedComponent {
+  constructor(private location: Location)
+  {}
 
+  goBack() {
+    this.location.back();
+  }
 }
