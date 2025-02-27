@@ -9,6 +9,7 @@
     position: absolute;
     bottom: 0px;
     right: 0;
+    width: 120px;
   }
 
   .become-sitter-container {
@@ -77,8 +78,9 @@
       }
 
       .become-sitter-description {
-        font-weight: typography.$bold;
         margin-bottom: 24px;
+        font-weight: typography.$bold;
+        text-align: justify;
       }
 
 
