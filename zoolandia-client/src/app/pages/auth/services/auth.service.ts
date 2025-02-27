@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {CookieService} from 'ngx-cookie-service';
 
 import {environment} from '../../../../environments/environment';
@@ -10,6 +10,8 @@ import {environment} from '../../../../environments/environment';
 })
 export class AuthService {
   private authPath = environment.apiUrl + '/identity';
+  private authState = new BehaviorSubject<boolean>(this.isAuthenticated());
+
   constructor(
     private http: HttpClient,
     private cookieService: CookieService
@@ -24,7 +26,8 @@ export class AuthService {
   }
 
   logout(): void {
-    this.cookieService.delete('auth');
+    this.cookieService.delete('auth', '/');
+    this.authState.next(false);
   }
 
   saveToken(token: any) {
@@ -32,11 +35,19 @@ export class AuthService {
   }
 
   getToken() {
-    return this.cookieService.get('auth');
+    if (this.cookieService === undefined) {
+      return 'false'
+    } else {
+      return this.cookieService.get('auth');
+    }
   }
 
-  isAuthenticated() {
-    return !!this.getToken();
+  isAuthenticated(): boolean {
+    if (this.cookieService === undefined) {
+      return false;
+    } else {
+      return !!this.cookieService.get('auth');
+    }
   }
 
   confirmEmail(userId: string, token: string) {

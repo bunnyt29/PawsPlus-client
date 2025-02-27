@@ -15,6 +15,7 @@ import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideToastr} from 'ngx-toastr';
 import {ErrorInterceptor} from './core/interceptors/error-interceptor.service';
 import {AuthGuard} from './core/guards/auth.guard';
+import {CookieService} from 'ngx-cookie-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,6 +32,10 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true
+    },
+    {
+      provide: CookieService,
+      useClass: CookieService
     },
     provideAnimations(),
     provideToastr()

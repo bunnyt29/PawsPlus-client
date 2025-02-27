@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {NavigationMenuComponent} from './shared/components/navigation-menu/navigation-menu.component';
 import {CommonModule} from '@angular/common';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +11,17 @@ import {CommonModule} from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'zoolandia-client';
   hideNavbar = false;
 
   private hiddenRoutes: string[] = ['/profile/edit', '/post/multi-step-form', '/pet/create', '/access-denied', '/404'];
   private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/admin', '/auth'];
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private renderer: Renderer2
+  ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.hideNavbar =
@@ -25,5 +29,17 @@ export class AppComponent {
           this.hiddenRoutePrefixes.some(prefix => event.url.startsWith(prefix));
       }
     });
+  }
+
+  ngOnInit() {
+    this.loadGoogleMaps();
+  }
+
+  private loadGoogleMaps() {
+    const script = this.renderer.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places,geometry&language=bg`;
+    script.async = true;
+    script.defer = true;
+    this.renderer.appendChild(document.head, script);
   }
 }

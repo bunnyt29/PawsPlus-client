@@ -12,6 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 import {GoogleAutocompleteComponent} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
 import {Observable} from 'rxjs';
 import {GoogleMap, MapMarker} from '@angular/google-maps';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-edit',
@@ -37,7 +38,7 @@ export class EditComponent implements OnInit, AfterViewInit {
   markerPosition: google.maps.LatLngLiteral | null = null;
 
   mapOptions: google.maps.MapOptions = {
-    mapId: "4186b8dc6f3cfdc8",
+    mapId: environment.googleMapsMapId,
     center: { lat: 42.68841949999999, lng: 23.2507638 },
     zoom: 13,
     disableDefaultUI: true

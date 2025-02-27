@@ -6,12 +6,14 @@ import {NotificationsComponent} from './components/notifications/notifications.c
 import {MyPostComponent} from '../post/components/my-post/my-post.component';
 import {ProfileResolver} from './services/profile-resolver.guard';
 import {MyPetsComponent} from '../pet/components/my-pets/my-pets.component';
+import {AuthGuard} from '../../core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'edit',
     loadComponent: () =>
-      import('./components/edit/edit.component').then((m) => m.EditComponent)
+      import('./components/edit/edit.component').then((m) => m.EditComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'details',
@@ -47,7 +49,8 @@ const routes: Routes = [
         component: NotificationsComponent,
         resolve: { profile: ProfileResolver }
       }
-    ]
+    ],
+    canActivate: [AuthGuard]
   }
 ];
 

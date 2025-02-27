@@ -36,7 +36,7 @@
         <a routerLink="/search" *ngIf="profile?.roles?.includes('Owner')"><img src="/images/shared/become-sitter.png" alt="Иконка на лапички">Стани гледач</a>
       </nav>
     </div>
-    <div class="profile-info">
+    <div class="profile-info" *ngIf="profile">
       <div class="profile-info-name">
         <span>Здравей, {{ profile!.firstName }}!</span>
       </div>
