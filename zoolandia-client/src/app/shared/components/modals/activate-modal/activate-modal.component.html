@@ -1,0 +1,28 @@
+<div class="modal-dialog" role="document">
+  <button
+    type="button"
+    class="close btn"
+    data-dismiss="modal"
+    aria-label="Close"
+    (click)="closeModal.emit()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">{{ config.title }}</h3>
+    </div>
+    <div class="modal-body">
+      <p>{{ config.description }}</p>
+      <textarea *ngIf="config.action === 'disapprovePost'" class="main-textarea" formControlName="stateReason"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button type="button"
+              class="btn secondary-button-small"
+              (click)="activate(config.data)"
+      >
+        Активирай
+      </button>
+    </div>
+  </div>
+</div>

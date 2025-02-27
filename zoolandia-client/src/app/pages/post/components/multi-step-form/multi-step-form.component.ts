@@ -124,6 +124,7 @@ export class MultiStepFormComponent {
 
       if (this.postForm.valid) {
         this.postService.create(this.postForm.value).subscribe(() => {
+          this.toastr.success('Успешно попълни формата!')
           this.router.navigate(['/profile/edit']);
         });
       } else {

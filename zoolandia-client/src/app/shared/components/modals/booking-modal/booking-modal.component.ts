@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ModalConfig} from '../../../models/ModalConfig';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CalendarModule} from 'primeng/calendar';
@@ -21,10 +21,11 @@ import {ToastrService} from 'ngx-toastr';
   templateUrl: './booking-modal.component.html',
   styleUrl: './booking-modal.component.scss'
 })
-export class BookingModalComponent {
+export class BookingModalComponent implements AfterViewInit{
   @Input() config!: ModalConfig;
   @Output() closeModal = new EventEmitter<void>();
   bookingForm!: FormGroup;
+  filteredServices: Array<any> = [];
 
   services = [
     { id: 1, name: 'DogWalking', imagePath: '/images/desktop/post/service-walking.svg' },
@@ -57,6 +58,24 @@ export class BookingModalComponent {
     });
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.getFilteredServices();
+    });
+  }
+
+  getFilteredServices() {
+    if (!this.config || !this.config.data || !this.config.data.data || !this.config.data.data.post) {
+      console.error('config.data.data.post is missing or undefined');
+      return;
+    }
+
+    this.filteredServices = this.config.data.data.post.services.map((serviceFromRes: any) =>
+      this.services.find(service => service.name.includes(serviceFromRes.name))
+    ).filter((service: any) => service);
+  }
+
+
   formatTime(controlName: string) {
     let selectedTime: Date = this.bookingForm.get(controlName)?.value;
     if (selectedTime) {
@@ -79,7 +98,7 @@ export class BookingModalComponent {
 
   submitBookingForm() {
     this.bookingForm.patchValue({
-      sitterId: this.config.data
+      sitterId: this.config.data.profileId
     })
 
     this.bookingService.create(this.bookingForm.value).subscribe( res => {

@@ -20,8 +20,9 @@ export const routes: Routes = [
   {
     path: "admin",
     // data: { preload: true },
-    loadChildren: () => import("./pages/admin/admin.module").then((m) => m.AdminModule)
-    // data: { allowedRoles: ['Administrator'] }
+    loadChildren: () => import("./pages/admin/admin.module").then((m) => m.AdminModule),
+    canActivate: [AuthGuard],
+    data: { allowedRoles: ['Administrator'] }
   },
   {
     path: "profile",
@@ -33,14 +34,14 @@ export const routes: Routes = [
     // data: { preload: true },
     loadChildren: () => import("./pages/pet/pet.module").then((m) => m.PetModule),
     canActivate: [AuthGuard],
-    // data: { allowedRoles: ['Owner'] }
+    data: { allowedRoles: ['Owner'] }
   },
   {
     path: "post",
     // data: { preload: true },
     loadChildren: () => import("./pages/post/post.module").then((m) => m.PostModule),
     canActivate: [AuthGuard],
-    // data: {allowedRoles: ['Sitter']}
+    data: {allowedRoles: ['Sitter']}
   },
   {
     path: "search",

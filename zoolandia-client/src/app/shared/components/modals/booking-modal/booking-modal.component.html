@@ -17,10 +17,10 @@
       <div class="modal-body-side">
         <div class="filter">
           <span class="filter-heading">Каква услуга търсиш?</span>
-          <div class="fields-container">
+          <div class="fields-container" *ngIf="filteredServices">
             <label
               class="field"
-              *ngFor="let service of services"
+              *ngFor="let service of filteredServices"
               [ngClass]="{ 'selected': bookingForm.value.serviceType === service.id }">
               <img [src]="service.imagePath" [alt]="service.name">
               <input

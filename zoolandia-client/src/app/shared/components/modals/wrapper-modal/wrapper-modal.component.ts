@@ -7,6 +7,7 @@ import {AddModalComponent} from '../add-modal/add-modal.component';
 import {BookingModalComponent} from '../booking-modal/booking-modal.component';
 import {ModalService} from '../../../services/modal.service';
 import {RejectModalComponent} from '../reject-modal/reject-modal.component';
+import {ActivateModalComponent} from '../activate-modal/activate-modal.component';
 @Component({
   selector: 'app-wrapper-modal',
   standalone: true,
@@ -17,7 +18,8 @@ import {RejectModalComponent} from '../reject-modal/reject-modal.component';
     EditModalComponent,
     AddModalComponent,
     BookingModalComponent,
-    RejectModalComponent
+    RejectModalComponent,
+    ActivateModalComponent
   ],
   templateUrl: './wrapper-modal.component.html',
   styleUrls: ['./wrapper-modal.component.scss']

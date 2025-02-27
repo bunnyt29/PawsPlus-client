@@ -199,7 +199,6 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
   placeId: string = '';
   markerPosition: google.maps.LatLngLiteral | null = null;
   circleRadius = 500;
-  formattedAddress!: string;
   mapInitialized = false;
 
   mapOptions: google.maps.MapOptions = {
@@ -305,7 +304,7 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
       title: 'Резервирай услуга',
       description: 'Попълни формата и изпрати заявка до избрания от теб гледач',
       action: 'book',
-      data: this.profileId,
+      data: {data: this.data, profileId: this.profileId},
       type: 'addPet',
       discard: () => console.log('Delete cancelled'),
     });

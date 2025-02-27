@@ -5,6 +5,7 @@ import {ActivatedRoute, RouterLink} from '@angular/router';
 import {GoogleMap, MapMarker} from '@angular/google-maps';
 import {CommonModule} from '@angular/common';
 import {ModalService} from '../../../../shared/services/modal.service';
+import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 
 @Component({
   selector: 'app-my-profile',
@@ -13,7 +14,8 @@ import {ModalService} from '../../../../shared/services/modal.service';
     CommonModule,
     RouterLink,
     GoogleMap,
-    MapMarker
+    MapMarker,
+    WrapperModalComponent
   ],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.scss'
@@ -92,11 +94,12 @@ export class MyProfileComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openActivateModal() {
+  openActivateModal(profileId: string) {
     this.modalService.open({
       title: `Активирай профила си`,
       description: 'Профилът ти ще бъде изпратен за одобрение! Администратор ще го прегледа и ще се свърже с теб по имейл, за да уговорите кратко интервю. Това е стандартна процедура за потвърждение на самоличността и проверка на съответствието с изискванията на платформата.',
       action: 'activate',
+      data: profileId,
       discard: () => console.log('Delete cancelled'),
     });
   }

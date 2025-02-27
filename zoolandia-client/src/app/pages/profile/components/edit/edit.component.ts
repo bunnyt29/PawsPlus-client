@@ -11,7 +11,7 @@ import {FileService} from '../../../../core/services/file.service';
 import {ToastrService} from 'ngx-toastr';
 import {GoogleAutocompleteComponent} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
 import {Observable} from 'rxjs';
-import {GoogleMap, MapMarker} from '@angular/google-maps';
+import {GoogleMap, MapAdvancedMarker} from '@angular/google-maps';
 import {environment} from '../../../../../environments/environment';
 
 @Component({
@@ -22,7 +22,7 @@ import {environment} from '../../../../../environments/environment';
     ImageUploadComponent,
     GoogleAutocompleteComponent,
     GoogleMap,
-    MapMarker
+    MapAdvancedMarker
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'

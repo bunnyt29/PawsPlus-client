@@ -1,5 +1,5 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
-import {NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
+import {NavigationEnd, NavigationStart, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {NavigationMenuComponent} from './shared/components/navigation-menu/navigation-menu.component';
 import {CommonModule} from '@angular/common';
 import {environment} from '../environments/environment';
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
     private renderer: Renderer2
   ) {
     this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
+      if (event instanceof NavigationStart) {
         this.hideNavbar =
           this.hiddenRoutes.includes(event.url) ||
           this.hiddenRoutePrefixes.some(prefix => event.url.startsWith(prefix));
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit{
 
   private loadGoogleMaps() {
     const script = this.renderer.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places,geometry&language=bg`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places,geometry&language=bg&loading=async`;
     script.async = true;
     script.defer = true;
     this.renderer.appendChild(document.head, script);

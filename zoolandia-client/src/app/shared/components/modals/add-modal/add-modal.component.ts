@@ -23,7 +23,7 @@ import {ModalService} from 'ngx-modal-ease';
   templateUrl: './add-modal.component.html',
   styleUrl: './add-modal.component.scss'
 })
-export class AddModalComponent implements OnInit{
+export class AddModalComponent implements OnInit {
   @Input() config!: ModalConfig;
   @Output() closeModal = new EventEmitter<void>();
 

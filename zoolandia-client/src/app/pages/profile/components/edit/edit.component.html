@@ -78,7 +78,7 @@
             <div class="location-holder">
               <google-autocomplete  *ngIf="formattedAddress" [inputValue]="formattedAddress" (placeSelected)="handlePlaceSelected($event)"></google-autocomplete>
               <google-map height="300px" width="500px" [options]="mapOptions">
-                <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
+                <map-advanced-marker *ngIf="markerPosition" [position]="markerPosition"></map-advanced-marker>
               </google-map>
             </div>
           </div>

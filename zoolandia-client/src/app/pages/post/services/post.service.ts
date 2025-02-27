@@ -13,6 +13,9 @@ export class PostService {
     private http: HttpClient
   ) { }
 
+  activate(profileId: string): Observable<any> {
+    return this.http.patch(this.postPath + `/${profileId}/activate`, { profileId: profileId} );
+  }
   create(data:any): Observable<any> {
     return this.http.post<any>(this.postPath, data);
   }
