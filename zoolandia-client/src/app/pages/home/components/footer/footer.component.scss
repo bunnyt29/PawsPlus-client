@@ -1,0 +1,9 @@
+@use '../../../../../style/abstracts/colors';
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: colors.$accent-color;
+  height: 50px;
+}
