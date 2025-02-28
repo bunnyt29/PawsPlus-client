@@ -7,10 +7,10 @@
   overflow: hidden;
 
   .sidebar {
+    position: fixed;
     padding: 70px 70px 0 0;
     width: 350px;
     height: 100vh;
-    position: fixed;
     top: 0;
     left: 0;
     background-color: colors.$secondary-background;
@@ -66,6 +66,11 @@
           border-bottom-right-radius: 20px;
         }
       }
+    }
+
+    .bottom {
+      position: absolute;
+      bottom: 0;
     }
   }
 

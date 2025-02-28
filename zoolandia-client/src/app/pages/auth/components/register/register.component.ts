@@ -67,9 +67,8 @@ export class RegisterComponent {
   register() {
     const formData = { ...this.registerForm.value };
     delete formData.confirmPassword;
-    this.authService.register(formData).subscribe(data => {
-      this.toastr.success("Успешно се регистрира!");
-      this.router.navigate(['/auth/login']);
+    this.authService.register(formData).subscribe(() => {
+      this.toastr.warning("Изпратихме ти съобщение! Потвърди имейла си!");
     });
   }
 }

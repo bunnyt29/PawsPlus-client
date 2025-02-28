@@ -978,9 +978,11 @@ p-calendar .p-datepicker-calendar td {
 
         .author {
           display: flex;
+          flex-direction: column;
           align-items: center;
           gap: 10px;
           font-weight: typography.$semi-bold;
+          text-align: center;
         }
 
         //td:first-child {

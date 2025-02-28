@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import {ModalConfig} from '../../../models/ModalConfig';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CalendarModule} from 'primeng/calendar';
@@ -7,6 +7,7 @@ import {CommonModule} from '@angular/common';
 import {GoogleAutocompleteComponent} from '../../google-autocomplete/google-autocomplete.component';
 import {BookingService} from '../../../services/booking.service';
 import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-booking-modal',
@@ -43,7 +44,8 @@ export class BookingModalComponent implements AfterViewInit{
   constructor(
     private fb: FormBuilder,
     private bookingService: BookingService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.bookingForm = this.fb.group({
       startDay: ['', Validators.required],
@@ -101,8 +103,10 @@ export class BookingModalComponent implements AfterViewInit{
       sitterId: this.config.data.profileId
     })
 
-    this.bookingService.create(this.bookingForm.value).subscribe( res => {
+    this.bookingService.create(this.bookingForm.value).subscribe( () => {
       this.toastr.success("Успешно изпрати своята заявка! Очаквай потвърждение скоро!");
+      this.closeModal.emit();
+      this.router.navigate(['/profile/my-profile-details/notifications'])
     })
   }
 }

@@ -14,6 +14,12 @@
       <li *ngIf="profile?.roles?.includes('Sitter')"><a routerLink="my-post" routerLinkActive="active">Моята обява</a></li>
       <li><a routerLink="notifications" routerLinkActive="active">Поръчки</a></li>
     </ul>
+    <div class="bottom">
+      <div class="go-back" (click)="logout()">
+        <img src="/images/shared/home/dropdown-options/logout.png" alt="Излез">
+        <span>Излез</span>
+      </div>
+    </div>
   </div>
   <div class="profile-content">
     <router-outlet></router-outlet>

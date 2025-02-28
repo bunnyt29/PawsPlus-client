@@ -34,9 +34,12 @@ export class DeleteModalComponent {
         this.router.navigate(['/profile/my-profile-details/my-pets']);
       });
     }
-    deleteService(serviceId: string) {
-      this.postServiceService.delete(serviceId).subscribe(() => {
-        this.toastr.success("Успешно изтрита услуга!");
-      });
-    }
+
+  deleteService(serviceId: string) {
+    this.postServiceService.delete(serviceId).subscribe(() => {
+      this.toastr.success("Успешно изтрита услуга!");
+      this.closeModal.emit();
+      location.reload();
+    });
+  }
 }

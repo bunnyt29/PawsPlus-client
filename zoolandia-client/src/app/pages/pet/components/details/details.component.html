@@ -74,9 +74,9 @@
             </div>
           </div>
           <div class="health-status-answer">
-            <span *ngIf="pet.healthStatus?.isVaccinated === null"><img src="/images/shared/no-info.png" alt="Липсват данни"> Няма информация</span>
+            <span *ngIf="pet.healthStatus?.isVaccinated === null"><img src="/images/shared/no-info.png" alt="Липсват данни"></span>
             <span *ngIf="pet.healthStatus?.isVaccinated"><img src="/images/shared/answer-yes.png" alt="Да"></span>
-            <span *ngIf="!pet.healthStatus?.isVaccinated"><img src="/images/shared/answer-no.png" alt="Не"></span>
+            <span *ngIf="pet.healthStatus?.isVaccinated === false"><img src="/images/shared/answer-no.png" alt="Не"></span>
           </div>
         </div>
         <div class="health-status-item">
@@ -89,9 +89,9 @@
             </div>
           </div>
           <div class="health-status-answer">
-            <span *ngIf="pet.healthStatus?.isCastrated === null"><img src="/images/shared/no-info.png" alt="Липсват данни"> Няма информация</span>
+            <span *ngIf="pet.healthStatus?.isCastrated === null"><img src="/images/shared/no-info.png" alt="Липсват данни"></span>
             <span *ngIf="pet.healthStatus?.isCastrated"><img src="/images/shared/answer-yes.png" alt="Да"></span>
-            <span *ngIf="!pet.healthStatus?.isCastrated"><img src="/images/shared/answer-no.png" alt="Не"></span>
+            <span *ngIf="pet.healthStatus?.isCastrated === false"><img src="/images/shared/answer-no.png" alt="Не"></span>
           </div>
         </div>
         <div class="health-status-item">
@@ -104,9 +104,9 @@
             </div>
           </div>
           <div class="health-status-answer">
-            <span *ngIf="pet.healthStatus?.takesMedications === null"><img src="/images/shared/no-info.png" alt="Липсват данни"> Няма информация</span>
+            <span *ngIf="pet.healthStatus?.takesMedications === null"><img src="/images/shared/no-info.png" alt="Липсват данни"></span>
             <span *ngIf="pet.healthStatus?.takesMedications"><img src="/images/shared/answer-yes.png" alt="Да"></span>
-            <span *ngIf="!pet.healthStatus?.takesMedications"><img src="/images/shared/answer-no.png" alt="Не"></span>
+            <span *ngIf="pet.healthStatus?.takesMedications === false"><img src="/images/shared/answer-no.png" alt="Не"></span>
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@
             </div>
           </div>
           <div class="health-status-answer">
-            <span *ngIf="pet.healthStatus?.hasEatingSchedule === ''"><img src="/images/shared/no-info.png" alt="Липсват данни"> Няма информация</span>
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule === ''"><img src="/images/shared/no-info.png" alt="Липсват данни"></span>
             <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'once'">
               <img *ngIf="pet.petType === 1" src="/images/desktop/pet/dog.svg" alt="Куче">
               <img *ngIf="pet.petType === 2" src="/images/desktop/pet/cat.svg" alt="Котка">

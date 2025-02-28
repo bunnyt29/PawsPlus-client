@@ -28,7 +28,7 @@
       <button *ngIf="config.action === 'disapproveBooking'"
               type="button"
               class="btn modal-button disapprove"
-              (click)="disapproveBooking(config.data)"
+              (click)="disapproveBooking()"
       >
         Неодобри
       </button>
@@ -36,7 +36,7 @@
       <button *ngIf="config.action === 'cancel'"
               type="button"
               class="btn modal-button disapprove"
-              (click)="cancelBooking(config.data)"
+              (click)="cancelBooking()"
       >
         Откажи
       </button>

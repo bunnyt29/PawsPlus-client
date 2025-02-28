@@ -18,12 +18,13 @@ const routes: Routes = [
   {
     path: 'details',
     loadComponent: () =>
-      import('./components/details/details.component').then((m) => m.DetailsComponent)
+      import('./components/details/details.component').then((m) => m.DetailsComponent),
   },
   {
     path: 'preview',
     loadComponent: () =>
       import('./components/sitter-details-preview/sitter-details-preview.component').then((m) => m.SitterDetailsPreviewComponent),
+    canActivate: [AuthGuard],
     data: { allowedRoles: ['Administrator'] }
   },
   {

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgIf} from "@angular/common";
 import {ModalConfig} from '../../../models/ModalConfig';
 import {PostService} from '../../../../pages/post/services/post.service';
@@ -40,20 +40,26 @@ export class RejectModalComponent {
     });
     this.postService.disapprove(postId, this.rejectForm.value).subscribe(() => {
       this.toastr.success('Отхвърлихте профила!');
+      this.closeModal.emit();
       this.router.navigate(['/admin/dashboard']);
+
+      if (this.router.url === '/admin/dashboard') {
+        location.reload();
+      } else {
+        this.router.navigate(['/admin/dashboard']);
+      }
     });
   }
 
-  disapproveBooking(data: any) {
-    this.bookingService.disapprove(data).subscribe( () => {
+  disapproveBooking() {
+    this.bookingService.disapprove(this.config.data).subscribe( () => {
       this.toastr.success('Отхвърлихте поръчката');
       this.closeModal.emit();
     })
   }
 
-  cancelBooking(data: any) {
-    console.log(data)
-    this.bookingService.cancel(data).subscribe( () => {
+  cancelBooking() {
+    this.bookingService.cancel(this.config.data).subscribe( () => {
       this.toastr.success('Отхвърлихте поръчката');
       this.closeModal.emit();
     })

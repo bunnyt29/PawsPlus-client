@@ -128,6 +128,10 @@
           <button class="btn secondary-button-small" (click)="viewProfile(searchResult.id)">Виж повече</button>
         </div>
       </div>
+      <div class="no-results" *ngIf="searchResults.length === 0">
+        <img src="/images/shared/access-denied.svg" alt="Объркано момиче">
+        <span>Няма намерени резултати</span>
+      </div>
     </div>
   </div>
   <div class="right-side google-map">

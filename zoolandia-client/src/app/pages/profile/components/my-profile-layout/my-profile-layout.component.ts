@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {SharedModule} from '../../../../shared/shared.module';
-import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {ProfileService} from '../../services/profile.service';
 import {Profile} from '../../../../shared/models/Profile';
+import {AuthService} from '../../../auth/services/auth.service';
 @Component({
   selector: 'app-my-profile-layout',
   standalone: true,
@@ -18,7 +19,9 @@ import {Profile} from '../../../../shared/models/Profile';
 export class MyProfileLayoutComponent implements OnInit{
   profile!: Profile;
   constructor(
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -29,5 +32,10 @@ export class MyProfileLayoutComponent implements OnInit{
     this.profileService.getMine().subscribe( res => {
       this.profile = res;
     })
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/home']);
   }
 }

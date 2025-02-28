@@ -47,9 +47,9 @@ export class NotificationsComponent implements OnInit{
       this.bookings = res.map((booking: any) => ({ ...booking, meetingPlaceAddress: '' }));
 
       this.bookings.forEach((booking: any) => {
-        if (booking.meetingPlaceId) {
+        if (booking.googlePlaceId) {
           const geocoder = new google.maps.Geocoder();
-          geocoder.geocode({ placeId: booking.meetingPlaceId }, (results, status) => {
+          geocoder.geocode({ placeId: booking.googlePlaceId }, (results, status) => {
             if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
               booking.meetingPlaceAddress = results[0].formatted_address;
             } else {
@@ -66,24 +66,25 @@ export class NotificationsComponent implements OnInit{
     this.router.navigate(['/pet/details', ownerId])
   }
 
-  approve(bookingId: string, ownerId: string) {
-    const data: {id: string, ownerId: string} =
+  approve(bookingId: string, ownerId: string, serviceName: string) {
+    const data: {id: string, ownerId: string, serviceName: string} =
     {
       id: bookingId,
-      ownerId: ownerId
+      ownerId: ownerId,
+      serviceName: serviceName
     }
     this.bookingService.approve(bookingId, data).subscribe( () => {
       this.toastr.success('Успешно потвърдихте поръчката!');
     })
   }
 
-  openReasonForRejectModal(action: string, bookingId: string, id: string) {
-    console.log('opened')
+  openReasonForRejectModal(action: string, bookingId: string, id: string, serviceName: string) {
     if (action === 'cancel') {
-      const data: {id: string, sitterId: string} =
+      const data: {id: string, sitterId: string, serviceName: string} =
       {
         id: bookingId,
-        sitterId: id
+        sitterId: id,
+        serviceName: serviceName
       }
       this.modalService.open({
         title: `Отказване от поръчка`,
@@ -93,10 +94,11 @@ export class NotificationsComponent implements OnInit{
         discard: () => console.log('Delete cancelled'),
       });
     } else if (action === 'disapprove') {
-      const data: {id: string, ownerId: string} =
+      const data: {id: string, ownerId: string, serviceName: string} =
       {
         id: bookingId,
-        ownerId: id
+        ownerId: id,
+        serviceName: serviceName
       }
       this.modalService.open({
         title: `Отхвърляне на поръчка`,

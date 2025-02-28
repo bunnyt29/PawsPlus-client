@@ -33,7 +33,7 @@ export class EditComponent implements OnInit, AfterViewInit {
   profile!: Profile;
   defaultImage: string | undefined = '/images/shared/default-image-owner.svg';
   placeId: string = '';
-  formattedAddress!: string | undefined;
+  formattedAddress!: string ;
 
   markerPosition: google.maps.LatLngLiteral | null = null;
 
@@ -64,33 +64,11 @@ export class EditComponent implements OnInit, AfterViewInit {
       'photoUrl': ['']
     });
     this.fetchProfile();
+    this.formattedAddress = this.formattedAddress || '';
   }
 
   ngAfterViewInit() {
     if (this.googleMap.googleMap) {
-      const mapInstance = this.googleMap.googleMap;
-
-      // const service = new google.maps.places.PlacesService(mapInstance);
-      //
-      // service.getDetails({
-      //   placeId: this.placeId,
-      //   fields: ['geometry', 'name', 'formatted_address']
-      // }, (place, status) => {
-      //   if (status === google.maps.places.PlacesServiceStatus.OK && place?.geometry?.location) {
-      //     this.formattedAddress = place.formatted_address;
-      //     const location = place.geometry.location;
-      //     this.mapOptions = {
-      //       ...this.mapOptions,
-      //       center: location,
-      //       zoom: 15
-      //     };
-      //
-      //     this.markerPosition = { lat: location.lat(), lng: location.lng() };
-      //   } else {
-      //     console.error('Грешка при взимане на профила.', status);
-      //   }
-      // });
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ placeId: this.placeId }, (results, status) => {
         if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
@@ -103,7 +81,7 @@ export class EditComponent implements OnInit, AfterViewInit {
           };
           this.markerPosition = { lat: location.lat(), lng: location.lng() };
         } else {
-          this.formattedAddress = 'Address not found';
+          this.formattedAddress = '';
         }
       });
     }

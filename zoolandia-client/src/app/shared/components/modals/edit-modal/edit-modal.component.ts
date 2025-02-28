@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ModalConfig} from '../../../models/ModalConfig';
 import {CalendarModule} from 'primeng/calendar';
-import {CommonModule, NgForOf, NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {PetService} from '../../../../pages/pet/services/pet.service';
@@ -63,7 +63,7 @@ export class EditModalComponent implements OnInit{
       this.postService = res;
       const formattedDates = this.postService.availableDates.map((dateStr: string) => {
         const [year, month, day] = dateStr.split('-').map(Number);
-        return new Date(year, month - 1, day); // Month is 0-based in JS Dates
+        return new Date(year, month - 1, day);
       });
 
       const meetingPlacesArray = this.serviceForm.get('meetingPlaces') as FormArray;
@@ -85,11 +85,19 @@ export class EditModalComponent implements OnInit{
   editService(serviceId: string) {
     let formData = this.serviceForm.value;
 
+    formData.availableDates = formData.availableDates.map((date: Date | string) => {
+      if (date instanceof Date) {
+        return date.toISOString().split('T')[0]; // Format as 'yyyy-MM-dd'
+      }
+      return date; // If already a string, keep it unchanged
+    });
+
     const uniqueMeetingPlaces = [...new Set(formData.meetingPlaces)];
 
     this.serviceForm.patchValue({
       id: serviceId,
-      meetingPlaces: uniqueMeetingPlaces
+      meetingPlaces: uniqueMeetingPlaces,
+      availableDates: formData.availableDates
     });
 
     this.postServiceService.edit(serviceId, this.serviceForm.value).subscribe(() => {
