@@ -65,15 +65,26 @@ export class MyPostComponent implements OnInit {
     return !service.price || !service.availableDates || service.availableDates.length === 0;
   }
 
-  openDeleteModal(serviceId: string) {
-    this.modalService.open({
-      title: 'Изтрий услуга',
-      description: 'Сигурен ли си, че искаш да изтриеш тази услуга?',
-      action: 'delete',
-      data: serviceId,
-      type: 'deleteService',
-      discard: () => console.log('Delete cancelled'),
-    });
+  openDeleteModal(type: string, data?: any) {
+    if (type === 'deleteService') {
+      this.modalService.open({
+        title: 'Изтрий услуга',
+        description: 'Сигурен ли си, че искаш да изтриеш тази услуга?',
+        action: 'delete',
+        data: data,
+        type: 'deleteService',
+        discard: () => console.log('Delete cancelled'),
+      });
+    } else if (type === 'deleteAnimal') {
+      this.modalService.open({
+        title: 'Премахни животно',
+        description: 'Това действие ще изтрие животното от списъка с животни, за които предлагаш услуги',
+        action: 'delete',
+        data: data,
+        type: 'deleteAnimal',
+        discard: () => console.log('Delete cancelled'),
+      });
+    }
   }
 
   openViewDetailsModal(serviceId: string, serviceName: string) {
@@ -115,7 +126,7 @@ export class MyPostComponent implements OnInit {
       description: 'Избери домашен любимец',
       action: 'add',
       data: post,
-      type: 'addPet',
+      type: 'addAnimal',
       discard: () => console.log('Delete cancelled'),
     });
   }

@@ -13,7 +13,7 @@
       <h3 class="modal-title">+ {{ config.title }}</h3>
     </div>
     <div class="modal-body-with-choosing-service">
-      <div class="fields-container">
+      <div class="fields-container" *ngIf="config.type == 'addService'">
         <div *ngFor="let service of services">
           <label
             class="field"
@@ -27,6 +27,28 @@
             />
             {{ service.name | translateService }}
           </label>
+        </div>
+      </div>
+      <div class="fields-container animal-choose-holder" *ngIf="config.type == 'addAnimal'">
+        <div *ngFor="let pet of pets">
+          <label class="field" [ngClass]="{'selected': selectedPet === pet.id}" (click)="selectPet(pet.id)">
+            <img [src]="pet.imagePath" [alt]="pet.name">
+            <input type="radio" [value]="pet.id" [checked]="selectedPet === pet.id"/>
+            {{ pet.name }}
+          </label>
+        </div>
+
+        <div *ngIf="selectedPet === 1" class="form">
+          <span>Избери размер на кучето</span>
+          <div class="fields-container">
+            <div *ngFor="let weight of weights">
+              <label class="field-size" [ngClass]="{'selected': selectedWeights.includes(weight.id)}">
+                <span class="size-value">{{ weight.value }}</span>
+                <input type="checkbox" [value]="weight.id" (change)="onWeightChange($event, weight.id)"/>
+                {{ weight.name }}
+              </label>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-body" *ngIf="selectedService">
@@ -87,6 +109,9 @@
       >
         Запази
       </button>
+    </div>
+    <div class="modal-footer" *ngIf="config.type == 'addAnimal'">
+      <button type="button" class="btn secondary-button" (click)="editPost()">Запази</button>
     </div>
   </div>
 </div>

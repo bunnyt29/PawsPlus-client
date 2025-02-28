@@ -9,6 +9,7 @@ import {Post} from '../../../models/Post';
 import {PostServiceService} from '../../../../pages/post/post-services/services/post-service.service';
 import {ToastrService} from 'ngx-toastr';
 import {ModalService} from 'ngx-modal-ease';
+import {PostService} from '../../../../pages/post/services/post.service';
 
 @Component({
   selector: 'app-add-modal',
@@ -30,6 +31,8 @@ export class AddModalComponent implements OnInit {
   serviceForm!: FormGroup;
   today: Date = new Date();
   selectedService: number | null = null;
+  selectedPet: number | null = null;
+  selectedWeights: number[] = [];
   post!: Post;
 
   services = [
@@ -45,9 +48,22 @@ export class AddModalComponent implements OnInit {
     { id: 3, name: 'Взимане от трето място' }
   ];
 
+  pets = [
+    { id: 1, name: 'Куче', imagePath: '/images/shared/dog.svg' },
+    { id: 2, name: 'Котка', imagePath: '/images/shared/cat.svg' },
+  ];
+
+  weights = [
+    { id: 1, name: 'Малко', value: '0-7 кг.' },
+    { id: 2, name: 'Средно', value: '8-20 кг.' },
+    { id: 3, name: 'Голямо', value: '21-50 кг.' },
+    { id: 4, name: 'Много голямо', value: '50+ кг.' },
+  ];
+
   constructor(
     private fb: FormBuilder,
     private postServiceService: PostServiceService,
+    private postService: PostService,
     private modalService: ModalService,
     private toastr: ToastrService
   ) {}
@@ -63,18 +79,41 @@ export class AddModalComponent implements OnInit {
     });
     this.getPost();
   }
+
   getPost() {
     this.post = this.config.data;
 
     const postServiceNames = this.post.services.map((service: any) => service.name);
+    const excludedPetIds = new Set(this.post.pets);
 
     this.services = this.services.filter(service =>
       !postServiceNames.includes(service.name)
     );
+
+    this.pets = this.pets.filter(pet => !excludedPetIds.has(pet.id));
   }
+
   selectService(serviceId: number): void {
     this.selectedService = serviceId;
     this.serviceForm.patchValue({ serviceType: serviceId });
+  }
+
+  selectPet(petId: number): void {
+    this.selectedPet = petId;
+
+    if (petId === 1) {
+      this.selectedWeights = [];
+    }
+  }
+
+  onWeightChange(event: any, weightId: number): void {
+    const index = this.selectedWeights.indexOf(weightId);
+
+    if (index === -1) {
+      this.selectedWeights.push(weightId);
+    } else {
+      this.selectedWeights.splice(index, 1);
+    }
   }
 
   onMeetingPlaceChange(event: any, place: number): void {
@@ -100,5 +139,26 @@ export class AddModalComponent implements OnInit {
       this.serviceForm.reset();
     })
     this.modalService.close();
+  }
+
+  editPost(): void {
+    if (!this.selectedPet) {
+      this.toastr.error("Моля, изберете животно.");
+      return;
+    }
+
+    const updatedData = {
+      id: this.config.data.id,
+      animalTypeId: this.selectedPet,
+      weights: this.selectedPet === 1 ? this.selectedWeights : []
+    };
+
+    this.postService.edit(updatedData.id, updatedData).subscribe(() => {
+      this.toastr.success("Успешно обновено!");
+      this.modalService.close();
+      location.reload();
+    }, () => {
+      this.toastr.error("Възникна грешка при обновяването.");
+    });
   }
 }

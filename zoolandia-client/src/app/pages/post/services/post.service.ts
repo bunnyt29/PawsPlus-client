@@ -47,4 +47,13 @@ export class PostService {
   disapprove(id: string, data: any):Observable<any>{
     return this.http.patch(this.postPath + '/' + id + '/disapprove', data)
   }
+
+  edit(id:string, data:any) {
+    return this.http.put(this.postPath + '/' + id, data);
+  }
+
+  delete(data: any): Observable<any> {
+    return this.http.delete(`${this.postPath}/${data.id}`, { params: { id: data.id, animalTypeId: data.animalTypeId } });
+  }
+
 }
