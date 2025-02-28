@@ -104,7 +104,7 @@
             <button class="btn" (click)="openViewDetailsModal(service.id, service.name)">
               <img src="/images/shared/view-more.svg" alt="Виж повече">
             </button>
-            <button class="btn" (click)="openDeleteModal(service.id)">
+            <button class="btn" (click)="openDeleteModal('deleteService', service.id)">
               <img src="/images/shared/delete.svg" alt="Изтрий">
             </button>
           </div>
@@ -121,15 +121,21 @@
     <h2>Предлагам грижи за:</h2>
     <div class="my-post-details">
       <div *ngFor="let pet of post.pets">
-        <div *ngIf="pet == 1"
-             class="my-post-detail">
-          <img src="/images/shared/dog.svg" alt="Куче">
-          <span>Куче</span>
-        </div>
-        <div *ngIf="pet == 2"
-             class="my-post-detail">
-          <img src="/images/shared/cat.svg" alt="Котка">
-          <span>Котка</span>
+        <div class="my-post-detail">
+          <div class="overlay"></div>
+          <div *ngIf="pet == 1">
+            <img src="/images/shared/dog.svg" alt="Куче">
+            <span>Куче</span>
+          </div>
+          <div *ngIf="pet == 2">
+            <img src="/images/shared/cat.svg" alt="Котка">
+            <span>Котка</span>
+          </div>
+          <div class="action-buttons">
+            <button class="btn">
+              <img src="/images/shared/delete.svg" (click)="openDeleteModal('deleteAnimal', { id: post.id, animalTypeId: pet })" alt="Изтрий">
+            </button>
+          </div>
         </div>
       </div>
       <div *ngIf="post.pets.length < 2 " (click)="openAddNewPetModal(post)" class="add">

@@ -6,6 +6,7 @@ import {PostServiceService} from '../../../../pages/post/post-services/services/
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {ModalService} from '../../../services/modal.service';
+import {PostService} from '../../../../pages/post/services/post.service';
 
 @Component({
   selector: 'app-delete-modal',
@@ -23,6 +24,7 @@ export class DeleteModalComponent {
   constructor(
     private petService: PetService,
     private postServiceService: PostServiceService,
+    private postService: PostService,
     private modalService: ModalService,
     private toastr: ToastrService,
     private router: Router
@@ -41,5 +43,14 @@ export class DeleteModalComponent {
       this.closeModal.emit();
       location.reload();
     });
+  }
+
+  deleteAnimal() {
+    console.log(this.config.data)
+    this.postService.delete(this.config.data).subscribe(() => {
+      this.toastr.success("Успешно изтрито животно!");
+      this.closeModal.emit();
+      location.reload();
+    })
   }
 }

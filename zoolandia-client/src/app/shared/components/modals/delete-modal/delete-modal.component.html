@@ -25,7 +25,7 @@
         class="btn modal-button approve"
         (click)="deletePet(config.data)"
       >
-        Да
+        Изтрий
       </button>
       <button
         *ngIf="config.action === 'delete' && config.type === 'deleteService'"
@@ -33,17 +33,25 @@
         class="btn modal-button approve"
         (click)="deleteService(config.data)"
       >
-        Да
+        Изтрий
+      </button>
+      <button
+        *ngIf="config.action === 'delete' && config.type === 'deleteAnimal'"
+        type="button"
+        class="btn modal-button approve"
+        (click)="deleteAnimal()"
+      >
+        Изтрий
       </button>
 
-      <button
-        type="button"
-        class="btn modal-button disapprove"
-        data-dismiss="modal"
-        (click)="closeModal.emit()"
-      >
-        Не
-      </button>
+<!--      <button-->
+<!--        type="button"-->
+<!--        class="btn modal-button disapprove"-->
+<!--        data-dismiss="modal"-->
+<!--        (click)="closeModal.emit()"-->
+<!--      >-->
+<!--        Не-->
+<!--      </button>-->
     </div>
   </div>
 </div>
