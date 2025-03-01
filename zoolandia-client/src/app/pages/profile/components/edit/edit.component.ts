@@ -93,7 +93,7 @@ export class EditComponent implements OnInit, AfterViewInit {
     this.profileService.getMine().subscribe(res => {
       this.profile = res;
 
-      let placeId =this.profile.location?.placeId;
+      let placeId = this.profile.location?.placeId;
       if (placeId) {
         this.placeId = placeId;
       }

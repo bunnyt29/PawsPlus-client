@@ -41,6 +41,7 @@ export class SearchComponent implements OnInit {
   minDateForEndDate!: Date;
   formattedAddress: string | undefined = '';
   paramsObject: { [key: string]: any } = {};
+  mapMarkers: google.maps.MarkerOptions[] = [];
 
   serviceOptions = [
     { value: 1, text: 'Разходки', image: '/images/desktop/post/service-walking.svg' },
@@ -180,6 +181,41 @@ export class SearchComponent implements OnInit {
 
     this.postService.search(params).subscribe(res => {
       this.searchResults = res.posts;
+      this.mapMarkers = [];
+
+      const geocoder = new google.maps.Geocoder();
+
+      this.searchResults.forEach((result, index) => {
+        if (result.latitude && result.longitude) {
+          this.addMarker(result.latitude, result.longitude, `${result.firstName} ${result.lastName}`);
+        } else if (result.placeId) {
+          geocoder.geocode({ placeId: result.placeId }, (geoResults: any, status) => {
+            if (status === google.maps.GeocoderStatus.OK && geoResults[0]?.geometry?.location) {
+              const location = geoResults[0].geometry.location;
+              this.addMarker(location.lat(), location.lng(), `${result.firstName} ${result.lastName}`);
+            } else {
+              console.error(`Failed to geocode placeId ${result.placeId}:`, status);
+            }
+
+            if (index === this.searchResults.length - 1) {
+              this.cdr.detectChanges();
+            }
+          });
+        }
+      });
+    });
+  }
+
+  private addMarker(lat: number, lng: number, title: string): void {
+    const randomOffset = () => (Math.random() - 0.5) * 0.001;
+
+    this.mapMarkers.push({
+      position: {
+        lat: lat + randomOffset(),
+        lng: lng + randomOffset()
+      },
+      title,
+      clickable: true
     });
   }
 

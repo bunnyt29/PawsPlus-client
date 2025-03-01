@@ -47,7 +47,6 @@ export class DeleteModalComponent {
   }
 
   deleteAnimal() {
-    console.log(this.config.data)
     this.postService.delete(this.config.data).subscribe(() => {
       this.toastr.success("Успешно изтрито животно!");
       this.closeModal.emit();
