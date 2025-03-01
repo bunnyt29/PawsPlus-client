@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { ProfileRoutingModule } from './profile-routing.module';
+import {ProfileRoutingModule} from './profile-routing.module';
 import {provideHttpClient} from '@angular/common/http';
 
 

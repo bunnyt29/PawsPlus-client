@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { PostRoutingModule } from './post-routing.module';
-import {TranslateServicePipe} from '../../shared/pipes/translate-service.pipe';
+import {PostRoutingModule} from './post-routing.module';
 
 
 @NgModule({

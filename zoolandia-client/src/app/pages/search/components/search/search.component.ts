@@ -1,14 +1,17 @@
 import {ChangeDetectorRef, Component, HostListener, NgZone, OnInit} from '@angular/core';
-import {CalendarModule} from 'primeng/calendar';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {SliderModule} from 'primeng/slider';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {SharedModule} from '../../../../shared/shared.module';
-import {PostService} from '../../../post/services/post.service';
-import {GoogleAutocompleteComponent} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
 import {GoogleMapsModule} from '@angular/google-maps';
 import {debounceTime, Subject} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
+
+import {PostService} from '../../../post/services/post.service';
+import {GoogleAutocompleteComponent} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
+
+import {CalendarModule} from 'primeng/calendar';
+import {SliderModule} from 'primeng/slider';
+import {SharedModule} from '../../../../shared/shared.module';
+
 import {environment} from '../../../../../environments/environment';
 
 @Component({
@@ -27,7 +30,7 @@ import {environment} from '../../../../../environments/environment';
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
-export class SearchComponent implements OnInit{
+export class SearchComponent implements OnInit {
   private searchSubject = new Subject<void>();
   dropdownOpen = false;
   selectedOption: any = null;
@@ -84,12 +87,12 @@ export class SearchComponent implements OnInit{
   )
   {
     this.today = new Date();
-    this.searchSubject.pipe(debounceTime(100)).subscribe(() => {
+    this.searchSubject.pipe(debounceTime(100)).subscribe((): void => {
       this.performSearch();
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.queryParams.subscribe(queryParams => {
       this.paramsObject = { ...this.paramsObject, ...queryParams };
       this.searchParams = Object.assign(this.searchParams, queryParams);
@@ -116,12 +119,12 @@ export class SearchComponent implements OnInit{
     });
   }
 
-  onPetTypeChange(value: string) {
+  onPetTypeChange(value: string): void {
     this.searchParams.petType = value;
     this.cdr.detectChanges();
   }
 
-  onStartDateChange(event: any) {
+  onStartDateChange(event: any): void {
     if (this.searchParams.startDate) {
       this.minDateForEndDate = new Date(this.searchParams.startDate);
     } else {
@@ -129,11 +132,11 @@ export class SearchComponent implements OnInit{
     }
   }
 
-  toggleDropdown() {
+  toggleDropdown(): void {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  selectOption(option: any, event: Event) {
+  selectOption(option: any, event: Event): void {
     event.stopPropagation();
     this.selectedOption = option;
     this.searchParams.serviceType = option.value;
@@ -147,13 +150,14 @@ export class SearchComponent implements OnInit{
     }
   }
 
-  updatePriceRange(event: any) {
+  updatePriceRange(event: any): void {
     this.searchParams.minPrice = event.values[0];
     this.searchParams.maxPrice = event.values[1];
   }
 
-  handlePlaceSelected(place: google.maps.places.PlaceResult) {
+  handlePlaceSelected(place: google.maps.places.PlaceResult): void {
     this.selectedPlace = place;
+
     if (place.geometry && place.geometry.location) {
       const location = place.geometry.location;
       this.searchParams.latitude = location.lat();
@@ -171,18 +175,19 @@ export class SearchComponent implements OnInit{
     }
   }
 
-  private performSearch() {
+  private performSearch(): void {
     const params = { ...this.searchParams };
+
     this.postService.search(params).subscribe(res => {
       this.searchResults = res.posts;
     });
   }
 
-  onSearch() {
+  onSearch(): void {
     this.searchSubject.next();
   }
 
-  viewProfile(profileId: string) {
+  viewProfile(profileId: string): void {
     this.router.navigate(['profile/details'], { queryParams: { id: profileId }});
   }
 }

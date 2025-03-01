@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RejectModalComponent } from './reject-modal.component';
+import {RejectModalComponent} from './reject-modal.component';
 
 describe('RejectModalComponent', () => {
   let component: RejectModalComponent;

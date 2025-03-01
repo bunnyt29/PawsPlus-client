@@ -1,5 +1,5 @@
-import { PetType } from './PetType';
-import { Gender } from './Gender';
+import {PetType} from './PetType';
+import {Gender} from './Gender';
 
 export interface Pet {
   name: string;

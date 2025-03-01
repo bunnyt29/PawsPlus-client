@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+
 import {environment} from '../../../environments/environment';
 
 @Injectable({
@@ -7,7 +7,6 @@ import {environment} from '../../../environments/environment';
 })
 export class GoogleMapsService {
   private apiLoaded = false;
-  //private baseUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
 
   constructor() {
     if (typeof google !== 'undefined' && google.maps) {

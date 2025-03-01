@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ModalConfig} from '../../../models/ModalConfig';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+
 import {PetService} from '../../../../pages/pet/services/pet.service';
 import {PostServiceService} from '../../../../pages/post/post-services/services/post-service.service';
-import {ToastrService} from 'ngx-toastr';
-import {Router} from '@angular/router';
 import {ModalService} from '../../../services/modal.service';
 import {PostService} from '../../../../pages/post/services/post.service';
 
@@ -12,7 +13,7 @@ import {PostService} from '../../../../pages/post/services/post.service';
   selector: 'app-delete-modal',
   standalone: true,
   imports: [
-    NgIf
+    CommonModule
   ],
   templateUrl: './delete-modal.component.html',
   styleUrl: './delete-modal.component.scss'

@@ -1,10 +1,10 @@
-import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+import {TestBed} from '@angular/core/testing';
+import {CanActivateFn} from '@angular/router';
 
-import { profileResolverGuard } from './profile-resolver.guard';
+import {profileResolverGuard} from './profile-resolver.guard';
 
 describe('profileResolverGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
+  const executeGuard: CanActivateFn = (...guardParameters) =>
       TestBed.runInInjectionContext(() => profileResolverGuard(...guardParameters));
 
   beforeEach(() => {

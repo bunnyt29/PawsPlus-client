@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {Profile} from '../../../../shared/models/Profile';
+import {ActivatedRoute} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+
 import {ProfileService} from '../../../profile/services/profile.service';
 import {PostService} from '../../services/post.service';
-import {Post} from '../../../../shared/models/Post';
-import {SharedModule} from '../../../../shared/shared.module';
-import {ActivatedRoute} from '@angular/router';
 import {ModalService} from '../../../../shared/services/modal.service';
-import {ModalComponent} from '../../../../shared/components/modal/modal.component';
+import {Post} from '../../../../shared/models/Post';
+import {Profile} from '../../../../shared/models/Profile';
+import {SharedModule} from '../../../../shared/shared.module';
 import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 
 @Component({
@@ -14,7 +15,6 @@ import {WrapperModalComponent} from '../../../../shared/components/modals/wrappe
   standalone: true,
   imports: [
     SharedModule,
-    ModalComponent,
     WrapperModalComponent
   ],
   templateUrl: './my-post.component.html',
@@ -30,22 +30,24 @@ export class MyPostComponent implements OnInit {
     private profileService: ProfileService,
     private postService: PostService,
     private route: ActivatedRoute,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private toastr: ToastrService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.profile = this.route.snapshot.data['profile'];
     this.fetchData();
   }
 
-  fetchData() {
+  fetchData(): void {
     this.postService.get(this.profile.id).subscribe(res => {
       this.post = res;
       this.postId = res.id;
       this.checkIncompleteServices();
     })
   }
-  checkIncompleteServices() {
+
+  checkIncompleteServices(): void {
     this.incompleteServices = this.post.services
       .filter(service => service.price == 0 || service.availableDates == null)
       .map(service => this.getServiceName(service.name));
@@ -61,11 +63,7 @@ export class MyPostComponent implements OnInit {
     return serviceMap[serviceName] || serviceName;
   }
 
-  isServiceIncomplete(service: any): boolean {
-    return !service.price || !service.availableDates || service.availableDates.length === 0;
-  }
-
-  openDeleteModal(type: string, data?: any) {
+  openDeleteModal(type: string, data?: any): void {
     if (type === 'deleteService') {
       this.modalService.open({
         title: 'Изтрий услуга',
@@ -87,7 +85,7 @@ export class MyPostComponent implements OnInit {
     }
   }
 
-  openViewDetailsModal(serviceId: string, serviceName: string) {
+  openViewDetailsModal(serviceId: string, serviceName: string): void {
     this.modalService.open({
       title: serviceName,
       description: 'Виж подробности за своята услуга.',
@@ -98,29 +96,29 @@ export class MyPostComponent implements OnInit {
     });
   }
 
-  openEditModal(serviceId: string) {
+  openEditModal(serviceId: string): void {
     this.modalService.open({
       title: `Редактирай услуга`,
       description: 'Сигурен ли си, че искаш да изтриеш тази услуга?',
       action: 'edit',
       data: serviceId,
       type: 'editService',
-      discard: () => console.log('Delete cancelled'),
+      discard: () => this.toastr.info('Редактирането бе отказано!'),
     });
   }
 
-  openAddNewServiceModal(post: Post) {
+  openAddNewServiceModal(post: Post): void {
     this.modalService.open({
       title: 'Добави нова услуга ',
       description: 'Избери услуга, която искаш да добавиш',
       action: 'add',
       data: post,
       type: 'addService',
-      discard: () => console.log('Delete cancelled'),
+      discard: () => this.toastr.info('Добавянето на нова услуга бе отказано!'),
     });
   }
 
-  openAddNewPetModal(post: Post) {
+  openAddNewPetModal(post: Post): void {
     this.modalService.open({
       title: 'Добави домашен любимец, за когото ще предлагаш грижи ',
       description: 'Избери домашен любимец',

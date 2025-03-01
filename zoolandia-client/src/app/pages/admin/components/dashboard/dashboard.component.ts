@@ -1,14 +1,14 @@
 import {ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+
 import {PostService} from '../../../post/services/post.service';
+import {ModalService} from '../../../../shared/services/modal.service';
+import {AuthService} from '../../../auth/services/auth.service';
+import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 import {TranslateServicePipe} from '../../../../shared/pipes/translate-service.pipe';
 import {AnimalTypePipe} from '../../../../shared/pipes/animal-type.pipe';
-import {ToastrService} from 'ngx-toastr';
-import {ModalService} from '../../../../shared/services/modal.service';
-import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
-import {AuthService} from '../../../auth/services/auth.service';
-
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('profileOptions') profileOptionsRef!: ElementRef;
   pendingPosts!: Array<any>;
   optionsVisible: boolean = false;
+
   constructor(
     private postService: PostService,
     private authService: AuthService,
@@ -36,7 +37,7 @@ export class DashboardComponent implements OnInit {
     private eRef: ElementRef
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.fetchData();
   }
 
@@ -65,30 +66,30 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  fetchData() {
+  fetchData(): void {
     this.postService.getPending().subscribe(res => {
       this.pendingPosts = res;
     })
   }
 
-  viewPost(profileId: string) {
+  viewPost(profileId: string): void {
     this.router.navigate(['profile/preview'], { queryParams: { id: profileId }});
   }
 
-  approve(postId: any) {
+  approve(postId: any): void {
     this.postService.approve(postId).subscribe(() => {
       this.toastr.success('Активирахте профила!');
       location.reload();
     });
   }
 
-  openReasonForRejectModal(postId: string) {
+  openReasonForRejectModal(postId: string): void {
     this.modalService.open({
       title: `Причина за неодобрение`,
       description: 'Опиши причините за неодобрение по ясен и конструктивен начин, така че получателят да разбере конкретно върху какво трябва да работи и как да подобри представянето си.',
       action: 'disapprovePost',
       data: postId,
-      discard: () => console.log('Delete cancelled'),
+      discard: () => this.toastr.info('Изтриването беше отказано'),
     });
   }
 

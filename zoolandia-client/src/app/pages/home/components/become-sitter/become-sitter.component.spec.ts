@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BecomeSitterComponent } from './become-sitter.component';
+import {BecomeSitterComponent} from './become-sitter.component';
 
 describe('BecomeSitterComponent', () => {
   let component: BecomeSitterComponent;

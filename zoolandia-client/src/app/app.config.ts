@@ -1,20 +1,13 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import {provideRouter, withComponentInputBinding} from '@angular/router';
+import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
+import {provideRouter} from '@angular/router';
 
-import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
-import {
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withFetch,
-  withInterceptors,
-  withInterceptorsFromDi
-} from '@angular/common/http';
+import {routes} from './app.routes';
+import {provideClientHydration} from '@angular/platform-browser';
+import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
 import {TokenInterceptorService} from './core/interceptors/token-interceptor.service';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideToastr} from 'ngx-toastr';
 import {ErrorInterceptor} from './core/interceptors/error-interceptor.service';
-import {AuthGuard} from './core/guards/auth.guard';
 import {CookieService} from 'ngx-cookie-service';
 
 export const appConfig: ApplicationConfig = {

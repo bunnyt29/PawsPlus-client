@@ -1,17 +1,19 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {GoogleMap, MapAdvancedMarker} from '@angular/google-maps';
+import {ToastrService} from 'ngx-toastr';
+
 
 import {AuthService} from '../../../auth/services/auth.service';
 import {ProfileService} from '../../services/profile.service';
+import {FileService} from '../../../../core/services/file.service';
 import {Profile} from '../../../../shared/models/Profile';
 import {SharedModule} from '../../../../shared/shared.module';
 import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
-import {FileService} from '../../../../core/services/file.service';
-import {ToastrService} from 'ngx-toastr';
 import {GoogleAutocompleteComponent} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
-import {Observable} from 'rxjs';
-import {GoogleMap, MapAdvancedMarker} from '@angular/google-maps';
+
 import {environment} from '../../../../../environments/environment';
 
 @Component({
@@ -67,7 +69,7 @@ export class EditComponent implements OnInit, AfterViewInit {
     this.formattedAddress = this.formattedAddress || '';
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (this.googleMap.googleMap) {
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ placeId: this.placeId }, (results, status) => {
@@ -87,7 +89,7 @@ export class EditComponent implements OnInit, AfterViewInit {
     }
   }
 
-  fetchProfile(){
+  fetchProfile(): void{
     this.profileService.getMine().subscribe(res => {
       this.profile = res;
 
@@ -140,7 +142,6 @@ export class EditComponent implements OnInit, AfterViewInit {
       const latitude = location.lat();
       const longitude = location.lng();
 
-
       this.mapOptions = {
         ...this.mapOptions,
         center: { lat: latitude, lng: longitude },
@@ -163,7 +164,7 @@ export class EditComponent implements OnInit, AfterViewInit {
     return this.profileService.edit(this.profile.id, this.profileForm.value);
   }
 
-  navigateToPetCreation() {
+  navigateToPetCreation(): void {
     this.saveChanges().subscribe(  {
       next: () => {
         this.toastr.success('Успешно редактира профила си!');
@@ -175,9 +176,9 @@ export class EditComponent implements OnInit, AfterViewInit {
     });
   }
 
-  editProfile(){
+  editProfile(): void{
     this.saveChanges().subscribe( {
-      next: () => {
+      next: (): void => {
         this.router.navigate(['/profile/my-profile-details']);
     }
     });

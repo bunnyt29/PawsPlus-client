@@ -1,13 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+
+import {ModalService} from '../../../services/modal.service';
+
 import {DetailsModalComponent} from '../details-modal/details-modal.component';
 import {DeleteModalComponent} from '../delete-modal/delete-modal.component';
 import {EditModalComponent} from '../edit-modal/edit-modal.component';
 import {AddModalComponent} from '../add-modal/add-modal.component';
 import {BookingModalComponent} from '../booking-modal/booking-modal.component';
-import {ModalService} from '../../../services/modal.service';
 import {RejectModalComponent} from '../reject-modal/reject-modal.component';
 import {ActivateModalComponent} from '../activate-modal/activate-modal.component';
+
 @Component({
   selector: 'app-wrapper-modal',
   standalone: true,

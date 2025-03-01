@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import {environment} from '../../../../environments/environment';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
+
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class PostService {
   activate(profileId: string): Observable<any> {
     return this.http.patch(this.postPath + `/${profileId}/activate`, { profileId: profileId} );
   }
+
   create(data:any): Observable<any> {
     return this.http.post<any>(this.postPath, data);
   }
@@ -55,5 +57,4 @@ export class PostService {
   delete(data: any): Observable<any> {
     return this.http.delete(`${this.postPath}/${data.id}`, { params: { id: data.id, animalTypeId: data.animalTypeId } });
   }
-
 }

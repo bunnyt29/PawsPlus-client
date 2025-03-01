@@ -1,10 +1,11 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {ProfileService} from '../../services/profile.service';
-import {Profile} from '../../../../shared/models/Profile';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {GoogleMap, MapMarker} from '@angular/google-maps';
 import {CommonModule} from '@angular/common';
+
+import {ProfileService} from '../../services/profile.service';
 import {ModalService} from '../../../../shared/services/modal.service';
+import {Profile} from '../../../../shared/models/Profile';
 import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 
 @Component({
@@ -39,9 +40,9 @@ export class MyProfileComponent implements OnInit, AfterViewInit {
     private profileService: ProfileService,
     private modalService: ModalService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.profile = this.route.snapshot.data['profile'];
     let placeId =this.profile.location?.placeId;
     if (placeId) {
@@ -49,13 +50,10 @@ export class MyProfileComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (this.googleMap.googleMap) {
-      const mapInstance = this.googleMap.googleMap;
-
-      // const service = new google.maps.places.PlacesService(mapInstance);
-
       const geocoder = new google.maps.Geocoder();
+
       geocoder.geocode({ placeId: this.placeId }, (results, status) => {
         if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
           this.formattedAddress = results[0].formatted_address;
@@ -70,31 +68,10 @@ export class MyProfileComponent implements OnInit, AfterViewInit {
           this.formattedAddress = 'Address not found';
         }
       });
-
-      // service.getDetails({
-      //   placeId: this.placeId,
-      //   fields: ['geometry', 'name', 'formatted_address']
-      // }, (place, status) => {
-      //   if (status === google.maps.places.PlacesServiceStatus.OK && place?.geometry?.location) {
-      //     this.formattedAddress = place.formatted_address;
-      //     console.log(place.formatted_address)
-      //     console.log(this.formattedAddress)
-      //     const location = place.geometry.location;
-      //     this.mapOptions = {
-      //       ...this.mapOptions,
-      //       center: location,
-      //       zoom: 15
-      //     };
-      //
-      //     this.markerPosition = { lat: location.lat(), lng: location.lng() };
-      //   } else {
-      //     console.error('Грешка при взимане на профила.', status);
-      //   }
-      // });
     }
   }
 
-  openActivateModal(profileId: string) {
+  openActivateModal(profileId: string): void {
     this.modalService.open({
       title: `Активирай профила си`,
       description: 'Профилът ти ще бъде изпратен за одобрение! Администратор ще го прегледа и ще се свърже с теб по имейл, за да уговорите кратко интервю. Това е стандартна процедура за потвърждение на самоличността и проверка на съответствието с изискванията на платформата.',

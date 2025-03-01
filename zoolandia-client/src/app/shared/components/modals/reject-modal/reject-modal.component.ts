@@ -1,17 +1,18 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
-import {NgIf} from "@angular/common";
-import {ModalConfig} from '../../../models/ModalConfig';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {Router} from '@angular/router';
+
 import {PostService} from '../../../../pages/post/services/post.service';
 import {ToastrService} from 'ngx-toastr';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
 import {BookingService} from '../../../services/booking.service';
+import {ModalConfig} from '../../../models/ModalConfig';
 
 @Component({
   selector: 'app-reject-modal',
   standalone: true,
   imports: [
-    NgIf,
+    CommonModule,
     ReactiveFormsModule
   ],
   templateUrl: './reject-modal.component.html',

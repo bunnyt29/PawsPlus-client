@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
+
 import {AuthService} from '../../../pages/auth/services/auth.service';
 import {ProfileService} from '../../../pages/profile/services/profile.service';
 import {Profile} from '../../models/Profile';

@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {PetService} from '../../services/pet.service';
+import {CommonModule} from '@angular/common';
 import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+
+import {PetService} from '../../services/pet.service';
+import {ModalService} from '../../../../shared/services/modal.service';
 import {Pet} from '../../../../shared/models/Pet';
 import {Gender, GenderTranslations} from '../../../../shared/models/Gender';
 import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
-import {CommonModule} from '@angular/common';
-import {ModalService} from '../../../../shared/services/modal.service';
-import {ModalComponent} from '../../../../shared/components/modal/modal.component';
 import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 
 @Component({
@@ -16,13 +17,12 @@ import {WrapperModalComponent} from '../../../../shared/components/modals/wrappe
     CommonModule,
     NavigationMenuComponent,
     RouterLink,
-    ModalComponent,
     WrapperModalComponent
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
 })
-export class DetailsComponent implements OnInit{
+export class DetailsComponent implements OnInit {
   profileId!: string | null;
   pet!: Pet;
   petId!: string;
@@ -32,6 +32,7 @@ export class DetailsComponent implements OnInit{
     private petService: PetService,
     private modalService: ModalService,
     private route: ActivatedRoute,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -44,7 +45,6 @@ export class DetailsComponent implements OnInit{
       this.pet = res;
       this.petId = res.id;
       this.activityLevel = Number(this.pet.personality?.activityLevel);
-      console.log(this.pet.weight)
     })
   }
 
@@ -59,7 +59,7 @@ export class DetailsComponent implements OnInit{
       action: 'delete',
       data: petId,
       type: 'deletePet',
-      discard: () => console.log('Delete cancelled'),
+      discard: () => this.toastr.info('Изтриването бе отказано!'),
     });
   }
 }

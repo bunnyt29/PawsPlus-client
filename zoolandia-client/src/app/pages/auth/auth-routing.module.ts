@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
   {
@@ -17,11 +17,6 @@ const routes: Routes = [
     loadComponent: () =>
       import('./components/role-selection/role-selection.component').then((m) => m.RoleSelectionComponent),
   },
-  // {
-  //   path: 'multi-step-form',
-  //   loadComponent: () =>
-  //     import('./components/multi-step-form/multi-step-form.component').then((m) => m.MultiStepFormComponent),
-  // },
   {
     path: 'confirm-email',
     loadComponent: () =>

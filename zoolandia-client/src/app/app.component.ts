@@ -1,5 +1,5 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
-import {NavigationEnd, NavigationStart, Router, RouterLink, RouterOutlet} from '@angular/router';
+import {NavigationStart, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {NavigationMenuComponent} from './shared/components/navigation-menu/navigation-menu.component';
 import {CommonModule} from '@angular/common';
 import {environment} from '../environments/environment';

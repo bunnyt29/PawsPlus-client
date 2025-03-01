@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MyProfileLayoutComponent } from './my-profile-layout.component';
+import {MyProfileLayoutComponent} from './my-profile-layout.component';
 
 describe('SidebarComponent', () => {
   let component: MyProfileLayoutComponent;

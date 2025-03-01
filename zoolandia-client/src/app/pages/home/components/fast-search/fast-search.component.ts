@@ -1,15 +1,11 @@
-import {ChangeDetectorRef, Component, NgZone} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
-import {CommonModule, NgForOf} from '@angular/common';
-import {PostService} from '../../../post/services/post.service';
-import {debounceTime} from 'rxjs';
+import {ChangeDetectorRef, Component} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {Router} from '@angular/router';
+
 import {CalendarModule} from 'primeng/calendar';
 import {SharedModule} from '../../../../shared/shared.module';
-import {
-  GoogleAutocompleteComponent
-} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
-import {Router} from '@angular/router';
-import {HttpParams} from '@angular/common/http';
+import {GoogleAutocompleteComponent} from '../../../../shared/components/google-autocomplete/google-autocomplete.component';
 
 @Component({
   selector: 'fast-search',
@@ -65,22 +61,21 @@ export class FastSearchComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     private router: Router
-  )
-  {
+  ) {
     this.today = new Date();
   }
 
-  onPetTypeChange(value: number) {
+  onPetTypeChange(value: number): void {
     this.searchParams.petType = value;
     this.cdr.detectChanges();
   }
 
-  onServiceTypeChange(value: number) {
+  onServiceTypeChange(value: number): void {
     this.searchParams.serviceType = value;
     this.cdr.detectChanges();
   }
 
-  onStartDateChange(event: any) {
+  onStartDateChange(event: any): void {
     if (this.searchParams.startDate) {
       this.minDateForEndDate = new Date(this.searchParams.startDate);
     } else {
@@ -88,7 +83,7 @@ export class FastSearchComponent {
     }
   }
 
-  onPlaceSelected(place: google.maps.places.PlaceResult) {
+  onPlaceSelected(place: google.maps.places.PlaceResult): void {
     this.searchParams.formattedAddress = place.formatted_address;
     if (place.geometry && place.geometry.location) {
       const location = place.geometry.location;
@@ -96,7 +91,7 @@ export class FastSearchComponent {
       this.searchParams.longitude = location.lng();
     }
   }
-  onSearch(){
+  onSearch(): void{
     this.router.navigate(['/search'], { queryParams: this.searchParams })
   }
 }

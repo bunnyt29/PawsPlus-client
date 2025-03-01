@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {GoogleAutocompleteComponent} from "../google-autocomplete/google-autocomplete.component";
+import {Component} from '@angular/core';
 
+import {GoogleAutocompleteComponent} from "../google-autocomplete/google-autocomplete.component";
 @Component({
   selector: 'app-not-found',
   standalone: true,

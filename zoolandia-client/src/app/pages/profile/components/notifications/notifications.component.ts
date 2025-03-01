@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {AnimalTypePipe} from "../../../../shared/pipes/animal-type.pipe";
 import {CommonModule} from "@angular/common";
-import {TranslateServicePipe} from "../../../../shared/pipes/translate-service.pipe";
-import {BookingService} from '../../../../shared/services/booking.service';
 import {ActivatedRoute, Router} from '@angular/router';
+
+import {BookingService} from '../../../../shared/services/booking.service';
 import {GoogleMapsService} from '../../../../shared/services/google-maps.service';
-import {Profile} from '../../../../shared/models/Profile';
 import {ToastrService} from 'ngx-toastr';
 import {ModalService} from '../../../../shared/services/modal.service';
+import {Profile} from '../../../../shared/models/Profile';
 import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
+import {AnimalTypePipe} from "../../../../shared/pipes/animal-type.pipe";
+import {TranslateServicePipe} from "../../../../shared/pipes/translate-service.pipe";
 
 @Component({
   selector: 'app-notifications',
@@ -22,7 +23,7 @@ import {WrapperModalComponent} from '../../../../shared/components/modals/wrappe
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss'
 })
-export class NotificationsComponent implements OnInit{
+export class NotificationsComponent implements OnInit {
   bookings!: Array<any>;
   profile!: Profile;
 
@@ -35,18 +36,17 @@ export class NotificationsComponent implements OnInit{
     private modalService: ModalService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.profile = this.route.snapshot.data['profile'];
 
     this.fetchData();
   }
 
-  fetchData(){
+  fetchData(): void{
     this.bookingService.getPending().subscribe(res => {
-      console.log(res)
       this.bookings = res.map((booking: any) => ({ ...booking, meetingPlaceAddress: '' }));
 
-      this.bookings.forEach((booking: any) => {
+      this.bookings.forEach((booking: any): void => {
         if (booking.googlePlaceId) {
           const geocoder = new google.maps.Geocoder();
           geocoder.geocode({ placeId: booking.googlePlaceId }, (results, status) => {
@@ -62,23 +62,23 @@ export class NotificationsComponent implements OnInit{
     });
   }
 
-  viewPet(ownerId: string){
+  viewPet(ownerId: string): void {
     this.router.navigate(['/pet/details', ownerId])
   }
 
-  approve(bookingId: string, ownerId: string, serviceName: string) {
+  approve(bookingId: string, ownerId: string, serviceName: string): void {
     const data: {id: string, ownerId: string, serviceName: string} =
     {
       id: bookingId,
       ownerId: ownerId,
       serviceName: serviceName
     }
-    this.bookingService.approve(bookingId, data).subscribe( () => {
+    this.bookingService.approve(bookingId, data).subscribe( (): void => {
       this.toastr.success('Успешно потвърдихте поръчката!');
     })
   }
 
-  openReasonForRejectModal(action: string, bookingId: string, id: string, serviceName: string) {
+  openReasonForRejectModal(action: string, bookingId: string, id: string, serviceName: string): void {
     if (action === 'cancel') {
       const data: {id: string, sitterId: string, serviceName: string} =
       {

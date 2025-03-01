@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import {environment} from '../../../../environments/environment';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
+
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class PetService {
   private petPath = environment.apiUrl + "/pets";
   private breedPath = environment.apiUrl + "/breeds";
   private userPath = environment.apiUrl + "/profiles";
+
   constructor(
     private http: HttpClient
   ) { }

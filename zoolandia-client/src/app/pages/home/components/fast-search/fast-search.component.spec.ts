@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FastSearchComponent } from './fast-search.component';
+import {FastSearchComponent} from './fast-search.component';
 
 describe('FastSearchComponent', () => {
   let component: FastSearchComponent;

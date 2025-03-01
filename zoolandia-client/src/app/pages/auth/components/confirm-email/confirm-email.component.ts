@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+
 import {AuthService} from '../../services/auth.service';
 
 @Component({
@@ -29,8 +30,8 @@ export class ConfirmEmailComponent implements OnInit {
   }
 
   confirm(): void {
-    this.authService.confirmEmail(this.userId, this.token).subscribe(() => {
-      setTimeout(() => {
+    this.authService.confirmEmail(this.userId, this.token).subscribe((): void => {
+      setTimeout((): void => {
         this.router.navigate(['/auth/login']);
       }, 3000);
     });
