@@ -1,16 +1,20 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {SharedModule} from '../../../../shared/shared.module';
 import {CommonModule} from '@angular/common';
-import {PostService} from '../../services/post.service';
-import {ToastrService} from 'ngx-toastr';
-import {ProfileService} from '../../../profile/services/profile.service';
 import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+
+import {PostService} from '../../services/post.service';
+import {ProfileService} from '../../../profile/services/profile.service';
+import {SharedModule} from '../../../../shared/shared.module';
 
 @Component({
   selector: 'app-multi-step-form',
   standalone: true,
-  imports: [SharedModule, CommonModule],
+  imports: [
+    SharedModule,
+    CommonModule
+  ],
   templateUrl: './multi-step-form.component.html',
   styleUrl: './multi-step-form.component.scss'
 })
@@ -45,8 +49,7 @@ export class MultiStepFormComponent {
     private profileService: ProfileService,
     private router: Router,
     private toastr: ToastrService
-  )
-  {
+  ) {
     this.postForm = this.fb.group({
       profileId: ['', Validators.required],
       services: this.fb.array([], [Validators.required, Validators.minLength(1)]),
@@ -55,7 +58,7 @@ export class MultiStepFormComponent {
     });
   }
 
-  onCheckboxChange(event: Event, controlName: string) {
+  onCheckboxChange(event: Event, controlName: string): void {
     const checkbox = event.target as HTMLInputElement;
     const formArray = this.postForm.get(controlName) as FormArray;
 
@@ -77,7 +80,7 @@ export class MultiStepFormComponent {
     return formArray.value.includes(id);
   }
 
-  nextStep() {
+  nextStep(): void {
     const stepValid = this.validateCurrentStep();
     if (stepValid) {
       const petsValue: number[] = this.postForm.get('pets')?.value || [];
@@ -91,7 +94,7 @@ export class MultiStepFormComponent {
     }
   }
 
-  previousStep() {
+  previousStep(): void {
     const petsValue: number[] = this.postForm.get('pets')?.value || [];
     if (this.currentStep === 3 && !petsValue.includes(1)) {
       this.currentStep = 1;
@@ -114,7 +117,7 @@ export class MultiStepFormComponent {
     return formArray.value.length > 0;
   }
 
-  submitForm() {
+  submitForm(): void {
     this.profileService.getMine().subscribe(res => {
       this.profileId = res.id;
 

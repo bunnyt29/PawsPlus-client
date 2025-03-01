@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import {NgIf} from "@angular/common";
-import {PaginatorModule} from "primeng/paginator";
+import {Component} from '@angular/core';
+import {CommonModule} from "@angular/common";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
 
@@ -8,8 +7,7 @@ import {RouterLink} from "@angular/router";
   selector: 'app-change-password',
   standalone: true,
     imports: [
-        NgIf,
-        PaginatorModule,
+        CommonModule,
         ReactiveFormsModule,
         RouterLink
     ],

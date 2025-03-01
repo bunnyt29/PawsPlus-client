@@ -1,28 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { SharedModule } from '../../../../shared/shared.module';
-import { CommonModule } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {SharedModule} from '../../../../shared/shared.module';
+import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
-import { ImageUploadComponent } from '../../../../shared/components/image-upload/image-upload.component';
-import { FileService } from '../../../../core/services/file.service';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+
+import {FileService} from '../../../../core/services/file.service';
 import {PetService} from '../../services/pet.service';
+import {ProfileService} from '../../../profile/services/profile.service';
 import {PetType} from '../../../../shared/models/PetType';
 import {Gender} from '../../../../shared/models/Gender';
-import {ProfileService} from '../../../profile/services/profile.service';
-import {ToastrService} from 'ngx-toastr';
 import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
-import {Router} from '@angular/router';
-import {AutoCompleteModule} from 'primeng/autocomplete';
+import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
+
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [SharedModule, CommonModule, ImageUploadComponent, NavigationMenuComponent, FormsModule, AutoCompleteModule],
+  imports: [
+    SharedModule,
+    CommonModule,
+    ImageUploadComponent,
+    NavigationMenuComponent,
+    FormsModule,
+    AutoCompleteModule
+  ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
 
-export class CreateComponent implements OnInit{
+export class CreateComponent implements OnInit {
   petForm!: FormGroup;
   selectedPet: string = 'dog';
   currentIndex: number = 0;
@@ -83,6 +92,7 @@ export class CreateComponent implements OnInit{
     this.setupAgeAdjuster();
     this.getBreeds();
   }
+
   previousPet(): void {
     this.currentIndex = (this.currentIndex - 1 + this.pets.length) % this.pets.length;
     this.selectedPet = this.pets[this.currentIndex];
@@ -134,7 +144,7 @@ export class CreateComponent implements OnInit{
         this.petForm.patchValue({ photoUrl: photoUrl });
       },
       error: (err) => {
-        console.error('File upload failed:', err);
+        console.error('Прикачването на файл не успя да се извърши!', err);
       },
     });
   }
@@ -143,26 +153,25 @@ export class CreateComponent implements OnInit{
     return this.petTranslations[this.selectedPet];
   }
 
-  setActivityLevel(level: number) {
+  setActivityLevel(level: number): void {
     this.petForm.get('personality.activityLevel')?.setValue(level.toString());
   }
 
-  getBreeds() {
+  getBreeds(): void {
     const petType = PetType[this.selectedPet.charAt(0).toUpperCase() + this.selectedPet.slice(1).toLowerCase() as keyof typeof PetType];
     this.petService.getBreeds(petType).subscribe(res => {
       if (Array.isArray(res)) {
         this.breeds = res.map(breed => ({ id: breed.id, name: breed.name }));
         this.items = this.breeds;
       } else {
-        console.error('Unexpected response format:', res);
         this.breeds = [];
       }
     }, error => {
-      console.error('Error fetching breeds:', error);
+      console.error('Грешка при взимането на породите', error);
     });
   }
 
-  search(event: any) {
+  search(event: any): void {
     let query = event.query.toLowerCase();
     this.items = this.breeds.filter(breed => breed.name.toLowerCase().includes(query));
   }
@@ -179,19 +188,18 @@ export class CreateComponent implements OnInit{
         };
 
         this.petService.create(formData).subscribe({
-          next: (response) => {
+          next: (response): void => {
             this.toastr.success("Успешно създаде твоя домашен любимец");
             this.router.navigate(['/profile/my-profile-details/my-pets']);
           },
-          error: (err) => {
+          error: (): void => {
             this.toastr.error("Неуспешно създаване. Опитайте отново.");
           }
         });
       },
-      error: (err) => {
+      error: (): void => {
         this.toastr.error('Грешка при разпознаване на профила!')
       }
     });
   }
-
 }

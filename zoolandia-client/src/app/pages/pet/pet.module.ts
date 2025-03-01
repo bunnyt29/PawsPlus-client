@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { PetRoutingModule } from './pet-routing.module';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {PetRoutingModule} from './pet-routing.module';
 
 @NgModule({
   declarations: [],

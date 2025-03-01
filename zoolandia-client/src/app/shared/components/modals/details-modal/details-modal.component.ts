@@ -1,7 +1,9 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CommonModule} from "@angular/common";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+
 import {CalendarModule} from "primeng/calendar";
-import {CommonModule, NgForOf, NgIf} from "@angular/common";
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+
 import {PostService} from '../../../models/PostService';
 import {PostServiceService} from '../../../../pages/post/post-services/services/post-service.service';
 import {ModalConfig} from '../../../models/ModalConfig';

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ConfirmEmailComponent } from './confirm-email.component';
+import {ConfirmEmailComponent} from './confirm-email.component';
 
 describe('ConfirmEmailComponent', () => {
   let component: ConfirmEmailComponent;

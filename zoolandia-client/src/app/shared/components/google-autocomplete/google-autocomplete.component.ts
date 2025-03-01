@@ -1,16 +1,8 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Inject, Input,
-  Output,
-  PLATFORM_ID,
-  ViewChild
-} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Inject, Input, Output, PLATFORM_ID, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {GoogleMapsModule} from '@angular/google-maps';
 import {isPlatformBrowser} from '@angular/common';
+
 import {GoogleMapsService} from '../../services/google-maps.service';
 
 @Component({
@@ -23,7 +15,7 @@ import {GoogleMapsService} from '../../services/google-maps.service';
   templateUrl: './google-autocomplete.component.html',
   styleUrl: './google-autocomplete.component.scss'
 })
-export class GoogleAutocompleteComponent  implements AfterViewInit{
+export class GoogleAutocompleteComponent  implements AfterViewInit {
   @ViewChild('autocompleteInput', { static: false }) autocompleteInput!: ElementRef;
   @Output() placeSelected = new EventEmitter<any>();
   @Input() inputValue: string | undefined = '';
@@ -33,7 +25,7 @@ export class GoogleAutocompleteComponent  implements AfterViewInit{
     private googleMapsService: GoogleMapsService
   ) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.googleMapsService.loadGoogleMaps().then(() => {
         this.initAutocomplete();
@@ -41,7 +33,7 @@ export class GoogleAutocompleteComponent  implements AfterViewInit{
     }
   }
 
-  initAutocomplete() {
+  initAutocomplete(): void {
     const autocomplete = new google.maps.places.Autocomplete(this.autocompleteInput.nativeElement, {
       // types: ['route'],
       componentRestrictions: { country: ['BG'] },

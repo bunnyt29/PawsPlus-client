@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SitterDetailsPreviewComponent } from './sitter-details-preview.component';
+import {SitterDetailsPreviewComponent} from './sitter-details-preview.component';
 
 describe('SitterDetailsPreviewComponent', () => {
   let component: SitterDetailsPreviewComponent;

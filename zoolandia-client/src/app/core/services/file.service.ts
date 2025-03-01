@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 })
 export class FileService {
   private filePath = environment.apiUrl + '/files';
+
   constructor(
     private http: HttpClient
   ) { }
@@ -16,7 +17,6 @@ export class FileService {
     const formData = new FormData();
     formData.append('image', file);
 
-    console.log('Uploading to:', this.filePath + '/' + 'uploadImage');
     return this.http.post<any>(this.filePath + '/' + 'uploadImage', formData);
   }
 }

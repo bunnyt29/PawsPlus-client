@@ -1,4 +1,4 @@
-import { AnimalTypePipe } from './animal-type.pipe';
+import {AnimalTypePipe} from './animal-type.pipe';
 
 describe('AnimalTypePipe', () => {
   it('create an instance', () => {

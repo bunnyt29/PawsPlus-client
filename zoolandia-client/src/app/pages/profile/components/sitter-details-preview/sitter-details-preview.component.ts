@@ -1,15 +1,18 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {CalendarModule} from "primeng/calendar";
 import {GoogleMap, MapCircle} from "@angular/google-maps";
 import {CommonModule} from "@angular/common";
-import {WrapperModalComponent} from "../../../../shared/components/modals/wrapper-modal/wrapper-modal.component";
-import {environment} from '../../../../../environments/environment';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+
+import {PostService} from '../../../post/services/post.service';
 import {ProfileService} from '../../services/profile.service';
 import {ModalService} from '../../../../shared/services/modal.service';
+import {WrapperModalComponent} from "../../../../shared/components/modals/wrapper-modal/wrapper-modal.component";
 import {FormsModule} from '@angular/forms';
-import {PostService} from '../../../post/services/post.service';
-import {ToastrService} from 'ngx-toastr';
+
+
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-sitter-details-preview',
@@ -21,7 +24,7 @@ import {ToastrService} from 'ngx-toastr';
     GoogleMap,
     MapCircle,
     WrapperModalComponent,
-    RouterLink,
+    RouterLink
   ],
   templateUrl: './sitter-details-preview.component.html',
   styleUrl: './sitter-details-preview.component.scss'
@@ -33,7 +36,6 @@ export class SitterDetailsPreviewComponent implements OnInit, AfterViewChecked {
   placeId: string = '';
   markerPosition: google.maps.LatLngLiteral | null = null;
   circleRadius = 500;
-  formattedAddress!: string;
   mapInitialized = false;
 
   mapOptions: google.maps.MapOptions = {
@@ -64,7 +66,6 @@ export class SitterDetailsPreviewComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.profileId = params['id'];
-      console.log(this.profileId)
     });
 
     this.fetchData();
@@ -77,7 +78,7 @@ export class SitterDetailsPreviewComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  fetchData(){
+  fetchData(): void {
     this.profileService.get(this.profileId).subscribe(res => {
       this.data = res;
       this.placeId = res.location?.placeId || '';
@@ -98,14 +99,12 @@ export class SitterDetailsPreviewComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  initializeMap() {
+  initializeMap(): void {
     if (!this.googleMap || !this.googleMap.googleMap) {
-      console.error('Google Map instance not available.');
       return;
     }
 
     if (!this.placeId) {
-      console.error('Missing placeId for geocoding.');
       return;
     }
 
@@ -115,6 +114,7 @@ export class SitterDetailsPreviewComponent implements OnInit, AfterViewChecked {
         const location = results[0].geometry.location;
 
         const offsetCenter = google.maps.geometry.spherical.computeOffset(location, Math.random() * 128, 90);
+
         this.markerPosition = {
           lat: offsetCenter.lat(),
           lng: offsetCenter.lng()
@@ -133,19 +133,19 @@ export class SitterDetailsPreviewComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  toggleAvailability(service: any) {
+  toggleAvailability(service: any): void {
     service.showAvailability = !service.showAvailability;
     this.cd.detectChanges();
   }
 
-  approve(postId: any) {
-    this.postService.approve(postId).subscribe(() => {
+  approve(postId: any): void {
+    this.postService.approve(postId).subscribe((): void => {
       this.toastr.success('Активирахте профила!');
       this.router.navigate(['/admin/dashboard']);
     });
   }
 
-  openReasonForRejectModal(postId: string) {
+  openReasonForRejectModal(postId: string): void {
     this.modalService.open({
       title: `Причина за неодобрение`,
       description: 'Опиши причините за неодобрение по ясен и конструктивен начин, така че получателят да разбере конкретно върху какво трябва да работи и как да подобри представянето си.',
@@ -154,5 +154,4 @@ export class SitterDetailsPreviewComponent implements OnInit, AfterViewChecked {
       discard: () => console.log('Delete cancelled'),
     });
   }
-
 }

@@ -1,17 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
-import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
-import {CommonModule, NgForOf, NgIf} from '@angular/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+
+import {AutoCompleteModule} from 'primeng/autocomplete';
+
 import {FileService} from '../../../../core/services/file.service';
 import {PetService} from '../../services/pet.service';
 import {ProfileService} from '../../../profile/services/profile.service';
-import {ToastrService} from 'ngx-toastr';
 import {PetType} from '../../../../shared/models/PetType';
 import {Pet} from '../../../../shared/models/Pet';
 import {Gender} from '../../../../shared/models/Gender';
-import {Router} from '@angular/router';
-import {AutoCompleteModule} from 'primeng/autocomplete';
+import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
+import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
 
 @Component({
   selector: 'app-edit',
@@ -19,8 +21,6 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
   imports: [
     ImageUploadComponent,
     NavigationMenuComponent,
-    NgForOf,
-    NgIf,
     ReactiveFormsModule,
     CommonModule,
     AutoCompleteModule
@@ -28,7 +28,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
 })
-export class EditComponent implements OnInit{
+export class EditComponent implements OnInit {
   petForm!: FormGroup;
   pet!: Pet;
   petId!: string;
@@ -36,7 +36,6 @@ export class EditComponent implements OnInit{
   currentIndex: number = 0;
   pets: string[] = ['dog', 'cat'];
   dynamicFields: string[] = ['name', 'photoUrl'];
-  defaultImage: string | undefined = '/images/shared/default-image-owner.svg';
   Gender = Gender;
   profileId!: string;
   steps = Array(10).fill(0);
@@ -92,6 +91,7 @@ export class EditComponent implements OnInit{
     this.fetchData();
     this.getBreeds();
   }
+
   previousPet(): void {
     this.currentIndex = (this.currentIndex - 1 + this.pets.length) % this.pets.length;
     this.selectedPet = this.pets[this.currentIndex];
@@ -143,7 +143,7 @@ export class EditComponent implements OnInit{
         this.petForm.patchValue({ photoUrl: photoUrl });
       },
       error: (err) => {
-        console.error('File upload failed:', err);
+        this.toastr.error('Изникна грешка при прикачването на файл!')
       },
     });
   }
@@ -152,31 +152,30 @@ export class EditComponent implements OnInit{
     return this.petTranslations[this.selectedPet];
   }
 
-  getBreeds() {
+  getBreeds(): void {
     const petType = PetType[this.selectedPet.charAt(0).toUpperCase() + this.selectedPet.slice(1).toLowerCase() as keyof typeof PetType];
     this.petService.getBreeds(petType).subscribe(res => {
       if (Array.isArray(res)) {
         this.breeds = res.map(breed => ({ id: breed.id, name: breed.name }));
         this.items = this.breeds;
       } else {
-        console.error('Unexpected response format:', res);
         this.breeds = [];
       }
-    }, error => {
-      console.error('Error fetching breeds:', error);
+    }, () => {
+      this.toastr.error('Възникна грешка при взимането на породите!')
     });
   }
 
-  search(event: any) {
+  search(event: any): void {
     let query = event.query.toLowerCase();
     this.items = this.breeds.filter(breed => breed.name.toLowerCase().includes(query));
   }
 
-  setActivityLevel(level: number) {
+  setActivityLevel(level: number): void {
     this.petForm.get('personality.activityLevel')?.setValue(level.toString());
   }
 
-  fetchData() {
+  fetchData(): void {
     this.profileService.getMine().subscribe(res => {
       this.profileId = res.id;
       this.petService.get(this.profileId).subscribe(res => {
@@ -221,6 +220,7 @@ export class EditComponent implements OnInit{
       })
     })
   }
+
   editPet(): void {
     const formData = {
       ...this.petForm.value,

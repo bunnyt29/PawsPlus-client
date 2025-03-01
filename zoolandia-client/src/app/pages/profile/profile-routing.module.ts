@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {MyProfileLayoutComponent} from './components/my-profile-layout/my-profile-layout.component';
 import {MyProfileComponent} from './components/my-profile/my-profile.component';
 import {NotificationsComponent} from './components/notifications/notifications.component';

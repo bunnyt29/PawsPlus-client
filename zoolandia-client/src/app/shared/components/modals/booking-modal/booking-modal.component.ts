@@ -1,13 +1,16 @@
 import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
-import {ModalConfig} from '../../../models/ModalConfig';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CalendarModule} from 'primeng/calendar';
-import {TranslateServicePipe} from '../../../pipes/translate-service.pipe';
-import {CommonModule} from '@angular/common';
-import {GoogleAutocompleteComponent} from '../../google-autocomplete/google-autocomplete.component';
-import {BookingService} from '../../../services/booking.service';
-import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+
+import {CalendarModule} from 'primeng/calendar';
+
+import {BookingService} from '../../../services/booking.service';
+import {GoogleAutocompleteComponent} from '../../google-autocomplete/google-autocomplete.component';
+import {CommonModule} from '@angular/common';
+import {ModalConfig} from '../../../models/ModalConfig';
+import {TranslateServicePipe} from '../../../pipes/translate-service.pipe';
+
 
 @Component({
   selector: 'app-booking-modal',
@@ -22,7 +25,7 @@ import {Router} from '@angular/router';
   templateUrl: './booking-modal.component.html',
   styleUrl: './booking-modal.component.scss'
 })
-export class BookingModalComponent implements AfterViewInit{
+export class BookingModalComponent implements AfterViewInit {
   @Input() config!: ModalConfig;
   @Output() closeModal = new EventEmitter<void>();
   bookingForm!: FormGroup;

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ActivateModalComponent } from './activate-modal.component';
+import {ActivateModalComponent} from './activate-modal.component';
 
 describe('ActivateModalComponent', () => {
   let component: ActivateModalComponent;

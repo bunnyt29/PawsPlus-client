@@ -1,9 +1,11 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ModalConfig} from '../../../models/ModalConfig';
-import {CalendarModule} from 'primeng/calendar';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
+
+import {CalendarModule} from 'primeng/calendar';
+
+import {ModalConfig} from '../../../models/ModalConfig';
 import {PetService} from '../../../../pages/pet/services/pet.service';
 import {PostServiceService} from '../../../../pages/post/post-services/services/post-service.service';
 import {PostService} from '../../../models/PostService';
@@ -22,7 +24,7 @@ import {TranslateServicePipe} from '../../../pipes/translate-service.pipe';
   templateUrl: './edit-modal.component.html',
   styleUrl: './edit-modal.component.scss'
 })
-export class EditModalComponent implements OnInit{
+export class EditModalComponent implements OnInit {
   @Input() config!: ModalConfig;
   @Output() closeModal = new EventEmitter<void>();
   serviceForm!: FormGroup;

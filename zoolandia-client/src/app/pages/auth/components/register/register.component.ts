@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {NgOptimizedImage} from '@angular/common';
 
 import {AuthService} from '../../services/auth.service';
 import {SharedModule} from '../../../../shared/shared.module';
 import {passwordMatchValidator} from '../../../../core/validators/password-match.validator';
-import {ToastrService} from 'ngx-toastr';
-import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [SharedModule, NgOptimizedImage],
+  imports: [
+    SharedModule,
+    NgOptimizedImage
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   role!: number;
 
@@ -46,24 +49,31 @@ export class RegisterComponent {
       }
     });
   }
+
   get firstName() {
     return this.registerForm.get('firstName');
   }
+
   get lastName() {
     return this.registerForm.get('lastName');
   }
+
   get email() {
     return this.registerForm.get('email');
   }
+
   get phoneNumber() {
     return this.registerForm.get('phoneNumber');
   }
+
   get password() {
     return this.registerForm.get('password');
   }
+
   get passwordMatchError() {
     return this.registerForm.errors?.['PasswordNoMatch'] && this.registerForm.get('confirmPassword')?.touched;
   }
+
   register() {
     const formData = { ...this.registerForm.value };
     delete formData.confirmPassword;

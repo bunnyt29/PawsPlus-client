@@ -1,16 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {Router, RouterLink} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 import {AuthService} from '../../services/auth.service';
 import {SharedModule} from '../../../../shared/shared.module';
-import {ToastrService} from 'ngx-toastr';
-import {CommonModule} from '@angular/common';
-import {ActivatedRoute, Route, Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [SharedModule, CommonModule, RouterLink],
+  imports: [
+    SharedModule,
+    CommonModule,
+    RouterLink
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -22,8 +26,7 @@ export class LoginComponent implements OnInit{
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router
-  )
-  { }
+  ) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({

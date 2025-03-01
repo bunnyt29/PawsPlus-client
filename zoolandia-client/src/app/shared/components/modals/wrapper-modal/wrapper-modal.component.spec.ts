@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { WrapperModalComponent } from './wrapper-modal.component';
+import {WrapperModalComponent} from './wrapper-modal.component';
 
 describe('WrapperModalComponent', () => {
   let component: WrapperModalComponent;

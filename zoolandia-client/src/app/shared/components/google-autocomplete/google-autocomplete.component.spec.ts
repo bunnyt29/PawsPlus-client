@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GoogleAutocompleteComponent } from './google-autocomplete.component';
+import {GoogleAutocompleteComponent} from './google-autocomplete.component';
 
 describe('GoogleAutocompleteComponent', () => {
   let component: GoogleAutocompleteComponent;

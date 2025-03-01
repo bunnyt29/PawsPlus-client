@@ -1,15 +1,17 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CalendarModule} from "primeng/calendar";
 import {CommonModule} from "@angular/common";
 import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {SharedModule} from "../../../shared.module";
-import {TranslateServicePipe} from "../../../pipes/translate-service.pipe";
-import {ModalConfig} from '../../../models/ModalConfig';
-import {Post} from '../../../models/Post';
-import {PostServiceService} from '../../../../pages/post/post-services/services/post-service.service';
 import {ToastrService} from 'ngx-toastr';
+
+import {CalendarModule} from "primeng/calendar";
+
+import {PostServiceService} from '../../../../pages/post/post-services/services/post-service.service';
 import {ModalService} from 'ngx-modal-ease';
 import {PostService} from '../../../../pages/post/services/post.service';
+import {SharedModule} from "../../../shared.module";
+import {Post} from '../../../models/Post';
+import {ModalConfig} from '../../../models/ModalConfig';
+import {TranslateServicePipe} from "../../../pipes/translate-service.pipe";
 
 @Component({
   selector: 'app-add-modal',
@@ -80,7 +82,7 @@ export class AddModalComponent implements OnInit {
     this.getPost();
   }
 
-  getPost() {
+  getPost(): void {
     this.post = this.config.data;
 
     const postServiceNames = this.post.services.map((service: any) => service.name);
