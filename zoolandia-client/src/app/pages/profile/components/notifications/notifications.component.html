@@ -60,8 +60,8 @@
         <span *ngIf="booking.status == 'Approved'" class="approved">Приета</span>
       </td>
       <td>
-        <button class="btn"><img src="/images/shared/answer-yes.png" alt="Одобри" *ngIf="profile?.roles?.includes('Sitter')" (click)="approve(booking.id, booking.ownerId, booking.serviceName)"></button>
-        <button class="btn"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Sitter')" (click)="openReasonForRejectModal('disapprove', booking.id, booking.ownerId, booking.serviceName)"></button>
+        <button class="btn" *ngIf="booking.status == 'Pending'"><img src="/images/shared/answer-yes.png" alt="Одобри" *ngIf="profile?.roles?.includes('Sitter')" (click)="approve(booking.id, booking.ownerId, booking.serviceName)"></button>
+        <button class="btn" *ngIf="booking.status == 'Pending'"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Sitter')" (click)="openReasonForRejectModal('disapprove', booking.id, booking.ownerId, booking.serviceName)"></button>
         <button class="btn" *ngIf="booking.status == 'Pending'|| booking.status == 'Approved'"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Owner')" (click)="openReasonForRejectModal('cancel', booking.id, booking.sitterId, booking.serviceName)"></button>
       </td>
     </tr>
