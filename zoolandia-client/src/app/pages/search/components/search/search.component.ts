@@ -41,7 +41,7 @@ export class SearchComponent implements OnInit {
   minDateForEndDate!: Date;
   formattedAddress: string | undefined = '';
   paramsObject: { [key: string]: any } = {};
-  mapMarkers: google.maps.MarkerOptions[] = [];
+  mapMarkers: google.maps.MarkerOptions[] = []
 
   serviceOptions = [
     { value: 1, text: 'Разходки', image: '/images/desktop/post/service-walking.svg' },
@@ -184,15 +184,34 @@ export class SearchComponent implements OnInit {
       this.mapMarkers = [];
 
       const geocoder = new google.maps.Geocoder();
+      let firstLocationSet = false;
 
       this.searchResults.forEach((result, index) => {
         if (result.latitude && result.longitude) {
           this.addMarker(result.latitude, result.longitude, `${result.firstName} ${result.lastName}`);
+
+          if (!firstLocationSet) {
+            this.mapOptions = {
+              ...this.mapOptions,
+              center: { lat: result.latitude, lng: result.longitude },
+              zoom: 14
+            };
+            firstLocationSet = true;
+          }
         } else if (result.placeId) {
           geocoder.geocode({ placeId: result.placeId }, (geoResults: any, status) => {
             if (status === google.maps.GeocoderStatus.OK && geoResults[0]?.geometry?.location) {
               const location = geoResults[0].geometry.location;
               this.addMarker(location.lat(), location.lng(), `${result.firstName} ${result.lastName}`);
+
+              if (!firstLocationSet) {
+                this.mapOptions = {
+                  ...this.mapOptions,
+                  center: { lat: location.lat(), lng: location.lng() },
+                  zoom: 15
+                };
+                firstLocationSet = true;
+              }
             } else {
               console.error(`Failed to geocode placeId ${result.placeId}:`, status);
             }
@@ -203,6 +222,8 @@ export class SearchComponent implements OnInit {
           });
         }
       });
+
+      this.cdr.detectChanges();
     });
   }
 
