@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {NgOptimizedImage} from '@angular/common';
 
@@ -11,10 +11,11 @@ import {passwordMatchValidator} from '../../../../core/validators/password-match
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    SharedModule,
-    NgOptimizedImage
-  ],
+    imports: [
+        SharedModule,
+        NgOptimizedImage,
+        RouterLink
+    ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
