@@ -1,4 +1,13 @@
-import {ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 
 import {AuthService} from '../../../pages/auth/services/auth.service';
@@ -21,6 +30,7 @@ export class NavigationMenuComponent implements OnInit{
   isLogged: boolean = false;
   optionsVisible: boolean = false;
   @ViewChild('profileOptions') profileOptionsRef!: ElementRef;
+  @Output() scrollToSectionEvent = new EventEmitter<string>();
 
   constructor(
     private profileService: ProfileService,
@@ -32,6 +42,10 @@ export class NavigationMenuComponent implements OnInit{
 
   ngOnInit(): void {
     this.checkAuthentication();
+  }
+
+  onScrollToSection(section: string) {
+    this.scrollToSectionEvent.emit(section);
   }
 
   toggleOptions(): void {

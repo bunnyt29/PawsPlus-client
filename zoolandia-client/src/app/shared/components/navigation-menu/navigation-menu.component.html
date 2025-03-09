@@ -9,11 +9,11 @@
       <span></span>
       <span></span>
     </a>
-    <nav id="nav-links" class="nav-links hidden">
-      <a href="#">Кои сме ние?</a>
-      <a href="#">Нашите услуги</a>
-      <a href="#">Кой е гледач?</a>
-    </nav>
+<!--    <nav id="nav-links" class="nav-links hidden">-->
+<!--      <a href="javascript:void(0);" (click)="onScrollToSection('services')">Кои сме ние?</a>-->
+<!--      <a href="javascript:void(0);" (click)="onScrollToSection('become-sitter')">Кой е гледач?</a>-->
+<!--      <a href="javascript:void(0);" (click)="onScrollToSection('why-choose-us')">Избери Лапички+</a>-->
+<!--    </nav>-->
     <div class="nav-buttons">
       <a routerLink="/auth/login" class="login-button">Влез</a>
       <a routerLink="/auth/role-selection"
@@ -33,7 +33,7 @@
       </picture>
       <nav class="nav-links">
         <a routerLink="/search"><img src="/images/shared/navbar-search.svg" alt="Лупичка с лапа">Търси</a>
-        <a routerLink="/search" *ngIf="profile?.roles?.includes('Owner')"><img src="/images/shared/become-sitter.png" alt="Иконка на лапички">Стани гледач</a>
+<!--        <a routerLink="/search" *ngIf="profile?.roles?.includes('Owner')"><img src="/images/shared/become-sitter.png" alt="Иконка на лапички">Стани гледач</a>-->
       </nav>
     </div>
     <div class="profile-info" *ngIf="profile">

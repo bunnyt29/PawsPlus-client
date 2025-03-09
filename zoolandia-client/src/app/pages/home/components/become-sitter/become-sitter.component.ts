@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'become-sitter',
@@ -8,5 +8,7 @@ import {Component} from '@angular/core';
   styleUrl: './become-sitter.component.scss'
 })
 export class BecomeSitterComponent {
-
+  constructor(
+    public elementRef: ElementRef
+  ) {}
 }

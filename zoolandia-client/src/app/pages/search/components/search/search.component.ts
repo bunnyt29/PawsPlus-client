@@ -54,7 +54,8 @@ export class SearchComponent implements OnInit {
     mapId: environment.googleMapsMapId,
     center: { lat: 42.68841949999999, lng: 23.2507638 },
     zoom: 15,
-    disableDefaultUI: true
+    disableDefaultUI: true,
+    clickableIcons: false
   };
 
   searchParams: {
@@ -187,8 +188,9 @@ export class SearchComponent implements OnInit {
       let firstLocationSet = false;
 
       this.searchResults.forEach((result, index) => {
+        console.log(result)
         if (result.latitude && result.longitude) {
-          this.addMarker(result.latitude, result.longitude, `${result.firstName} ${result.lastName}`);
+          this.addMarker(result.latitude, result.longitude, `${result.firstName} ${result.lastName}`, index);
 
           if (!firstLocationSet) {
             this.mapOptions = {
@@ -201,8 +203,9 @@ export class SearchComponent implements OnInit {
         } else if (result.placeId) {
           geocoder.geocode({ placeId: result.placeId }, (geoResults: any, status) => {
             if (status === google.maps.GeocoderStatus.OK && geoResults[0]?.geometry?.location) {
+              console.log(geoResults[0])
               const location = geoResults[0].geometry.location;
-              this.addMarker(location.lat(), location.lng(), `${result.firstName} ${result.lastName}`);
+              this.addMarker(location.lat(), location.lng(), `${result.firstName} ${result.lastName}`, index);
 
               if (!firstLocationSet) {
                 this.mapOptions = {
@@ -227,7 +230,9 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  private addMarker(lat: number, lng: number, title: string): void {
+
+
+  private addMarker(lat: number, lng: number, title: string, index: number): void {
     const randomOffset = () => (Math.random() - 0.5) * 0.001;
 
     this.mapMarkers.push({
@@ -235,6 +240,7 @@ export class SearchComponent implements OnInit {
         lat: lat + randomOffset(),
         lng: lng + randomOffset()
       },
+      label: (index + 1).toString(),
       title,
       clickable: true
     });

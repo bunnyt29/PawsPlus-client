@@ -2,12 +2,14 @@
 @use '../../../../../style/abstracts/typography';
 
 .search-holder {
+  height: calc(100vh - 111px);
   padding-inline: 63px 0;
   display: flex;
   gap: 100px;
 
   .left-side {
     width: 60%;
+    height: 100%;
     margin-top: 30px;
 
     h1 {
@@ -111,9 +113,12 @@
 
     .search-results-holder {
       margin-block: 60px;
+      padding-right: 20px;
       display: flex;
       flex-direction: column;
       gap: 42px;
+      max-height: 400px;
+      overflow-y: auto;
 
       .search-result {
         padding-bottom: 27px;
@@ -143,6 +148,11 @@
           .sitter-info {
             display: flex;
             flex-direction: column;
+
+            .sitter-number {
+              font-size: typography.$font-size-lg;
+              font-weight: typography.$bold;
+            }
 
             .sitter-name {
               font-size: typography.$font-size-xl;
@@ -204,11 +214,30 @@
           text-align: center;
         }
       }
+
+      /* Custom scrollbar styling */
+      &::-webkit-scrollbar {
+        width: 8px; /* Adjust width of the scrollbar */
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: colors.$accent-color; /* Set the color of the scrollbar thumb */
+        border-radius: 10px; /* Optional: round the corners of the thumb */
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: #f1f1f1; /* Set the color of the scrollbar track */
+        border-radius: 10px; /* Optional: round the corners of the track */
+      }
     }
+
+
   }
 
   .right-side {
     width: 40%;
+    height: calc(100vh - 110px);
+    overflow: hidden;
   }
 }
 
@@ -235,7 +264,6 @@
     background-color: colors.$accent-color;
   }
 }
-
 
 .p-slider-range {
   background: colors.$accent-color;

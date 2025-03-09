@@ -106,15 +106,15 @@
       </div>
     </div>
     <div class="search-results-holder">
-      <div *ngFor="let searchResult of searchResults" class="search-result">
+      <div *ngFor="let searchResult of searchResults; let i = index;" class="search-result">
         <div class="search-result-info">
           <div class="image-holder">
             <img [src]="searchResult.photoUrl" alt="Снимка на {{searchResult.firstName}}">
           </div>
           <div class="sitter-info">
+            <span class="sitter-number">#{{ i + 1 }}</span>
             <span class="sitter-name">{{searchResult.firstName}} {{searchResult.lastName}}</span>
             <span class="sitter-description">{{searchResult.description| slice:0:150 }} ...</span>
-            <span class="sitter-location"><img src="/images/shared/sitter-location-icon.svg" alt="Иконка за местоположение"> Пазарджик</span>
           </div>
           <div class="service-price">
             <span>цени от</span>
@@ -135,8 +135,9 @@
     </div>
   </div>
   <div class="right-side google-map">
-    <google-map height="100vh" width="100%" [options]="mapOptions">
+    <google-map height="100%" width="100%" [options]="mapOptions">
       <map-marker *ngFor="let marker of mapMarkers"
+                  [label]="marker.label || '0'"
                   [position]="marker.position || { lat: 0, lng: 0 }"
                   [title]="marker.title || 'Unknown title'">
       </map-marker>

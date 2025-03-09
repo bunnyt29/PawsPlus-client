@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 
 @Component({
@@ -11,5 +11,7 @@ import {NgOptimizedImage} from '@angular/common';
   styleUrl: './services.component.scss'
 })
 export class ServicesComponent {
-
+  constructor(
+    public elementRef: ElementRef
+  ) {}
 }

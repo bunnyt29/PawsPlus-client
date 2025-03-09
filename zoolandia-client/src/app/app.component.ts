@@ -1,8 +1,9 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {Component, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {NavigationStart, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {NavigationMenuComponent} from './shared/components/navigation-menu/navigation-menu.component';
 import {CommonModule} from '@angular/common';
 import {environment} from '../environments/environment';
+import {HomeComponent} from './pages/home/components/home/home.component';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,8 @@ import {environment} from '../environments/environment';
 export class AppComponent implements OnInit{
   title = 'zoolandia-client';
   hideNavbar = false;
+  @ViewChild(HomeComponent) homeComponent!: HomeComponent;
+
 
   private hiddenRoutes: string[] = ['/profile/edit', '/post/multi-step-form', '/pet/create', '/access-denied', '/404'];
   private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/admin', '/auth', '/profile/preview'];
@@ -41,5 +44,11 @@ export class AppComponent implements OnInit{
     script.async = true;
     script.defer = true;
     this.renderer.appendChild(document.head, script);
+  }
+
+  scrollToSection(section: string) {
+    if (this.homeComponent) {
+      this.homeComponent.scrollToSection(section);
+    }
   }
 }

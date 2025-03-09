@@ -1,2 +1,2 @@
-<navigation-menu *ngIf="!hideNavbar"></navigation-menu>
+<navigation-menu *ngIf="!hideNavbar" (scrollToSectionEvent)="scrollToSection($event)"></navigation-menu>
 <router-outlet></router-outlet>

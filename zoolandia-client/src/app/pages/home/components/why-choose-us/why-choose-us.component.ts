@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'why-choose-us',
@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './why-choose-us.component.scss'
 })
 export class WhyChooseUsComponent {
-
+  constructor(
+    public elementRef: ElementRef
+  ) {}
 }
