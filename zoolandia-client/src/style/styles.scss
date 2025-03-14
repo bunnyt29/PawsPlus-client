@@ -1,7 +1,8 @@
 @use "base/reset";
 @use 'abstracts/colors';
-@use 'components/buttons';
 @use 'abstracts/typography';
+@use 'components/buttons';
+@use 'breakpoints/breakpoints' as *;
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
@@ -28,12 +29,21 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  @include for-phone-only {
+    background-image: url("/images/mobile/auth/auth-background.svg");
+  }
 }
 
 .auth-layout {
   height: 100vh;
   display: flex;
   align-items: center;
+
+  @include for-phone-only {
+    flex-direction: column-reverse;
+    justify-content: center;
+  }
 }
 
 .form-holder {
@@ -639,6 +649,23 @@ p-calendar .p-datepicker-calendar td {
       display: flex;
       align-items: center;
       gap: 5px;
+    }
+  }
+
+  @include for-phone-only {
+    .fields-container {
+      flex-wrap: wrap;
+
+      .field {
+        padding: 0 5px;
+        width: 100px;
+        height: 100px;
+        gap: 3px;
+
+        img {
+          width: 45px;
+        }
+      }
     }
   }
 }

@@ -1,5 +1,6 @@
 @use '../../../../../style/abstracts/typography';
 @use '../../../../../style/abstracts/colors';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 .services-holder {
   margin-bottom: 320px;
@@ -112,5 +113,84 @@
     color: white;
     font-weight: typography.$bold;
     text-align: justify;
+  }
+
+  @include for-phone-only {
+    margin-bottom: 100px;
+
+    .heading {
+      margin-bottom: 20px;
+
+      h2 {
+        width: 100%;
+      }
+    }
+
+    .services {
+      flex-direction: column;
+      gap: 40px;
+
+      .service {
+        max-width: 100%;
+        padding: 37px 30px;
+        gap: 0;
+      }
+
+      .service-vertical {
+        max-width: 100%;
+        padding: 26px;
+
+        .heading {
+          flex-direction: row;
+          align-items: start;
+          gap: 10px;
+
+          .title {
+            margin-left: 0;
+          }
+        }
+      }
+
+      .service-walking {
+        margin-top: 0;
+      }
+
+      .service-daily-care {
+        background-color: #E29D50;
+        margin-bottom: 0;
+        margin-left: 0;
+        z-index: 20;
+
+        .heading {
+          flex-direction: row-reverse;
+          justify-content: space-between;
+
+          .title {
+            margin-left: 0;
+          }
+        }
+      }
+
+      .service-boarding {
+        background-color: colors.$approve-color;
+        margin-bottom: 0;
+        margin-top: 0;
+        margin-left: 0;
+      }
+
+      .service-training {
+        background-color: colors.$accent-color;
+        position: unset;
+
+        .heading {
+          flex-direction: row-reverse;
+          justify-content: space-between;
+
+          .title {
+            margin-left: 0;
+          }
+        }
+      }
+    }
   }
 }

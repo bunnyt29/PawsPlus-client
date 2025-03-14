@@ -1,4 +1,10 @@
+@use '../../../../../style/breakpoints/breakpoints' as *;
 .login {
   padding-inline: 58px;
   gap: 138px;
+
+  @include for-phone-only {
+    padding-inline: 0px;
+    gap: 50px;
+  }
 }

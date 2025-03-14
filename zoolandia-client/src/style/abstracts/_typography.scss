@@ -1,11 +1,10 @@
 @use 'colors';
+@use '../breakpoints/breakpoints' as *;
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
 /* Font families */
 $primary-font-family: "Nunito Sans", serif;
 
-
-/* Font sizes */
 $font-size-xs: 0.875rem;
 $font-size-sm: 1rem;
 $font-size-md: 1.25rem;

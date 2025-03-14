@@ -1,5 +1,6 @@
 @use '../../../../../style/abstracts/typography';
 @use '../../../../../style/abstracts/colors';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 .become-sitter {
   background-color: colors.$secondary-background;
@@ -116,6 +117,34 @@
 
           .step-name {
             font-size: typography.$font-size-md
+          }
+
+          .step-description {
+            text-align: justify;
+          }
+        }
+      }
+    }
+  }
+
+  @include for-phone-only {
+    .paw-decoration {
+      right: -10px;
+      width: 80px;
+    }
+
+    .become-sitter-container {
+      flex-direction: column-reverse;
+
+      .right {
+        .steps {
+          margin-left: 25px;
+
+          .step {
+            .step-description {
+              margin-top: 10px;
+              width: 90%
+            }
           }
         }
       }

@@ -1,5 +1,6 @@
 @use '../../../../../style/abstracts/typography';
 @use '../../../../../style/abstracts/colors';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 .hero-holder  {
   width: 100vw;
@@ -53,6 +54,44 @@
     position: absolute;
     right: 0;
     bottom: 0;
+  }
+
+  @include for-phone-only {
+    width: 100vw;
+    height: 100%;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column-reverse;
+
+    .hero {
+      margin-top: 0;
+      flex-direction: column-reverse;
+      gap: 50px;
+
+      .fast-search {
+        padding: 30px 15px;
+        border-radius: 20px;
+      }
+
+      &-heading {
+        margin-top: 10px;
+
+        span {
+          font-size: typography.$font-size-lg
+        }
+
+        p {
+          width: 100%;
+        }
+      }
+    }
+
+    .hero-image {
+      position: relative;
+      margin: 0 auto;
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 

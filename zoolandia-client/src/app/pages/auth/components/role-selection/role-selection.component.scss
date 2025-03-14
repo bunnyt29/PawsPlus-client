@@ -1,4 +1,5 @@
 @use '../../../../../style/abstracts/colors';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 .role-selection {
   height: 100vh;
@@ -43,6 +44,20 @@
       transition: 500ms;
       background-color: colors.$accent-color;
       border: none;
+    }
+  }
+
+  @include for-phone-only {
+    padding: 50px 16px;
+    height: auto;
+    background-image: url("/images/mobile/auth/auth-background.svg");
+
+    .roles {
+      flex-direction: column;
+
+      .role {
+        flex-direction: row;
+      }
     }
   }
 }
