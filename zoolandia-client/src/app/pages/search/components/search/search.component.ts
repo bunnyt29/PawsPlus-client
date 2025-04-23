@@ -42,6 +42,7 @@ export class SearchComponent implements OnInit {
   formattedAddress: string | undefined = '';
   paramsObject: { [key: string]: any } = {};
   mapMarkers: google.maps.MarkerOptions[] = []
+  isMapExpanded = false; // State to track if the map is expanded
 
   serviceOptions = [
     { value: 1, text: 'Разходки', image: '/images/desktop/post/service-walking.svg' },
@@ -252,5 +253,40 @@ export class SearchComponent implements OnInit {
 
   viewProfile(profileId: string): void {
     this.router.navigate(['profile/details'], { queryParams: { id: profileId }});
+  }
+
+  toggleMap(): void {
+    this.isMapExpanded = !this.isMapExpanded;
+    this.adjustMapHeight();
+  }
+
+  adjustMapHeight(): void {
+    const mapContainer = document.querySelector('.google-map.mobile') as HTMLElement;
+    if (this.isMapExpanded) {
+      mapContainer.style.height = '300px';
+    } else {
+      mapContainer.style.height = '50px';
+    }
+  }
+
+  startDragging(event: MouseEvent) {
+    if (!this.isMapExpanded) return;
+
+    const mapContainer = document.querySelector('.google-map.mobile') as HTMLElement;
+    const initialHeight = mapContainer.offsetHeight;
+    const initialY = event.clientY;
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const deltaY = moveEvent.clientY - initialY;
+      mapContainer.style.height = `${initialHeight + deltaY}px`;
+    };
+
+    const onMouseUp = () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   }
 }

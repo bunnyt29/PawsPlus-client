@@ -63,10 +63,13 @@ export class EditModalComponent implements OnInit {
   getService() {
     this.postServiceService.get(this.config.data).subscribe(res => {
       this.postService = res;
-      const formattedDates = this.postService.availableDates.map((dateStr: string) => {
-        const [year, month, day] = dateStr.split('-').map(Number);
-        return new Date(year, month - 1, day);
-      });
+      const today = new Date();
+      const formattedDates = this.postService.availableDates
+        .map((dateStr: string) => {
+          const [year, month, day] = dateStr.split('-').map(Number);
+          return new Date(year, month - 1, day);
+        })
+        .filter(date => date >= today);
 
       const meetingPlacesArray = this.serviceForm.get('meetingPlaces') as FormArray;
       meetingPlacesArray.clear();
@@ -87,11 +90,13 @@ export class EditModalComponent implements OnInit {
   editService(serviceId: string) {
     let formData = this.serviceForm.value;
 
+    formData.availableDates = formData.availableDates.filter((date: Date | string) => date !== "" && date !== null);
+
     formData.availableDates = formData.availableDates.map((date: Date | string) => {
       if (date instanceof Date) {
-        return date.toISOString().split('T')[0]; // Format as 'yyyy-MM-dd'
+        return date.toISOString().split('T')[0]; // 'yyyy-MM-dd'
       }
-      return date; // If already a string, keep it unchanged
+      return date;
     });
 
     const uniqueMeetingPlaces = [...new Set(formData.meetingPlaces)];

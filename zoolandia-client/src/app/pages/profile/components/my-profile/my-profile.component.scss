@@ -1,5 +1,6 @@
 @use '../../../../../style/abstracts/typography';
 @use '../../../../../style/abstracts/colors';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 .status {
   margin-bottom: 50px;
@@ -37,4 +38,55 @@
 
 .disapproved {
   background-color: colors.$danger-color;
+}
+
+.profile-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+google-map {
+  width: 500px;
+}
+
+@include for-phone-only {
+  .status {
+    margin-bottom: 0;
+  }
+
+  //google-map {
+  //  width: 100% !important;
+  //  height: 250px !important;
+  //
+  //  .map-container {
+  //    width: 100%
+  //  }
+  //}
+
+  .edit {
+    right: 0;
+    top: 80px;
+  }
+
+  //.my-profile-head {
+  //
+  //  .profile-image {
+  //    width: auto;
+  //  }
+  //}
+  //
+  //.my-profile-main {
+  //  &-section {
+  //    p {
+  //      width: 100%;
+  //    }
+  //
+  //    .contacts {
+  //      flex-direction: column;
+  //      align-items: flex-start;
+  //    }
+  //  }
+  //}
 }

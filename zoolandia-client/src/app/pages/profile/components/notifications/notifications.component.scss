@@ -1,4 +1,6 @@
 @use '../../../../../style/abstracts/colors';
+@use '../../../../../style/breakpoints/breakpoints' as *;
+
 .dashboard {
   padding-inline: 50px;
 
@@ -7,14 +9,87 @@
   }
 
   .approved {
-    color: colors.$approve-color
+    color: colors.$approve-color;
   }
 
   .disapproved {
-    color: colors.$danger-darker-color
+    color: colors.$danger-darker-color;
   }
 
   button {
     background-color: transparent;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    thead {
+      background-color: colors.$accent-color;
+    }
+
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .profile-image-small {
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+      }
+    }
+  }
+
+  @include for-phone-only {
+    padding-inline: 10px;
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+      width: 100%;
+    }
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+
+    td {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 5px 0;
+
+      &::before {
+        content: attr(data-label);
+        font-weight: bold;
+      }
+
+      img {
+        max-width: 24px;
+        height: auto;
+      }
+    }
+
+    .author {
+      flex-direction: row;
+      gap: 6px;
+    }
   }
 }

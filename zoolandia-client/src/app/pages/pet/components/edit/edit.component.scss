@@ -1,10 +1,15 @@
 @use '../../../../../style/abstracts/typography';
 @use '../../../../../style/abstracts/colors';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 .pet-left-decoration {
   position: absolute;
   top: 0;
   left: 0;
+
+  @include for-phone-only {
+    display: none
+  }
 }
 
 .pet-create-holder {
@@ -334,6 +339,189 @@
     display: flex;
     justify-content: flex-end;
   }
+
+
+  @include for-phone-only {
+    padding-top: 50px;
+
+    h2 {
+      font-size: typography.$font-size-lg;
+    }
+
+    .pet-main-details-holder {
+      margin-top: 20px;
+
+      h3 {
+        font-size: typography.$font-size-lg;
+      }
+
+      .main-details-holder {
+        margin-top: 50px;
+        flex-direction: column;
+
+        .carousel-holder {
+
+          .arrow {
+            padding: 0;
+            width: 60px;
+          }
+
+          .carousel {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+            overflow: hidden;
+            width: 400px;
+
+            .carousel-item {
+              display: none;
+              flex: 0 0 100%;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+              width: 300px;
+              height: 250px;
+
+              img {
+                width: 200px;
+              }
+            }
+
+            .carousel-item.selected {
+              display: flex;
+            }
+          }
+        }
+
+        .main-details {
+          margin-top: 40px;
+          padding: 30px 10px 30px 10px;
+
+          .details-holder {
+            display: flex;
+            flex-direction: column;
+            gap: 27px;
+
+            .kilograms-fields-holder {
+
+              .kilograms-fields {
+                display: flex;
+                justify-content: space-between;
+
+                .kilogram-option {
+                  font-size: typography.$font-size-sm;
+                }
+
+                .square-input {
+                  width: 80px;
+                  height: 80px;
+                }
+
+                .kilogram-option.selected {
+                  background-color: colors.$accent-color;
+                }
+              }
+            }
+
+            .breed-field-holder {
+              display: flex;
+              flex-direction: column;
+
+              ::ng-deep.p-autocomplete-multiple {
+                height: 50px;
+
+                .p-autocomplete-multiple-container {
+                  padding-inline: 10px;
+                  border: 1px solid colors.$secondary-background;
+
+                  .p-autocomplete-input-token {
+                    padding-inline: 10px;
+                  }
+
+                  .p-autocomplete-token {
+                    padding: 5px;
+                    font-size: typography.$font-size-sm;
+                    background-color: colors.$accent-color;
+                    border-radius: 10px;
+                    gap: 5px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .pet-right-decoration {
+      display: none;
+    }
+
+    .pet-additional-details-holder {
+      margin-top: 70px;
+
+      h3 {
+        font-size: typography.$font-size-lg;
+      }
+
+      .additional-details {
+        margin-top: 50px;
+        flex-direction: column;
+        gap: 60px;
+
+        .additional-detail {
+          &-title {
+            margin-bottom: 30px;
+            padding-inline: 20px;
+
+            h4 {
+              font-size: typography.$font-size-lg;
+            }
+          }
+
+          .additional-detail-questions {
+            padding-inline: 20px;
+            gap: 15px;
+
+            .question-holder {
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 10px;
+
+              .question {
+                font-size: typography.$font-size-sm;
+              }
+
+              .answer-options {
+
+                .radio-button {
+                  font-size: typography.$font-size-sm;
+                }
+
+              }
+            }
+
+            .reversed {
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 15px;
+
+              .answer-options {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .save-pet {
+      padding-bottom: 30px;
+    }
+  }
 }
 
 .pet-label {
@@ -362,6 +550,10 @@
 
   input.hidden-radio {
     display: none;
+  }
+
+  @include for-phone-only {
+
   }
 }
 

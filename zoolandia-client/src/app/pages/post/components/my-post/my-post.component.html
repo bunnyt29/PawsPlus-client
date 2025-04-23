@@ -5,28 +5,26 @@
       <p>Завърши своята обява като добавиш цена и свободни дати към съответните услуги - {{ incompleteServices.join(', ') }}, използвайки бутона за редакция.</p>
     </div>
     <div class="my-post-details">
-      <div *ngFor="let service of post.services" class="service-block">
-        <div class="my-post-detail">
-          <div class="overlay"></div>
-          <img *ngIf="service.name == 'DogWalking'" src="/images/desktop/post/service-walking.svg" alt="Разходки">
-          <img *ngIf="service.name == 'DailyCare'" src="/images/desktop/post/service-daily-care.svg" alt="Дневна грижа">
-          <img *ngIf="service.name == 'PetSitting'" src="/images/desktop/post/service-pet-boarding.svg" alt="Престой">
-          <img *ngIf="service.name == 'Training'" src="/images/desktop/post/service-pet-training.svg" alt="Тренировки">
-          <span>{{ getServiceName(service.name) }}</span>
+      <div class="my-post-detail" *ngFor="let service of post.services">
+        <div class="overlay"></div>
+        <img *ngIf="service.name == 'DogWalking'" src="/images/desktop/post/service-walking.svg" alt="Разходки">
+        <img *ngIf="service.name == 'DailyCare'" src="/images/desktop/post/service-daily-care.svg" alt="Дневна грижа">
+        <img *ngIf="service.name == 'PetSitting'" src="/images/desktop/post/service-pet-boarding.svg" alt="Престой">
+        <img *ngIf="service.name == 'Training'" src="/images/desktop/post/service-pet-training.svg" alt="Тренировки">
+        <span>{{ getServiceName(service.name) }}</span>
 
-          <div class="action-buttons">
-            <button class="btn" (click)="openEditModal(service.id)">
-              <img src="/images/shared/edit.svg" alt="Редактирай">
-            </button>
-            <button class="btn" (click)="openViewDetailsModal(service.id, service.name)">
-              <img src="/images/shared/view-more.svg" alt="Виж повече">
-            </button>
-            <button class="btn" (click)="openDeleteModal('deleteService', service.id)">
-              <img src="/images/shared/delete.svg" alt="Изтрий">
-            </button>
-          </div>
+        <div class="action-buttons">
+          <button class="btn" (click)="openEditModal(service.id)">
+            <img src="/images/shared/edit.svg" alt="Редактирай">
+          </button>
+          <button class="btn" (click)="openViewDetailsModal(service.id, service.name)">
+            <img src="/images/shared/view-more.svg" alt="Виж повече">
+          </button>
+          <button class="btn" (click)="openDeleteModal('deleteService', service.id)">
+            <img src="/images/shared/delete.svg" alt="Изтрий">
+          </button>
         </div>
-      </div>
+      </div >
 
       <div *ngIf="post.services.length < 4" (click)="openAddNewServiceModal(post)" class="add">
         <img src="/images/shared/add-service.png" alt="Добави">

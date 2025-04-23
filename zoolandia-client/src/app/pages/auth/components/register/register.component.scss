@@ -1,3 +1,5 @@
+@use '../../../../../style/breakpoints/breakpoints' as *;
+
 .register {
   gap: 96px;
 
@@ -8,5 +10,20 @@
       grid-template-columns: repeat(2, minmax(0,1fr));
       grid-gap: 50px;
     }
+  }
+
+  @include for-phone-only {
+    padding-bottom: 50px;
+    gap: 0;
+
+    .form-holder {
+      margin-top: -80px;
+    }
+  }
+}
+
+.auth-layout {
+  @include for-phone-only {
+    flex-direction: column;
   }
 }

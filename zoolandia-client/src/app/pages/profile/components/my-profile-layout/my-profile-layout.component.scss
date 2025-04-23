@@ -1,21 +1,37 @@
 @use '../../../../../style/abstracts/colors';
 @use '../../../../../style/abstracts/typography';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 .profile-container {
   display: flex;
   height: 100vh;
   overflow: hidden;
+  position: relative;
+
+  .hamburger {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    background: none;
+    border: none;
+    z-index: 1000;
+    cursor: pointer;
+  }
 
   .sidebar {
     position: fixed;
-    padding: 70px 70px 0 0;
-    width: 350px;
-    height: 100vh;
     top: 0;
     left: 0;
+    width: 350px;
+    height: 100vh;
     background-color: colors.$secondary-background;
+    padding: 70px 70px 0 0;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+    z-index: 999;
+    transition: transform 0.3s ease;
 
     .go-back {
       margin-bottom: 30px;
@@ -39,6 +55,11 @@
     picture {
       padding-left: 37px;
       cursor: pointer;
+
+      img {
+        width: 150px;
+        height: auto;
+      }
     }
 
     ul {
@@ -50,12 +71,12 @@
       list-style: none;
 
       li {
-
         a {
           padding-left: 37px;
           font-size: typography.$font-size-md;
           font-weight: typography.$semi-bold;
           color: colors.$primary-text-color;
+          transition: background-color 0.3s ease;
         }
 
         a.active {
@@ -70,7 +91,24 @@
 
     .bottom {
       position: absolute;
-      bottom: 0;
+      bottom: 20px;
+      width: 100%;
+      padding-left: 37px;
+
+      .go-back {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        img {
+          width: 25px;
+        }
+
+        span {
+          font-size: typography.$font-size-md;
+          font-weight: typography.$semi-bold;
+        }
+      }
     }
   }
 
@@ -79,5 +117,75 @@
     width: calc(100% - 350px);
     overflow-y: auto;
     padding-right: 80px;
+  }
+
+  @include for-phone-only {
+    flex-direction: column;
+
+    .hamburger {
+      display: block;
+    }
+
+    .sidebar {
+      width: 80%;
+      transform: translateX(-100%);
+      position: absolute;
+      height: 100vh;
+      padding: 80px 20px;
+      border-radius: 0;
+      background-color: colors.$secondary-background;
+
+      &.open {
+        transform: translateX(0);
+      }
+
+      .go-back, picture {
+        padding-left: 0;
+      }
+
+      ul {
+        margin-block: 40px;
+        gap: 20px;
+
+        li a {
+          padding: 10px 0;
+          display: block;
+          border-radius: 10px;
+        }
+
+        li a.active {
+          padding: 0 0 4px 0;
+          position: relative;
+          color: colors.$accent-color;
+          font-weight: typography.$bold;
+          text-decoration: none;
+          background-color: transparent;
+
+          border-radius: 0;
+
+          &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60%;
+            height: 2px;
+            background-color: colors.$accent-color;
+            border-radius: 1px;
+          }
+        }
+      }
+
+      .bottom {
+        bottom: 0;
+        padding-left: 0;
+      }
+    }
+
+    .profile-content {
+      margin-left: 0;
+      width: 100%;
+      padding: 20px;
+    }
   }
 }

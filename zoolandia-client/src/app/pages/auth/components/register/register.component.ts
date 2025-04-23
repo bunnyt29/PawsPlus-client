@@ -1,23 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {NgOptimizedImage} from '@angular/common';
-
-import {AuthService} from '../../services/auth.service';
-import {SharedModule} from '../../../../shared/shared.module';
-import {passwordMatchValidator} from '../../../../core/validators/password-match.validator';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { NgOptimizedImage } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { SharedModule } from '../../../../shared/shared.module';
+import { passwordMatchValidator } from '../../../../core/validators/password-match.validator';
+import { PushNotifications } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-    imports: [
-        SharedModule,
-        NgOptimizedImage,
-        RouterLink
-    ],
+  imports: [
+    SharedModule,
+    NgOptimizedImage,
+    RouterLink
+  ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
@@ -29,8 +29,7 @@ export class RegisterComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService
-  )
-  {
+  ) {
     this.registerForm = this.fb.group({
       'firstName': ['', [Validators.required]],
       'lastName': ['', [Validators.required]],
@@ -46,8 +45,51 @@ export class RegisterComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.role = params['role'];
       if (this.role) {
-        this.registerForm.patchValue({  role: Number(this.role) });
+        this.registerForm.patchValue({ role: Number(this.role) });
       }
+    });
+
+    // Push notification setup
+    this.setupPushNotifications();
+  }
+
+  setupPushNotifications = async () => {
+    try {
+      // Check permissions and request if necessary
+      let permStatus = await PushNotifications.checkPermissions();
+      if (permStatus.receive === 'prompt') {
+        permStatus = await PushNotifications.requestPermissions();
+      }
+
+      if (permStatus.receive !== 'granted') {
+        throw new Error('User denied permissions!');
+      }
+
+      // Register for notifications
+      await PushNotifications.register();
+
+      // Add listeners for different events
+      await this.addPushNotificationListeners();
+    } catch (error) {
+      console.error('Push notifications setup failed: ', error);
+    }
+  }
+
+  addPushNotificationListeners = async () => {
+    await PushNotifications.addListener('registration', (token) => {
+      console.info('Registration token: ', token.value);
+    });
+
+    await PushNotifications.addListener('registrationError', (err) => {
+      console.error('Registration error: ', err.error);
+    });
+
+    await PushNotifications.addListener('pushNotificationReceived', (notification) => {
+      console.log('Push notification received: ', notification);
+    });
+
+    await PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+      console.log('Push notification action performed', notification.actionId, notification.inputValue);
     });
   }
 

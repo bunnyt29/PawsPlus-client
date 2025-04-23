@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Location} from '@angular/common';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {GoogleMap, MapAdvancedMarker} from '@angular/google-maps';
@@ -52,7 +53,8 @@ export class EditComponent implements OnInit, AfterViewInit {
     private fileService: FileService,
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -182,5 +184,9 @@ export class EditComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/profile/my-profile-details']);
     }
     });
+  }
+
+  backClicked() {
+    this.location.back();
   }
 }

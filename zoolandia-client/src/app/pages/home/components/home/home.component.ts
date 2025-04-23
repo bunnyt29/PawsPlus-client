@@ -4,6 +4,8 @@ import {ServicesComponent} from '../services/services.component';
 import {BecomeSitterComponent} from '../become-sitter/become-sitter.component';
 import {WhyChooseUsComponent} from '../why-choose-us/why-choose-us.component';
 import {FooterComponent} from '../footer/footer.component';
+import {Capacitor} from '@capacitor/core';
+import {FirebaseMessaging, GetTokenOptions} from '@capacitor-firebase/messaging';
 
 @Component({
   selector: 'app-home',
@@ -22,8 +24,16 @@ export class HomeComponent {
   @ViewChild(ServicesComponent) services!: ServicesComponent;
   @ViewChild(BecomeSitterComponent) becomeSitter!: BecomeSitterComponent;
   @ViewChild(WhyChooseUsComponent) whyChooseUs!: WhyChooseUsComponent;
+  public token = "";
 
-  constructor() {}
+  constructor() {
+    FirebaseMessaging.addListener("notificationReceived", (event) => {
+      console.log("notificationReceived: ", { event });
+    });
+    FirebaseMessaging.addListener("notificationActionPerformed", (event) => {
+      console.log("notificationActionPerformed: ", { event });
+    });
+  }
 
   scrollToSection(section: string) {
     let element: HTMLElement;
@@ -45,5 +55,9 @@ export class HomeComponent {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  }
+
+  public async requestPermissions(): Promise<void> {
+    await FirebaseMessaging.requestPermissions();
   }
 }

@@ -174,7 +174,7 @@
         <div class="post-item">
           <span class="post-item-heading">Местоположение</span>
           <div class="location">
-            <google-map height="300px" width="500px" [options]="mapOptions">
+            <google-map [height]="'300px'" [width]="'100%'" [options]="mapOptions">
               <map-circle *ngIf="markerPosition"
                           [center]="markerPosition"
                           [radius]="circleRadius"

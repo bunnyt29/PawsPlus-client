@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1025178889870",
+    "project_id": "pawsplus-7129f",
+    "storage_bucket": "pawsplus-7129f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025178889870:android:3ad6797d01e22bd139a3df",
+        "android_client_info": {
+          "package_name": "pawsplus.eu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF7BN49_Oka-k5qPSNK0bm2KUVpMJSh2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -22,9 +22,22 @@ $bold: 700;
 $extra-bold: 800;
 $black: 900;
 
-/* Line heights */
+@mixin responsive-font($default, $tablet: null, $phone: null) {
+  font-size: $default;
 
-/* Letter spacings */
+  @include for-tablet-portrait-up {
+    @if $tablet != null {
+      font-size: $tablet;
+    }
+  }
+
+  @include for-phone-only {
+    @if $phone != null {
+      font-size: $phone;
+    }
+  }
+}
+
 
 * {
   font-family: $primary-font-family;
@@ -36,19 +49,19 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  font-size: $font-size-4xl;
+  @include responsive-font($font-size-4xl, $font-size-3xl, 3rem);
 }
 
 h2 {
-  font-size: $font-size-3xl;
+  @include responsive-font($font-size-3xl, $font-size-2xl, 2.5rem);
 }
 
 h3 {
-  font-size: $font-size-2xl;
+  @include responsive-font($font-size-2xl, 2rem, 1.75rem);
 }
 
 p, label, input, placeholder, button {
-  font-size: $font-size-sm;
+  @include responsive-font($font-size-sm, 0.9375rem, 0.875rem);
 }
 
 a {

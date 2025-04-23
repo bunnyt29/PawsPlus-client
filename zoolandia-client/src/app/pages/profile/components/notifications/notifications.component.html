@@ -17,49 +17,49 @@
     </thead>
     <tbody>
     <tr *ngFor="let booking of bookings">
-      <td *ngIf="profile?.roles?.includes('Sitter')">
+      <td *ngIf="profile?.roles?.includes('Sitter')" data-label="Собственик">
         <div class="author">
           <img class="profile-image-small" [src]="booking.photoUrl" alt="">
           {{ booking.firstName }} {{ booking.lastName }}
         </div>
       </td>
-      <td *ngIf="profile?.roles?.includes('Owner')">
+      <td *ngIf="profile?.roles?.includes('Owner')" data-label="Гледач">
         <div class="author">
           <img class="profile-image-small" [src]="booking.sitterPhotoUrl" alt="">
           {{ booking.sitterFirstName }} {{ booking.sitterLastName }}
         </div>
       </td>
-      <td>
+      <td data-label="Услуга">
         {{ booking.serviceName | translateService }}
       </td>
-      <td>
+      <td data-label="Дати">
         от {{ booking.startDay }} до {{ booking.endDay }}
       </td>
-      <td>
+      <td data-label="Час">
         {{ booking.startTime }} - {{ booking.endTime }}
       </td>
-      <td>
+      <td data-label="Вид среща">
         <span *ngIf="booking.meetingPlaceId == 1">Взимане от собственика</span>
         <span *ngIf="booking.meetingPlaceId == 2">Оставяне у гледача</span>
         <span *ngIf="booking.meetingPlaceId == 3">Неутрално място</span>
       </td>
-      <td>
+      <td data-label="Локация">
         {{  booking.meetingPlaceAddress || 'Зареждане...' }}
       </td>
-      <td>
+      <td data-label="Съобщение">
         {{ booking.additionalDescription }}
       </td>
-      <td (click)="viewPet(booking.ownerId)">
+      <td (click)="viewPet(booking.ownerId)" data-label="Животно">
         <img *ngIf="booking.petType === 'Dog'" src="/images/shared/dog.svg" alt="Куче">
         <img *ngIf="booking.petType === 'Cat'" src="/images/shared/cat.svg" alt="Котка">
       </td>
-      <td>
+      <td data-label="Статус">
         <span *ngIf="booking.status == 'Pending'" class="pending">Чакаща</span>
         <span *ngIf="booking.status == 'Canceled'" class="disapproved">Отказана</span>
         <span *ngIf="booking.status == 'Disapproved'" class="disapproved">Отхвърлена</span>
         <span *ngIf="booking.status == 'Approved'" class="approved">Приета</span>
       </td>
-      <td>
+      <td data-label="Опции">
         <button class="btn" *ngIf="booking.status == 'Pending'"><img src="/images/shared/answer-yes.png" alt="Одобри" *ngIf="profile?.roles?.includes('Sitter')" (click)="approve(booking.id, booking.ownerId, booking.serviceName)"></button>
         <button class="btn" *ngIf="booking.status == 'Pending'"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Sitter')" (click)="openReasonForRejectModal('disapprove', booking.id, booking.ownerId, booking.serviceName)"></button>
         <button class="btn" *ngIf="booking.status == 'Pending'|| booking.status == 'Approved'"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Owner')" (click)="openReasonForRejectModal('cancel', booking.id, booking.sitterId, booking.serviceName)"></button>

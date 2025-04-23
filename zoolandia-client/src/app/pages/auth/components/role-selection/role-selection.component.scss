@@ -48,9 +48,10 @@
   }
 
   @include for-phone-only {
-    padding: 50px 16px;
-    height: auto;
+    padding-inline: 16px;
     background-image: url("/images/mobile/auth/auth-background.svg");
+    background-size: unset;
+    background-position: left top;
 
     .roles {
       flex-direction: column;

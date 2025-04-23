@@ -20,6 +20,7 @@ import {SharedModule} from '../../../../shared/shared.module';
 })
 export class MyProfileLayoutComponent implements OnInit {
   profile!: Profile;
+  sidebarOpen: boolean = false;
 
   constructor(
     private profileService: ProfileService,

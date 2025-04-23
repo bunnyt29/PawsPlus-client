@@ -150,7 +150,7 @@
           </div>
         </div>
       </div>
-      <div class="health-status-items">
+      <div class="health-status-items" *ngIf="!pet.healthStatus?.healthProblems">
         <div class="health-status-item">
           <div class="health-status-item-title">
             <div class="health-status-item-image-holder">
@@ -163,7 +163,7 @@
         </div>
         <div class="health-status-answer">
           <span *ngIf="pet.healthStatus?.healthProblems">{{ pet.healthStatus?.healthProblems }}</span>
-          <span *ngIf="!pet.healthStatus?.healthProblems">{{ pet.healthStatus?.healthProblems }}</span>
+<!--          <span *ngIf="!pet.healthStatus?.healthProblems">{{ pet.healthStatus?.healthProblems }}</span>-->
         </div>
       </div>
     </div>

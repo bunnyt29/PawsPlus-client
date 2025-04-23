@@ -1,5 +1,6 @@
 @use '../../../../../style/abstracts/typography';
 @use '../../../../../style/abstracts/colors';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 .my-pet-details-holder {
   display: flex;
@@ -117,6 +118,7 @@
 
           .health-status-answer {
             span {
+              display: flex;
 
               img {
                 width: 30px;
@@ -196,9 +198,96 @@
       }
     }
   }
-}
+
+  @include for-phone-only {
+    flex-direction: column-reverse;
+
+    .left-column {
+      padding: 20px;
+      width: 100%;
+
+      .edit-and-delete {
+        top: -420px;
+        right: 20px;
+      }
+
+      &-title {
+        margin-bottom: 20px;
+
+        h2 {
+          font-size: typography.$font-size-lg;
+        }
+      }
+
+      .personality {
+        padding: 20px 0;
+        flex-wrap: wrap;
+        column-gap: 0;
+        row-gap: 20px;
+
+        &-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          img {
+            width: 80px;
+          }
+
+          &-description {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            &-title {
+              width: 8ch;
+              font-size: typography.$font-size-md;
+              font-weight: typography.$semi-bold;
+            }
+          }
+        }
+
+        &-item:not(:last-child) {
+          padding: 0;
+          border-right: 0;
+        }
+      }
+
+      .health-status {
+        flex-direction: column;
+        align-items: center;
+
+
+        .health-status-items {
+          width: 100%;
+          padding: 20px;
+
+          .health-status-item {
+            .health-status-answer {
+              span {
+                display: flex;
+              }
+            }
+          }
+        }
+      }
+
+    }
+
+    .right-column {
+      width: 100%;
+      padding: 20px;
+    }
+  }
+  }
+
 
 .modal-container {
   width: 800px;
   height: 800px;
+
+  @include for-phone-only {
+    width: 100%;
+    height: auto;
+  }
 }

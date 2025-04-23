@@ -1,8 +1,9 @@
 <div class="search-holder">
   <div class="left-side">
     <h1>Твоето търсене</h1>
+
     <div class="filters-holder">
-      <div class="filters">
+      <div class="filters top">
         <div class="filter">
           <span class="filter-text">Търсене за:</span>
           <div class="filter-options">
@@ -21,36 +22,38 @@
             </label>
           </div>
         </div>
-        <div class="filter">
-          <span class="filter-text">Начална дата:</span>
-          <div class="filter-options">
-            <p-calendar
-              [(ngModel)]="searchParams.startDate"
-              (ngModelChange)="onStartDateChange($event); onSearch()"
-              [showIcon]="true"
-              [dateFormat]="'yy-mm-dd'"
-              [minDate]="today"
-              dataType="string"
-              inputId="startDate"
-              class="custom-calendar"
-              placeholder="29.09.2025"
-            ></p-calendar>
+        <div class="dates-filter">
+          <div class="filter">
+            <span class="filter-text">Начална дата:</span>
+            <div class="filter-options">
+              <p-calendar
+                [(ngModel)]="searchParams.startDate"
+                (ngModelChange)="onStartDateChange($event); onSearch()"
+                [showIcon]="true"
+                [dateFormat]="'yy-mm-dd'"
+                [minDate]="today"
+                dataType="string"
+                inputId="startDate"
+                class="custom-calendar"
+                placeholder="29.09.2025"
+              ></p-calendar>
+            </div>
           </div>
-        </div>
 
-        <div class="filter">
-          <span class="filter-text">Крайна дата:</span>
-          <div class="filter-options">
-            <p-calendar
-              [(ngModel)]="searchParams.endDate"
-              (ngModelChange)="onSearch()"
-              [showIcon]="true"
-              [dateFormat]="'yy-mm-dd'"
-              [minDate]="minDateForEndDate"
-              dataType="string"
-              inputId="endDate"
-              placeholder="29.09.2025"
-            ></p-calendar>
+          <div class="filter">
+            <span class="filter-text">Крайна дата:</span>
+            <div class="filter-options">
+              <p-calendar
+                [(ngModel)]="searchParams.endDate"
+                (ngModelChange)="onSearch()"
+                [showIcon]="true"
+                [dateFormat]="'yy-mm-dd'"
+                [minDate]="minDateForEndDate"
+                dataType="string"
+                inputId="endDate"
+                placeholder="29.09.2025"
+              ></p-calendar>
+            </div>
           </div>
         </div>
       </div>
@@ -105,6 +108,19 @@
         <button class="btn secondary-button-small" (click)="onSearch()">Търси</button>
       </div>
     </div>
+    <div class="google-map mobile"
+         [ngClass]="{ 'expanded': isMapExpanded }"
+         (click)="toggleMap()">
+      <google-map [height]="'300px'" [width]="'400px'" [options]="mapOptions">
+        <map-marker *ngFor="let marker of mapMarkers"
+                    [label]="marker.label || '0'"
+                    [position]="marker.position || { lat: 0, lng: 0 }"
+                    [title]="marker.title || 'Unknown title'">
+        </map-marker>
+
+      </google-map>
+
+    </div>
     <div class="search-results-holder">
       <div *ngFor="let searchResult of searchResults; let i = index;" class="search-result">
         <div class="search-result-info">
@@ -134,7 +150,7 @@
       </div>
     </div>
   </div>
-  <div class="right-side google-map">
+  <div class="right-side google-map desktop">
     <google-map height="100%" width="100%" [options]="mapOptions">
       <map-marker *ngFor="let marker of mapMarkers"
                   [label]="marker.label || '0'"

@@ -1,5 +1,6 @@
 @use '../../../../../style/abstracts/typography';
 @use '../../../../../style/abstracts/colors';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 .why-choose-us-holder {
   margin-top: 120px;
@@ -83,5 +84,48 @@
     }
   }
 
+  @include for-phone-only {
+    .benefits-holder {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 20px;
 
+      .benefit {
+        flex-direction: column;
+        padding: 30px 20px;
+      }
+
+      .first-benefit {
+        display: none;
+      }
+
+      .second-benefit {
+        grid-row: 1;
+        grid-column: 1;
+      }
+
+      .third-benefit {
+        display: none;
+
+        .payment-image {
+          height: auto;
+        }
+      }
+
+      .fourth-benefit {
+        grid-row: 1;
+        grid-column: 2;
+      }
+
+      .fifth-benefit {
+        grid-row: 2;
+        grid-column: 1;
+      }
+
+      .sixth-benefit {
+        grid-row: 2;
+        grid-column: 2;
+      }
+    }
+  }
 }

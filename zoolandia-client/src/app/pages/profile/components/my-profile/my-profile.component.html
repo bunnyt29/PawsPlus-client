@@ -57,7 +57,7 @@
         <h2>Локация</h2>
       </div>
       <address>{{formattedAddress}}</address>
-      <google-map height="300px" width="500px" [options]="mapOptions">
+      <google-map [height]="'250px'" [width]="'100%'" [options]="mapOptions">
         <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
       </google-map>
     </div>

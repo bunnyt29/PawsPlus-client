@@ -246,7 +246,7 @@
   }
 
   @include for-phone-only {
-    padding-inline: 20px;
+    padding-inline: 0;
 
     .nav-wrapper {
       picture {
@@ -263,6 +263,10 @@
         &-name {
           display: none;
         }
+      }
+
+      .nav-buttons {
+        width: auto;
       }
     }
   }

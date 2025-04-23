@@ -1,5 +1,6 @@
 @use '../abstracts/colors';
 @use '../abstracts/typography';
+@use '../breakpoints/breakpoints' as *;
 
 .btn {
   border: none;
@@ -15,6 +16,11 @@
   background-color: colors.$accent-color;
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
+
+  @include for-phone-only {
+    padding: 10px 10px;
+    width: 150px;
+  }
 }
 
 .primary-button:hover {

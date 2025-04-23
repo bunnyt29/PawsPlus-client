@@ -1,21 +1,37 @@
 <div class="profile-container">
-  <div class="sidebar">
-    <div class="go-back" routerLink="/search">
+  <button class="hamburger" (click)="sidebarOpen = !sidebarOpen">☰</button>
+
+  <div class="sidebar" [class.open]="sidebarOpen">
+    <div class="go-back" routerLink="/search" (click)="sidebarOpen = false">
       <img src="/images/shared/return-to.png" alt="Къщичка">
       <span>Върни се обратно</span>
     </div>
-    <picture routerLink="/search">
+
+    <!-- Logo -->
+    <picture routerLink="/search" (click)="sidebarOpen = false">
       <source media="(max-width:1100px)" srcset="/images/desktop/logo.svg">
       <img src="/images/desktop/logo.svg" alt="logo">
     </picture>
+
+    <!-- Navigation links -->
     <ul>
-      <li><a routerLink="my-profile" routerLinkActive="active">Моят профил</a></li>
-      <li *ngIf="profile?.roles?.includes('Owner')"><a routerLink="my-pets" routerLinkActive="active">Моите животни</a></li>
-      <li *ngIf="profile?.roles?.includes('Sitter')"><a routerLink="my-post" routerLinkActive="active">Моята обява</a></li>
-      <li><a routerLink="notifications" routerLinkActive="active">Поръчки</a></li>
+      <li>
+        <a routerLink="my-profile" routerLinkActive="active" (click)="sidebarOpen = false">Моят профил</a>
+      </li>
+      <li *ngIf="profile?.roles?.includes('Owner')">
+        <a routerLink="my-pets" routerLinkActive="active" (click)="sidebarOpen = false">Моите животни</a>
+      </li>
+      <li *ngIf="profile?.roles?.includes('Sitter')">
+        <a routerLink="my-post" routerLinkActive="active" (click)="sidebarOpen = false">Моята обява</a>
+      </li>
+      <li>
+        <a routerLink="notifications" routerLinkActive="active" (click)="sidebarOpen = false">Поръчки</a>
+      </li>
     </ul>
+
+    <!-- Logout button -->
     <div class="bottom">
-      <div class="go-back" (click)="logout()">
+      <div class="go-back" (click)="logout(); sidebarOpen = false">
         <img src="/images/shared/home/dropdown-options/logout.png" alt="Излез">
         <span>Излез</span>
       </div>

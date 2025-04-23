@@ -1,6 +1,6 @@
 <img class="profile-decoration-left" src="/images/desktop/profile/profile-left-blob.svg" alt="decoration">
 <img class="profile-decoration-right" src="/images/desktop/profile/profile-right-blob.svg" alt="decoration">
-
+<img (click)="backClicked()" class="arrow-back" src="/images/desktop/arrow-left.svg" alt="Върни се обратно">
 <section class="create-profile-holder">
   <form [formGroup]="profileForm">
     <div class="create-profile-head">
@@ -10,7 +10,7 @@
 
         </app-image-upload>
       </div>
-      <span class="profile-name">
+      <span class="profile-name-holder">
             <input placeholder="Иванов"
                    class="profile-name profile-input"
                    type="text"
@@ -77,7 +77,7 @@
             </div>
             <div class="location-holder">
               <google-autocomplete [inputValue]="formattedAddress" (placeSelected)="handlePlaceSelected($event)"></google-autocomplete>
-              <google-map height="300px" width="500px" [options]="mapOptions">
+              <google-map [height]="'300px'" [width]="'100%'" [options]="mapOptions">
                 <map-advanced-marker *ngIf="markerPosition" [position]="markerPosition"></map-advanced-marker>
               </google-map>
             </div>

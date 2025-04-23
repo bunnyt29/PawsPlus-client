@@ -1,5 +1,6 @@
 @use '../../../../../style/abstracts/colors';
 @use '../../../../../style/abstracts/typography';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 .my-pets-holder {
   position: relative;
@@ -112,5 +113,10 @@
     .my-pet-view-more {
       opacity: 1;
     }
+  }
+
+  @include for-phone-only {
+    padding: 80px 0 0 0;
+    justify-content: center;
   }
 }
