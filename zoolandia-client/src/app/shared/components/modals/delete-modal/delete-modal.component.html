@@ -43,6 +43,14 @@
       >
         Изтрий
       </button>
+      <button
+        *ngIf="config.action === 'delete' && config.type === 'deleteReview'"
+        type="button"
+        class="btn modal-button disapprove"
+        (click)="deleteReview()"
+      >
+        Изтрий
+      </button>
 
 <!--      <button-->
 <!--        type="button"-->

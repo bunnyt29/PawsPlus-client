@@ -32,4 +32,22 @@ export class BookingService {
   cancel(data: any): Observable<any> {
     return this.http.patch(this.bookingPath + `/${data.id}/cancel`, data);
   }
+
+  start(id: string): Observable<any> {
+    return this.http.patch(this.bookingPath + `/${id}/start`, { id: id });
+  }
+
+  complete(id: string): Observable<any> {
+    return this.http.patch(this.bookingPath + `/${id}/complete`, { id: id });
+  }
+
+  haveCompletedBookings(sitterId: string, ownerId: string) {
+    return this.http.get<any>(this.bookingPath + '/haveCompletedBookings', {
+      params: {
+        sitterId: sitterId,
+        ownerId: ownerId
+      }
+    });
+  }
+
 }

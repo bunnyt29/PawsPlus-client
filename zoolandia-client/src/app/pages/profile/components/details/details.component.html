@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class="my-profile-main">
-   <div class="heading">
+    <div class="heading">
      <h1>Добре дошъл в профила на {{ data.firstName }}!</h1>
      <p>{{ data.description }}</p>
    </div>
@@ -182,6 +182,86 @@
               </map-circle>
             </google-map>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews">
+      <div class="reviews-title">
+        <h2>Доверени отзиви от стопаните</h2>
+      </div>
+      <div class="review" *ngFor="let review of reviews">
+        <div class="review-header">
+          <button class="btn delete-review" *ngIf="mineId == review.profileId"  (click)="openDeleteModal(review.id)"><img src="/images/shared/delete.svg" alt="Кошче"></button>
+          <div class="profile-image-review">
+            <img [src]="review.photoUrl" alt="reviewer image">
+          </div>
+          <div class="reviewer-and-date-info">
+            <span>{{ review.firstName }} {{ review.lastName }}</span>
+            <span>Ревю от {{ review.reviewDate }}</span>
+          </div>
+        </div>
+        <div class="review-content">
+          <p>{{ review.content }}</p>
+          <p-rating
+            [(ngModel)]="review.rating"
+            [readonly]="true"
+            [cancel]="false"
+            stars="5"
+          >
+            <ng-template pTemplate="onicon">
+              <img
+                src="/images/shared/rating-active.png"
+                width="20px"
+                height="20px"
+                alt="Paw Active"
+              />
+            </ng-template>
+
+            <ng-template pTemplate="officon">
+              <img
+                src="/images/shared/rating-inactive.png"
+                style="filter: grayscale(100%) opacity(0.4);"
+                width="20px"
+                height="20px"
+                alt="Paw Inactive"
+              />
+            </ng-template>
+          </p-rating>
+        </div>
+      </div>
+      <div class="leave-review" *ngIf="canLeaveReview" [formGroup]="reviewForm">
+        <h3>Остави и ти своя коментар</h3>
+        <div class="rating">
+          <span>Оценка:</span>
+          <p-rating formControlName="rating" stars="5">
+            <ng-template pTemplate="onicon">
+              <img
+                src="/images/shared/rating-active.png"
+                width="25px"
+                height="25px"
+                alt="Paw Active"
+              />
+            </ng-template>
+            <ng-template pTemplate="officon">
+              <img
+                src="/images/shared/rating-active.png"
+                style="filter: grayscale(100%) opacity(0.5);"
+                width="25px"
+                height="25px"
+                alt="Paw Inactive"
+              />
+            </ng-template>
+          </p-rating>
+        </div>
+        <textarea formControlName="content" class="main-textarea" placeholder="Страходен гледач...." rows="8"></textarea>
+        <div class="right-button-holder">
+          <button type="button"
+                  class="btn secondary-button"
+                  (click)="sendReview()"
+          >
+            <img src="/images/shared/send.png" alt="Изпрати">
+            Изпрати отговор
+          </button>
         </div>
       </div>
     </div>

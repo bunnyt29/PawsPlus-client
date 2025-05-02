@@ -10,6 +10,7 @@ import {AddModalComponent} from '../add-modal/add-modal.component';
 import {BookingModalComponent} from '../booking-modal/booking-modal.component';
 import {RejectModalComponent} from '../reject-modal/reject-modal.component';
 import {ActivateModalComponent} from '../activate-modal/activate-modal.component';
+import {ReviewModalComponent} from '../review-modal/review-modal.component';
 
 @Component({
   selector: 'app-wrapper-modal',
@@ -22,7 +23,8 @@ import {ActivateModalComponent} from '../activate-modal/activate-modal.component
     AddModalComponent,
     BookingModalComponent,
     RejectModalComponent,
-    ActivateModalComponent
+    ActivateModalComponent,
+    ReviewModalComponent
   ],
   templateUrl: './wrapper-modal.component.html',
   styleUrls: ['./wrapper-modal.component.scss']
@@ -30,7 +32,6 @@ import {ActivateModalComponent} from '../activate-modal/activate-modal.component
 export class WrapperModalComponent {
   constructor(public modalService: ModalService) {}
 
-  // Expose config and isOpen from the service using getters
   get config() {
     return this.modalService.config;
   }
@@ -39,7 +40,6 @@ export class WrapperModalComponent {
     return this.modalService.isOpen;
   }
 
-  // Called when a child modal requests to close
   closeModal(): void {
     this.modalService.close();
   }

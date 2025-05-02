@@ -31,8 +31,8 @@ export class RegisterComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.registerForm = this.fb.group({
-      'firstName': ['', [Validators.required]],
-      'lastName': ['', [Validators.required]],
+      'firstName': ['', [Validators.required, Validators.minLength(2)]],
+      'lastName': ['', [Validators.required, Validators.minLength(2)]],
       'email': ['', [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(50)]],
       'phoneNumber': ['', [Validators.required, Validators.pattern('^[+]?[0-9]{9,15}$')]],
       'password': ['', [Validators.required]],
@@ -120,6 +120,12 @@ export class RegisterComponent implements OnInit {
   register() {
     const formData = { ...this.registerForm.value };
     delete formData.confirmPassword;
+
+    if (formData.invalid) {
+      this.toastr.error('Моля, попълнете валидни данни.');
+      return;
+    }
+
     this.authService.register(formData).subscribe(() => {
       this.toastr.warning("Изпратихме ти съобщение! Потвърди имейла си!");
     });

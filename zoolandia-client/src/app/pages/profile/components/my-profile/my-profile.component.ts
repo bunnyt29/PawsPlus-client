@@ -7,6 +7,10 @@ import {ProfileService} from '../../services/profile.service';
 import {ModalService} from '../../../../shared/services/modal.service';
 import {Profile} from '../../../../shared/models/Profile';
 import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
+import {Review} from '../../../../shared/models/Review';
+import {PrimeTemplate} from 'primeng/api';
+import {RatingModule} from 'primeng/rating';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-my-profile',
@@ -16,7 +20,10 @@ import {WrapperModalComponent} from '../../../../shared/components/modals/wrappe
     RouterLink,
     GoogleMap,
     MapMarker,
-    WrapperModalComponent
+    WrapperModalComponent,
+    PrimeTemplate,
+    RatingModule,
+    FormsModule
   ],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.scss'
@@ -26,6 +33,7 @@ export class MyProfileComponent implements OnInit, AfterViewInit {
   profile!: Profile;
   placeId: string = '';
   formattedAddress!: string | undefined;
+  reviews: Array<Review> | undefined = [];
 
   markerPosition: google.maps.LatLngLiteral | null = null;
 
@@ -44,6 +52,7 @@ export class MyProfileComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.profile = this.route.snapshot.data['profile'];
+    this.reviews = this.profile.reviews;
     let placeId =this.profile.location?.placeId;
     if (placeId) {
       this.placeId = placeId;

@@ -4,11 +4,13 @@ import {NavigationMenuComponent} from './shared/components/navigation-menu/navig
 import {CommonModule} from '@angular/common';
 import {environment} from '../environments/environment';
 import {HomeComponent} from './pages/home/components/home/home.component';
+import {LoaderComponent} from './shared/components/loader/loader.component';
+import {NotificationService} from './shared/services/notification.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, NavigationMenuComponent],
+  imports: [RouterOutlet, RouterLink, CommonModule, NavigationMenuComponent, LoaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -23,7 +25,8 @@ export class AppComponent implements OnInit{
 
   constructor(
     private router: Router,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private notificationService: NotificationService
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
@@ -35,6 +38,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.notificationService.initPushNotifications();
     this.loadGoogleMaps();
   }
 

@@ -9,6 +9,7 @@ import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideToastr} from 'ngx-toastr';
 import {ErrorInterceptor} from './core/interceptors/error-interceptor.service';
 import {CookieService} from 'ngx-cookie-service';
+import {LoaderInterceptor} from './core/interceptors/loader.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
       multi: true
     },
     {

@@ -6,6 +6,7 @@ import {ToastrService} from 'ngx-toastr';
 
 import {AuthService} from '../../services/auth.service';
 import {SharedModule} from '../../../../shared/shared.module';
+import {NotificationService} from '../../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit{
     private fb: FormBuilder,
     private authService: AuthService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -44,8 +46,14 @@ export class LoginComponent implements OnInit{
   }
 
   login(): void {
+    if (this.loginForm.invalid) {
+      this.toastr.error('Моля, попълнете валидни данни.');
+      return;
+    }
+
     this.authService.login(this.loginForm.value).subscribe(res => {
       this.authService.saveToken(res['token']);
+      this.notificationService.initPushNotifications();
       if(res.roles == "Administrator") {
         this.router.navigate(['/admin/dashboard'])
       } else {
@@ -59,6 +67,6 @@ export class LoginComponent implements OnInit{
           this.router.navigate(['/profile/my-profile-details']);
         }
       }
-    })
+    });
   }
 }

@@ -13,6 +13,7 @@
       <span class="profile-name-holder">
             <input placeholder="Иванов"
                    class="profile-name profile-input"
+                   [ngClass]="{'invalid-input': firstName?.touched && firstName?.invalid}"
                    type="text"
                    formControlName="firstName">
             <div class="alert"
@@ -23,6 +24,11 @@
                  *ngIf="firstName?.touched && firstName?.errors?.['minlength']">
               * минимален брой символи 2
             </div>
+            <input placeholder="Иванов"
+                   class="profile-name profile-input"
+                   [ngClass]="{'invalid-input': firstName?.touched && firstName?.invalid}"
+                   type="text"
+                   formControlName="lastName">
             <div class="alert"
                  *ngIf="lastName?.touched && lastName?.errors?.['required']">
               * задължително
@@ -31,10 +37,6 @@
                  *ngIf="lastName?.touched && lastName?.errors?.['minlength']">
               * минимален брой символи 2
             </div>
-            <input placeholder="Иванов"
-                   class="profile-name profile-input"
-                   type="text"
-                   formControlName="lastName">
       </span>
     </div>
     <div class="create-profile-main">
@@ -50,6 +52,9 @@
                       formControlName="description"
                       rows="8">
             </textarea>
+            <div class="alert" *ngIf="profileForm.get('description')?.touched && profileForm.get('description')?.errors?.['maxlength']">
+              * максимум 1024 символа
+            </div>
           </div>
         </div>
         <div class="contacts">
@@ -60,7 +65,8 @@
           <div class="contacts-main-holder">
             <div class="contact">
               <label>Телефонен номер</label>
-              <input class="profile-input"
+              <input class="profile-input main-input"
+                     [ngClass]="{'invalid-input': phoneNumber?.touched && phoneNumber?.invalid}"
                      type="text"
                      placeholder="0888990865"
                      formControlName="phoneNumber">
@@ -69,18 +75,39 @@
             </div>
           </div>
         </div>
+
         <div class="location">
           <div class="form-group">
             <div class="form-sections-heading">
               <img src="/images/shared/location-icon.svg" alt="location">
               <span>Местоположение</span>
             </div>
-            <div class="location-holder">
-              <google-autocomplete [inputValue]="formattedAddress" (placeSelected)="handlePlaceSelected($event)"></google-autocomplete>
+            <div
+              class="location-holder"
+              [ngClass]="{'invalid-location': profileForm.get('location')?.touched &&
+                        profileForm.get('location')?.invalid}"
+            >
+              <label>Адрес:</label>
+              <google-autocomplete
+                [inputValue]="formattedAddress"
+                (placeSelected)="handlePlaceSelected($event)"
+                (blur)="profileForm.get('location')?.markAsTouched()">
+              </google-autocomplete>
+
+              <div class="alert"
+                   *ngIf="profileForm.get('location')?.touched &&
+              profileForm.get('location')?.errors?.['required']">
+                * задължително поле
+              </div>
+
               <google-map [height]="'300px'" [width]="'100%'" [options]="mapOptions">
-                <map-advanced-marker *ngIf="markerPosition" [position]="markerPosition"></map-advanced-marker>
+                <map-advanced-marker
+                  *ngIf="markerPosition"
+                  [position]="markerPosition">
+                </map-advanced-marker>
               </google-map>
             </div>
+
           </div>
         </div>
       </div>

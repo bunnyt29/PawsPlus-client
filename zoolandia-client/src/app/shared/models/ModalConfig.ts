@@ -1,15 +1,11 @@
 export class ModalConfig {
   title: string = '';
   description?: string = '';
-  // A callback that receives form data when saving
   save?: (data: any) => void = () => {};
-  // A callback for when the modal is cancelled/discarded
   discard?: () => void = () => {};
-  // Any additional data you want to pass to the modal
   data?: any = null;
   type?: string = '';
-  // Action determines which modal to show: 'delete', 'edit', 'add', 'details', or 'book'
-  action?: 'delete' | 'edit' | 'add' | 'details' | 'book' | 'disapprovePost' | 'disapproveBooking'| 'cancel' | 'activate' = 'add';
+  action?: 'delete' | 'edit' | 'add' | 'details' | 'book' | 'disapprovePost' | 'disapproveBooking'| 'cancel' | 'activate' | 'review' = 'add';
 
   constructor(
     title: string = '',
@@ -18,7 +14,7 @@ export class ModalConfig {
     discard?: () => void,
     data?: any,
     type: string = '',
-    action: 'delete' | 'edit' | 'add' | 'details' | 'book'| 'disapprovePost'| 'disapproveBooking'| 'cancel' | 'activate' = 'add'
+    action: 'delete' | 'edit' | 'add' | 'details' | 'book'| 'disapprovePost'| 'disapproveBooking'| 'cancel' | 'activate' | 'review' = 'add'
   ) {
     this.title = title;
     this.description = description;

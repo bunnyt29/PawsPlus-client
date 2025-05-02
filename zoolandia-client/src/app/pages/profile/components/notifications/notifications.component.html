@@ -1,5 +1,36 @@
 <div class="dashboard">
-  <table *ngIf="profile">
+  <h1>Твоите поръчки</h1>
+  <div class="tabs">
+    <button
+      (click)="filterBookings('Pending')"
+      [ngClass]="{'active': activeTab === 'Pending'}">
+      Чакащи одобрение
+    </button>
+    <button
+      (click)="filterBookings('Approved')"
+      [ngClass]="{'active': activeTab === 'Approved'}">
+      Одобрени
+    </button>
+    <button
+      (click)="filterBookings('Canceled')"
+      [ngClass]="{'active': activeTab === 'Canceled'}">
+      Отказани
+    </button>
+    <button
+      (click)="filterBookings('Started')"
+      [ngClass]="{'active': activeTab === 'Started'}">
+      В процес
+    </button>
+    <button
+      (click)="filterBookings('Completed')"
+      [ngClass]="{'active': activeTab === 'Completed'}">
+      Минали
+    </button>
+  </div>
+  <div *ngIf="filteredBookings.length === 0" class="no-bookings-message">
+    <img src="/images/shared/no-bookings.svg" alt="Липсващи">
+  </div>
+  <table *ngIf="filteredBookings.length > 0">
     <thead>
     <tr>
       <th scope="col" *ngIf="profile?.roles?.includes('Sitter')">Автор</th>
@@ -9,14 +40,14 @@
       <th scope="col">Час</th>
       <th scope="col">Вид среща</th>
       <th scope="col">Локация</th>
-      <th scope="col">Съобщение</th>
+      <th scope="col" *ngIf="hasMessages()">Съобщение</th>
       <th scope="col">Животно</th>
       <th scope="col">Статус</th>
-      <th scope="col">Опции</th>
+      <th scope="col" *ngIf="!(activeTab === 'Completed' && profile?.roles?.includes('Sitter'))">Опции</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let booking of bookings">
+    <tr *ngFor="let booking of filteredBookings">
       <td *ngIf="profile?.roles?.includes('Sitter')" data-label="Собственик">
         <div class="author">
           <img class="profile-image-small" [src]="booking.photoUrl" alt="">
@@ -46,7 +77,7 @@
       <td data-label="Локация">
         {{  booking.meetingPlaceAddress || 'Зареждане...' }}
       </td>
-      <td data-label="Съобщение">
+      <td *ngIf="hasMessages()" data-label="Съобщение">
         {{ booking.additionalDescription }}
       </td>
       <td (click)="viewPet(booking.ownerId)" data-label="Животно">
@@ -57,12 +88,28 @@
         <span *ngIf="booking.status == 'Pending'" class="pending">Чакаща</span>
         <span *ngIf="booking.status == 'Canceled'" class="disapproved">Отказана</span>
         <span *ngIf="booking.status == 'Disapproved'" class="disapproved">Отхвърлена</span>
-        <span *ngIf="booking.status == 'Approved'" class="approved">Приета</span>
+        <span *ngIf="booking.status == 'Approved'" class="approved">Одобрена</span>
+        <span *ngIf="booking.status == 'Started'" class="approved">В процес на извършване</span>
+        <span *ngIf="booking.status == 'Completed'" class="approved">Завършена</span>
       </td>
-      <td data-label="Опции">
-        <button class="btn" *ngIf="booking.status == 'Pending'"><img src="/images/shared/answer-yes.png" alt="Одобри" *ngIf="profile?.roles?.includes('Sitter')" (click)="approve(booking.id, booking.ownerId, booking.serviceName)"></button>
-        <button class="btn" *ngIf="booking.status == 'Pending'"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Sitter')" (click)="openReasonForRejectModal('disapprove', booking.id, booking.ownerId, booking.serviceName)"></button>
-        <button class="btn" *ngIf="booking.status == 'Pending'|| booking.status == 'Approved'"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Owner')" (click)="openReasonForRejectModal('cancel', booking.id, booking.sitterId, booking.serviceName)"></button>
+      <td data-label="Опции" *ngIf="!(activeTab === 'Completed' && profile?.roles?.includes('Sitter'))">
+        <div class="button-group">
+          <button class="btn" *ngIf="booking.status == 'Pending'"><img src="/images/shared/answer-yes.png" alt="Одобри" *ngIf="profile?.roles?.includes('Sitter')" (click)="approve(booking.id, booking.ownerId, booking.serviceName)"></button>
+          <button class="btn" *ngIf="booking.status == 'Pending'"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Sitter')" (click)="openReasonForRejectModal('disapprove', booking.id, booking.ownerId, booking.serviceName)"></button>
+          <button class="action-btn btn-start" *ngIf="profile?.roles?.includes('Sitter') && booking.status == 'Approved'" (click)="startBooking(booking.id)">
+            <img src="/images/shared/start.png" alt="Старт">
+            Започни
+          </button>
+          <button class="action-btn btn-complete" *ngIf="profile?.roles?.includes('Sitter') && booking.status == 'Started'" (click)="completeBooking(booking.id)">
+            <img src="/images/shared/complete.png" alt="Завърши">
+            Завърши
+          </button>
+          <button class="btn" *ngIf="booking.status == 'Pending'|| booking.status == 'Approved'"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Owner')" (click)="openReasonForRejectModal('cancel', booking.id, booking.sitterId, booking.serviceName)"></button>
+          <button class="action-btn btn-review" *ngIf="profile?.roles?.includes('Owner') && booking.status == 'Completed' && canLeaveReview" (click)="openReviewModal(booking.ownerId, booking.sitterId)">
+            <img src="/images/shared/review.png" alt="Оцени">
+            Оцени
+          </button>
+        </div>
       </td>
     </tr>
     </tbody>

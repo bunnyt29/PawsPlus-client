@@ -42,7 +42,7 @@ export class SearchComponent implements OnInit {
   formattedAddress: string | undefined = '';
   paramsObject: { [key: string]: any } = {};
   mapMarkers: google.maps.MarkerOptions[] = []
-  isMapExpanded = false; // State to track if the map is expanded
+  isMapExpanded = false;
 
   serviceOptions = [
     { value: 1, text: 'Разходки', image: '/images/desktop/post/service-walking.svg' },
@@ -62,8 +62,8 @@ export class SearchComponent implements OnInit {
   searchParams: {
     petType: string | null;
     serviceType: string | null;
-    startDate: string | null;
-    endDate: string | null;
+    startDate: Date | null;
+    endDate: Date | null;
     minPrice: string | null;
     maxPrice: string | null;
     latitude: number;
@@ -90,6 +90,7 @@ export class SearchComponent implements OnInit {
   )
   {
     this.today = new Date();
+    this.minDateForEndDate = new Date();
     this.searchSubject.pipe(debounceTime(100)).subscribe((): void => {
       this.performSearch();
     });
@@ -99,6 +100,17 @@ export class SearchComponent implements OnInit {
     this.route.queryParams.subscribe(queryParams => {
       this.paramsObject = { ...this.paramsObject, ...queryParams };
       this.searchParams = Object.assign(this.searchParams, queryParams);
+
+      if (queryParams['startDate']) {
+        const parsedStart = new Date(queryParams['startDate']);
+        this.searchParams.startDate = isNaN(parsedStart.getTime()) ? null : parsedStart;
+      }
+
+      if (queryParams['endDate']) {
+        const parsedEnd = new Date(queryParams['endDate']);
+        this.searchParams.endDate = isNaN(parsedEnd.getTime()) ? null : parsedEnd;
+      }
+
       this.selectedOption = this.serviceOptions.find(option => option.value.toString() === this.searchParams.serviceType);
 
       const latitude = parseFloat(queryParams['latitude']);
@@ -179,7 +191,15 @@ export class SearchComponent implements OnInit {
   }
 
   private performSearch(): void {
-    const params = { ...this.searchParams };
+    const params = {
+      ...this.searchParams,
+      startDate: this.searchParams.startDate
+        ? this.searchParams.startDate.toISOString().split('T')[0]
+        : null,
+      endDate: this.searchParams.endDate
+        ? this.searchParams.endDate.toISOString().split('T')[0]
+        : null
+    };
 
     this.postService.search(params).subscribe(res => {
       this.searchResults = res.posts;

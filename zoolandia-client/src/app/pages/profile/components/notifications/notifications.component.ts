@@ -10,6 +10,7 @@ import {Profile} from '../../../../shared/models/Profile';
 import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 import {AnimalTypePipe} from "../../../../shared/pipes/animal-type.pipe";
 import {TranslateServicePipe} from "../../../../shared/pipes/translate-service.pipe";
+import {Review} from '../../../../shared/models/Review';
 
 @Component({
   selector: 'app-notifications',
@@ -26,6 +27,10 @@ import {TranslateServicePipe} from "../../../../shared/pipes/translate-service.p
 export class NotificationsComponent implements OnInit {
   bookings!: Array<any>;
   profile!: Profile;
+  filteredBookings: Array<any> = [];
+  activeTab: string = 'Pending';
+  reviews: Array<Review> | undefined = [];
+  canLeaveReview: boolean = true;
 
   constructor(
     private bookingService: BookingService,
@@ -42,11 +47,12 @@ export class NotificationsComponent implements OnInit {
     this.fetchData();
   }
 
-  fetchData(): void{
+  fetchData(): void {
     this.bookingService.getPending().subscribe(res => {
       this.bookings = res.map((booking: any) => ({ ...booking, meetingPlaceAddress: '' }));
-
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Pending');
       this.bookings.forEach((booking: any): void => {
+
         if (booking.googlePlaceId) {
           const geocoder = new google.maps.Geocoder();
           geocoder.geocode({ placeId: booking.googlePlaceId }, (results, status) => {
@@ -58,8 +64,29 @@ export class NotificationsComponent implements OnInit {
             }
           });
         }
+
+
       });
     });
+  }
+
+  filterBookings(status: string): void {
+    this.activeTab = status;
+    if (status === 'Pending') {
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Pending');
+    } else if (status === 'Approved') {
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Approved');
+    } else if (status === 'Started') {
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Started');
+    } else if (status === 'Canceled') {
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Canceled');
+    } else if (status === 'Completed') {
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Completed');
+    }
+  }
+
+  hasMessages(): boolean {
+    return this.filteredBookings.some(b => b.additionalDescription && b.additionalDescription.trim() !== '');
   }
 
   viewPet(ownerId: string): void {
@@ -75,6 +102,8 @@ export class NotificationsComponent implements OnInit {
     }
     this.bookingService.approve(bookingId, data).subscribe( (): void => {
       this.toastr.success('Успешно потвърдихте поръчката!');
+      this.activeTab = 'Approved';
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Approved');
     })
   }
 
@@ -108,5 +137,35 @@ export class NotificationsComponent implements OnInit {
         discard: () => console.log('Delete cancelled'),
       });
     }
+  }
+  openReviewModal(reviewerId: string, reviewedId: string): void {
+      const data: {reviewerId: string, reviewedId: string} =
+        {
+          reviewerId: reviewerId,
+          reviewedId: reviewedId
+        }
+      this.modalService.open({
+        title: `Остави обратна връзка за този гледач`,
+        description: 'Мнението ти е важно за нас и за останалите собственици на домашни любимци! Сподели как преминаха срещите с този гледач – беше ли отговорен, грижовен и внимателен? Всеки коментар помага на общността да направи по-информиран избор.',
+        action: 'review',
+        data: data,
+        discard: () => console.log('Delete cancelled'),
+      });
+    }
+
+  startBooking(bookingId: string) {
+    this.bookingService.start(bookingId).subscribe(() => {
+      this.toastr.success("Поръчката е в процес на изпълнение!");
+      this.activeTab = 'Started';
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Started');
+    })
+  }
+
+  completeBooking(bookingId: string) {
+    this.bookingService.complete(bookingId).subscribe(() => {
+      this.toastr.success("Поръчката е завършена!");
+      this.activeTab = 'Completed';
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Completed');
+    })
   }
 }

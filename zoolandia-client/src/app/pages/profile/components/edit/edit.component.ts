@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Location} from '@angular/common';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {EMPTY, Observable} from 'rxjs';
 import {GoogleMap, MapAdvancedMarker} from '@angular/google-maps';
 import {ToastrService} from 'ngx-toastr';
 
@@ -39,6 +39,7 @@ export class EditComponent implements OnInit, AfterViewInit {
   formattedAddress!: string ;
 
   markerPosition: google.maps.LatLngLiteral | null = null;
+  @Output() blur = new EventEmitter<void>();
 
   mapOptions: google.maps.MapOptions = {
     mapId: environment.googleMapsMapId,
@@ -62,8 +63,8 @@ export class EditComponent implements OnInit, AfterViewInit {
       'id': [''],
       'firstName': ['', [Validators.required, Validators.minLength(2)]],
       'lastName': ['', [Validators.required, Validators.minLength(2)]],
-      'description': [''],
-      'location': [null],
+      'description': ['', Validators.maxLength(1024)],
+      'location': [null, Validators.required],
       'phoneNumber': ['', [Validators.required, Validators.pattern('^[+]?[0-9]{9,15}$')]],
       'photoUrl': ['']
     });
@@ -163,6 +164,12 @@ export class EditComponent implements OnInit, AfterViewInit {
   }
 
   saveChanges(): Observable<any>{
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      this.toastr.error('Моля, попълнете валидни данни.');
+      return EMPTY;
+    }
+
     return this.profileService.edit(this.profile.id, this.profileForm.value);
   }
 

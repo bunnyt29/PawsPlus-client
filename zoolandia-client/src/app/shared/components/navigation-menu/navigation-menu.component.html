@@ -37,7 +37,7 @@
       </nav>
     </div>
     <div class="profile-info" *ngIf="profile">
-      <div class="profile-info-name">
+      <div class="profile-info-name" [routerLink]="'/profile/my-profile-details'">
         <span>Здравей, {{ profile!.firstName }}!</span>
       </div>
       <div class="nav-profile-image">

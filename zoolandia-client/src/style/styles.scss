@@ -160,6 +160,11 @@ input::-webkit-inner-spin-button {
   background-color: colors.$danger-color;
 }
 
+.main-input:hover,
+.main-input:focus-within {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
+}
+
 .secondary-input {
   padding: 10px 20px;
   background-color: colors.$primary-background;
@@ -335,7 +340,6 @@ textarea {
           .contacts-main-holder {
             max-width: 500px;
             margin-top: 24px;
-            padding-left: 50px;
             display: flex;
             gap: 40px;
 
@@ -866,12 +870,17 @@ p-calendar .p-datepicker-calendar td {
 
     .close {
       position: absolute;
-      top: 10px;
-      right: 20px;
+      top: 20px;
+      right: 30px;
       background-color: transparent;
 
       span {
         font-size: typography.$font-size-xl;
+      }
+
+      @include for-phone-only {
+        position: fixed;
+        top: 60px;
       }
     }
 
@@ -1154,7 +1163,6 @@ p-calendar .p-datepicker-calendar td {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
-    border-radius: 20px;
     overflow: hidden;
     background-color: colors.$primary-background;
 
@@ -1166,15 +1174,6 @@ p-calendar .p-datepicker-calendar td {
         th {
           padding: 1rem;
           text-align: left;
-        }
-
-        th:first-child {
-          border-top-left-radius: 10px;
-
-        }
-
-        th:last-child {
-          border-top-right-radius: 10px;
         }
       }
     }
@@ -1515,6 +1514,123 @@ p-calendar .p-datepicker-calendar td {
 @media (-webkit-device-pixel-ratio: 1.25) {
   body {
     zoom: 0.9;
+  }
+}
+
+
+.reviews {
+  background-color: colors.$primary-background;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+
+  &-title {
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid colors.$accent-color;
+      display: inline-block;
+      padding-bottom: 0.3rem;
+    }
+  }
+
+  .review {
+    background-color: colors.$secondary-background;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.01);
+    }
+
+    .review-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      .delete-review {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        background-color: transparent;
+
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+
+      .profile-image-review {
+        width: 50px;
+        height: 50px;
+        margin-right: 1rem;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid colors.$accent-color;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .reviewer-and-date-info {
+        display: flex;
+        flex-direction: column;
+
+        span:first-child {
+          font-weight: bold;
+        }
+
+        span:last-child {
+          font-size: 0.9rem;
+          color: colors.$secondary-text-color;
+        }
+      }
+    }
+
+    .review-content {
+      p {
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+
+
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  font-size: typography.$font-size-xs;
+  font-weight: typography.$medium;
+  color: colors.$danger-darker-color;
+  line-height: 1.4;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  animation: fadeInAlert 0.25s ease-in-out;
+}
+
+@keyframes fadeInAlert {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

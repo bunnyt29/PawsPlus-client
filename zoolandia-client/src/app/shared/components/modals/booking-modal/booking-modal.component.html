@@ -27,7 +27,7 @@
                 type="radio"
                 formControlName="serviceType"
                 [value]="service.id"
-              />
+                />
               {{ service.name | translateService}}
             </label>
           </div>
@@ -63,38 +63,64 @@
           <div class="filter-dates">
             <div class="date">
               <img src="/images/desktop/home/calendar.svg" alt="Календар">
-              <p-calendar
+              <input
+                type="time"
+                class="native-time-input"
                 formControlName="startTime"
-                [timeOnly]="true"
-                [hourFormat]="'24'"
-                placeholder="Начален час"
-                (onSelect)="formatTime('startTime')"
-              ></p-calendar>
+                lang="en-GB"
+              />
+<!--              <p-calendar-->
+<!--                formControlName="startTime"-->
+<!--                [timeOnly]="true"-->
+<!--                [hourFormat]="'24'"-->
+<!--                placeholder="Начален час"-->
+<!--                (onSelect)="formatTime('startTime')"-->
+<!--              ></p-calendar>-->
             </div>
             <div class="date">
               <img src="/images/desktop/home/calendar.svg" alt="Календар">
-              <p-calendar
+              <input
+                type="time"
+                class="native-time-input"
                 formControlName="endTime"
-                [timeOnly]="true"
-                [hourFormat]="'24'"
-                placeholder="Краен час"
-                (onSelect)="formatTime('endTime')"
-              ></p-calendar>
+              />
+<!--              <p-calendar-->
+<!--                formControlName="endTime"-->
+<!--                [timeOnly]="true"-->
+<!--                [hourFormat]="'24'"-->
+<!--                placeholder="Краен час"-->
+<!--                (onSelect)="formatTime('endTime')"-->
+<!--              ></p-calendar>-->
             </div>
           </div>
         </div>
       </div>
       <div class="modal-body-side">
+<!--        <div class="filter">-->
+<!--          <span class="filter-heading">Избери начин за взимане на животното</span>-->
+<!--          <div class="fields-container">-->
+<!--            <label class="field" *ngFor="let meetingPlace of meetingPlaceOptions"-->
+<!--                   [ngClass]="{ 'selected': bookingForm.value.meetingPlaceType === meetingPlace.id }">-->
+<!--              <input-->
+<!--                type="radio"-->
+<!--                formControlName="meetingPlaceType"-->
+<!--                [value]="meetingPlace.id"-->
+<!--              />-->
+<!--              {{ meetingPlace.name }}-->
+<!--            </label>-->
+<!--          </div>-->
+<!--        </div>-->
+
         <div class="filter">
           <span class="filter-heading">Избери начин за взимане на животното</span>
+
           <div class="fields-container">
-            <label class="field" *ngFor="let meetingPlace of meetingPlaceOptions"
+            <label class="field"
+                   *ngFor="let meetingPlace of filteredMeetingPlaces"
                    [ngClass]="{ 'selected': bookingForm.value.meetingPlaceType === meetingPlace.id }">
-              <input
-                type="radio"
-                formControlName="meetingPlaceType"
-                [value]="meetingPlace.id"
-              />
+              <input type="radio"
+                     formControlName="meetingPlaceType"
+                     [value]="meetingPlace.id" />
               {{ meetingPlace.name }}
             </label>
           </div>

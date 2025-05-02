@@ -1,0 +1,42 @@
+@use '../../../../../style/abstracts/colors';
+@use '../../../../../style/abstracts/typography';
+
+.invalid-input {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+
+  &::placeholder {
+    color: colors.$danger-darker-color;
+  }
+}
+
+.location-holder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  label {
+    font-size: typography.$font-size-md;
+  }
+}
+
+
+.location-holder.invalid-location ::ng-deep .pac-target-input {
+  border: 2px solid colors.$danger-darker-color !important;
+  background-color: colors.$danger-color;
+}
+
+.location-holder ::ng-deep .pac-target-input {
+  padding: 10px;
+  background-color: colors.$secondary-background;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: border-color .2s;
+
+  &:hover,
+  &:focus-within {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
+  }
+}

@@ -9,5 +9,6 @@
     <app-reject-modal *ngSwitchCase="'disapproveBooking'" [config]="config" (closeModal)="closeModal()"></app-reject-modal>
     <app-reject-modal *ngSwitchCase="'cancel'" [config]="config" (closeModal)="closeModal()"></app-reject-modal>
     <app-activate-modal *ngSwitchCase="'activate'" [config]="config" (closeModal)="closeModal()"></app-activate-modal>
+    <app-review-modal *ngSwitchCase="'review'" [config]="config" (closeModal)="closeModal()"></app-review-modal>
   </ng-container>
 </div>

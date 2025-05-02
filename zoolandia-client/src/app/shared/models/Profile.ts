@@ -1,3 +1,5 @@
+import {Review} from './Review';
+
 export interface Profile {
   id: string;
   email: string;
@@ -12,5 +14,6 @@ export interface Profile {
     longitude: number
   }
   roles?: Array<string>;
+  reviews?: Array<Review>;
   postStatus?: number;
 }

@@ -119,10 +119,16 @@
 
       &-name {
         display: flex;
+        cursor: pointer;
 
         span {
           font-size: typography.$font-size-md;
           font-weight: typography.$semi-bold;
+          transition: 200ms ease-in-out;
+        }
+
+        span:hover {
+          color: colors.$accent-color
         }
       }
 

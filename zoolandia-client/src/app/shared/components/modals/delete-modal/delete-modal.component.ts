@@ -8,6 +8,7 @@ import {PetService} from '../../../../pages/pet/services/pet.service';
 import {PostServiceService} from '../../../../pages/post/post-services/services/post-service.service';
 import {ModalService} from '../../../services/modal.service';
 import {PostService} from '../../../../pages/post/services/post.service';
+import {ReviewService} from '../../../services/review.service';
 
 @Component({
   selector: 'app-delete-modal',
@@ -26,6 +27,7 @@ export class DeleteModalComponent {
     private petService: PetService,
     private postServiceService: PostServiceService,
     private postService: PostService,
+    private reviewService: ReviewService,
     private modalService: ModalService,
     private toastr: ToastrService,
     private router: Router
@@ -49,6 +51,14 @@ export class DeleteModalComponent {
   deleteAnimal() {
     this.postService.delete(this.config.data).subscribe(() => {
       this.toastr.success("Успешно изтрито животно!");
+      this.closeModal.emit();
+      location.reload();
+    })
+  }
+
+  deleteReview(){
+    this.reviewService.delete(this.config.data).subscribe(() => {
+      this.toastr.success("Успешно изтрихте ревюто!");
       this.closeModal.emit();
       location.reload();
     })

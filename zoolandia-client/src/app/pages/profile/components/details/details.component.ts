@@ -1,6 +1,6 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {GoogleMap, MapCircle, MapMarker} from '@angular/google-maps';
 
@@ -12,6 +12,12 @@ import {NavigationMenuComponent} from '../../../../shared/components/navigation-
 import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 
 import {environment} from '../../../../../environments/environment';
+import {Review} from '../../../../shared/models/Review';
+import {RatingModule} from 'primeng/rating';
+import {ToastrService} from 'ngx-toastr';
+import {ReviewService} from '../../../../shared/services/review.service';
+import {BookingService} from '../../../../shared/services/booking.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -26,7 +32,8 @@ import {environment} from '../../../../../environments/environment';
     NavigationMenuComponent,
     WrapperModalComponent,
     MapMarker,
-    MapCircle
+    MapCircle,
+    RatingModule
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
@@ -34,11 +41,15 @@ import {environment} from '../../../../../environments/environment';
 export class DetailsComponent implements OnInit, AfterViewChecked {
   @ViewChild(GoogleMap) googleMap!: GoogleMap;
   profileId!: string;
+  mineId!: string;
   data!: any;
+  reviews: Array<Review> = [];
   placeId: string = '';
   markerPosition: google.maps.LatLngLiteral | null = null;
   circleRadius = 500;
   mapInitialized = false;
+  reviewForm!: FormGroup;
+  canLeaveReview: boolean = false;
 
   mapOptions: google.maps.MapOptions = {
     mapId: environment.googleMapsMapId,
@@ -56,11 +67,22 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
   };
 
   constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private profileService: ProfileService,
     private modalService: ModalService,
-    private cd: ChangeDetectorRef
-  ) {}
+    private reviewService: ReviewService,
+    private bookingService: BookingService,
+    private cd: ChangeDetectorRef,
+    private toastr: ToastrService
+  ) {
+    this.reviewForm = this.fb.group({
+      'rating': [''],
+      'content': ['', [Validators.required, Validators.minLength(2)]],
+      'reviewerId': ['', [Validators.required]],
+      'reviewedId': ['', [Validators.required]],
+    })
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -81,6 +103,7 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
     this.profileService.get(this.profileId).subscribe(res => {
       this.data = res;
       this.placeId = res.location?.placeId || '';
+      this.reviews = res.reviews;
 
       if (this.data.post && this.data.post.services) {
         this.data.post.services = this.data.post.services.map((service: any) => {
@@ -95,6 +118,18 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
       if (this.googleMap && this.googleMap.googleMap) {
         this.initializeMap();
       }
+    });
+    this.profileService.getMine().subscribe( res => {
+      this.mineId = res.id;
+
+      this.bookingService.haveCompletedBookings(this.profileId, this.mineId).subscribe(result => {
+        if (result) {
+          const alreadyReviewed = this.reviews.some(review => review.profileId === this.mineId);
+          this.canLeaveReview = !alreadyReviewed;
+        } else {
+          this.canLeaveReview = false;
+        }
+      });
     });
   }
 
@@ -145,5 +180,28 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
       type: 'addPet',
       discard: () => console.log('Delete cancelled'),
     });
+  }
+
+  openDeleteModal(reviewId: string) {
+    this.modalService.open({
+      title: 'Изтриване на ревю',
+      description: 'Сигурен ли си, че искаш да изтриеш ревюто ти?',
+      action: 'delete',
+      data: reviewId,
+      type: 'deleteReview',
+      discard: () => this.toastr.info('Изтриването бе отказано!'),
+    });
+  }
+
+  sendReview(): void {
+    this.reviewForm.patchValue({
+        'reviewerId': this.mineId,
+        'reviewedId': this.profileId
+      }
+    )
+    this.reviewService.create(this.reviewForm.value).subscribe( res => {
+      this.toastr.success("Успешно изпратихте своето ревю!");
+      window.location.reload();
+    })
   }
 }

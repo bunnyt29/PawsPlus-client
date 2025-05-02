@@ -39,8 +39,8 @@ export class FastSearchComponent {
   searchParams: {
     petType: number;
     serviceType: number;
-    startDate: string | null;
-    endDate: string | null;
+    startDate: Date | null;
+    endDate: Date | null;
     minPrice: number;
     maxPrice: number;
     latitude: number;
@@ -49,8 +49,8 @@ export class FastSearchComponent {
   } = {
     petType: 0,
     serviceType: 0,
-    startDate: null,
-    endDate: null,
+    startDate: new Date(),
+    endDate: new Date(),
     minPrice: 1,
     maxPrice: 100,
     latitude: 0,
@@ -63,6 +63,7 @@ export class FastSearchComponent {
     private router: Router
   ) {
     this.today = new Date();
+    this.minDateForEndDate = new Date();
   }
 
   onPetTypeChange(value: number): void {
@@ -91,7 +92,18 @@ export class FastSearchComponent {
       this.searchParams.longitude = location.lng();
     }
   }
-  onSearch(): void{
-    this.router.navigate(['/search'], { queryParams: this.searchParams })
+  onSearch(): void {
+    const parseToDateOnly = (value: any): string | null => {
+      if (!value) return null;
+      const date = new Date(value);
+      return isNaN(date.getTime()) ? null : date.toISOString().split('T')[0];
+    };
+
+    const queryParams = {
+      ...this.searchParams,
+      startDate: parseToDateOnly(this.searchParams.startDate),
+      endDate: parseToDateOnly(this.searchParams.endDate)
+    };
+    this.router.navigate(['/search'], { queryParams });
   }
 }

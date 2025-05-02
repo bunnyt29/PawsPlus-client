@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="my-profile-main">
-    <div class="my-profile-main-section">
+    <div class="my-profile-main-section" *ngIf="profile.description">
       <div class="my-profile-main-section-title">
         <img src="/images/shared/additional-description.svg" alt="additional-description">
         <h2>Допълнително описание</h2>
@@ -60,6 +60,48 @@
       <google-map [height]="'250px'" [width]="'100%'" [options]="mapOptions">
         <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
       </google-map>
+    </div>
+    <div class="reviews" *ngIf="profile.reviews && profile.reviews.length > 0">
+      <h2>Доверени отзиви от стопаните</h2>
+      <div class="review" *ngFor="let review of reviews">
+        <div class="review-header">
+          <div class="profile-image-review">
+            <img [src]="review.photoUrl" alt="reviewer image">
+          </div>
+          <div class="reviewer-and-date-info">
+            <span>{{ review.firstName }} {{ review.lastName }}</span>
+            <span>Ревю от {{ review.reviewDate }}</span>
+          </div>
+        </div>
+        <div class="review-content">
+          <p>{{ review.content }}</p>
+          <p-rating
+            [(ngModel)]="review.rating"
+            [readonly]="true"
+            [cancel]="false"
+            stars="5"
+          >
+            <ng-template pTemplate="onicon">
+              <img
+                src="/images/shared/rating-active.png"
+                width="20px"
+                height="20px"
+                alt="Paw Active"
+              />
+            </ng-template>
+
+            <ng-template pTemplate="officon">
+              <img
+                src="/images/shared/rating-inactive.png"
+                style="filter: grayscale(100%) opacity(0.4);"
+                width="20px"
+                height="20px"
+                alt="Paw Inactive"
+              />
+            </ng-template>
+          </p-rating>
+        </div>
+      </div>
     </div>
   </div>
 </div>

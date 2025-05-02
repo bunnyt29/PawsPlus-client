@@ -1,0 +1,55 @@
+<div class="modal-dialog" role="document">
+  <button
+    type="button"
+    class="close btn"
+    data-dismiss="modal"
+    aria-label="Close"
+    (click)="closeModal.emit()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">{{ config.title }}</h3>
+    </div>
+    <div class="modal-body" [formGroup]="reviewForm">
+      <p>{{ config.description }}</p>
+      <p-rating formControlName="rating" stars="5">
+        <ng-template pTemplate="cancelicon">
+          <img
+            src="/images/shared/cancel.png"
+            width="25px"
+            height="25px" />
+        </ng-template>
+        <ng-template pTemplate="onicon">
+          <img
+            src="/images/shared/rating-active.png"
+            width="30px"
+            height="30px"
+            alt="Paw Active"
+          />
+        </ng-template>
+        <ng-template pTemplate="officon">
+          <img
+            src="/images/shared/rating-active.png"
+            style="filter: grayscale(100%) opacity(0.5);"
+            width="30px"
+            height="30px"
+            alt="Paw Inactive"
+          />
+        </ng-template>
+      </p-rating>
+
+      <textarea formControlName="content" class="main-textarea" placeholder="Страходен гледач...." rows="8"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button type="button"
+              class="btn secondary-button"
+              (click)="sendReview()"
+      >
+        Изпрати отговор
+      </button>
+
+    </div>
+  </div>
+</div>
