@@ -50,6 +50,7 @@ export class NotificationsComponent implements OnInit {
   fetchData(): void {
     this.bookingService.getPending().subscribe(res => {
       this.bookings = res.map((booking: any) => ({ ...booking, meetingPlaceAddress: '' }));
+      console.log(this.bookings)
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Pending');
       this.bookings.forEach((booking: any): void => {
 
@@ -64,8 +65,6 @@ export class NotificationsComponent implements OnInit {
             }
           });
         }
-
-
       });
     });
   }

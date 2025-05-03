@@ -63,6 +63,7 @@ export class RejectModalComponent {
     this.bookingService.cancel(this.config.data).subscribe( () => {
       this.toastr.success('Отхвърлихте поръчката');
       this.closeModal.emit();
+      window.location.reload();
     })
   }
 }

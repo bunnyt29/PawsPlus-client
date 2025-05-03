@@ -1,5 +1,13 @@
-import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 
@@ -11,6 +19,7 @@ import {CommonModule} from '@angular/common';
 import {ModalConfig} from '../../../models/ModalConfig';
 import {TranslateServicePipe} from '../../../pipes/translate-service.pipe';
 import {startWith} from 'rxjs';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 
 @Component({
@@ -21,7 +30,9 @@ import {startWith} from 'rxjs';
     CalendarModule,
     ReactiveFormsModule,
     TranslateServicePipe,
-    GoogleAutocompleteComponent
+    GoogleAutocompleteComponent,
+    FormsModule,
+    OverlayPanelModule
   ],
   templateUrl: './booking-modal.component.html',
   styleUrl: './booking-modal.component.scss'
@@ -32,6 +43,8 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
   bookingForm!: FormGroup;
   filteredServices: Array<any> = [];
   filteredMeetingPlaces: Array<{ id: number; name: string }> = [];
+  availableDates!: Date[];
+  showAvailability: boolean = false;
 
   services = [
     { id: 1, name: 'DogWalking', imagePath: '/images/desktop/post/service-walking.svg' },
@@ -53,11 +66,20 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
     private router: Router,
     private cd: ChangeDetectorRef
   ) {
+    const now = new Date();
+    const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000); // add 1 hour
+
+    const formatToHHMM = (date: Date): string => {
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      return `${hours}:${minutes}`;
+    };
+
     this.bookingForm = this.fb.group({
-      startDay: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endDay: ['', Validators.required],
-      endTime: ['', Validators.required],
+      startDay: [new Date(), Validators.required],
+      startTime: [formatToHHMM(now), Validators.required],
+      endDay: [new Date(), Validators.required],
+      endTime: [formatToHHMM(oneHourLater), Validators.required],
       meetingPlaceType: [null, Validators.required],
       meetingPlaceId: ['', Validators.required],
       additionalDescription: [''],
@@ -102,8 +124,6 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
       .filter(Boolean) as typeof this.services;
   }
 
-
-
   getFilteredMeetingPlaces(): void {
     const post = this.config?.data?.data?.post;
     if (!post) { this.filteredMeetingPlaces = []; return; }
@@ -111,8 +131,10 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
     if (selectedServiceId == null) { this.filteredMeetingPlaces = []; return; }
 
     const uiService      = this.services.find(s => s.id === selectedServiceId);
+
     const serviceFromRes = post.services.find((s: any) => s.name === uiService?.name);
-    console.log(serviceFromRes)
+    this.availableDates = serviceFromRes.availableDates.map((dateStr: string) => new Date(dateStr));
+
     if (!serviceFromRes) { this.filteredMeetingPlaces = []; return; }
 
     this.filteredMeetingPlaces = this.meetingPlaceOptions.filter(mp =>
@@ -158,10 +180,26 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
       sitterId: this.config.data.profileId
     })
 
-    this.bookingService.create(this.bookingForm.value).subscribe( () => {
+    const formatDateOnly = (date: Date): string => {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+
+    const formValue = { ...this.bookingForm.value };
+
+    formValue.startDay = formatDateOnly(formValue.startDay);
+    formValue.endDay = formatDateOnly(formValue.endDay);
+
+    this.bookingService.create(formValue).subscribe( () => {
       this.toastr.success("Успешно изпрати своята заявка! Очаквай потвърждение скоро!");
       this.closeModal.emit();
       this.router.navigate(['/profile/my-profile-details/notifications'])
     })
+  }
+
+  toggleAvailableDates() {
+    this.showAvailability = !this.showAvailability;
   }
 }

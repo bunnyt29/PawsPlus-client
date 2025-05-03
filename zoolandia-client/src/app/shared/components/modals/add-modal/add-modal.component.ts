@@ -141,6 +141,7 @@ export class AddModalComponent implements OnInit {
       this.serviceForm.reset();
     })
     this.modalService.close();
+    window.location.reload();
   }
 
   editPost(): void {
@@ -158,7 +159,7 @@ export class AddModalComponent implements OnInit {
     this.postService.edit(updatedData.id, updatedData).subscribe(() => {
       this.toastr.success("Успешно обновено!");
       this.modalService.close();
-      location.reload();
+      window.location.reload();
     }, () => {
       this.toastr.error("Възникна грешка при обновяването.");
     });

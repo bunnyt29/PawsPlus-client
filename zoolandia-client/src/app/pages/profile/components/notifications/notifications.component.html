@@ -105,7 +105,7 @@
             Завърши
           </button>
           <button class="btn" *ngIf="booking.status == 'Pending'|| booking.status == 'Approved'"><img src="/images/shared/answer-no.png" alt="Отхвърли" *ngIf="profile?.roles?.includes('Owner')" (click)="openReasonForRejectModal('cancel', booking.id, booking.sitterId, booking.serviceName)"></button>
-          <button class="action-btn btn-review" *ngIf="profile?.roles?.includes('Owner') && booking.status == 'Completed' && canLeaveReview" (click)="openReviewModal(booking.ownerId, booking.sitterId)">
+          <button class="action-btn btn-review" *ngIf="profile?.roles?.includes('Owner') && booking.status == 'Completed' && !booking.isReviewed" (click)="openReviewModal(booking.ownerId, booking.sitterId)">
             <img src="/images/shared/review.png" alt="Оцени">
             Оцени
           </button>

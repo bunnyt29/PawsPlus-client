@@ -46,7 +46,9 @@ export class ReviewModalComponent {
       }
     )
     this.reviewService.create(this.reviewForm.value).subscribe( res => {
-      this.toastr.success("Успешно изпратихте своето ревю!")
-    })
+      this.toastr.success("Успешно изпратихте своето ревю!");
+      this.closeModal.emit();
+      window.location.reload();
+    });
   }
 }

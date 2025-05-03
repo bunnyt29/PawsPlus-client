@@ -60,7 +60,7 @@ export class DeleteModalComponent {
     this.reviewService.delete(this.config.data).subscribe(() => {
       this.toastr.success("Успешно изтрихте ревюто!");
       this.closeModal.emit();
-      location.reload();
+      window.location.reload();
     })
   }
 }

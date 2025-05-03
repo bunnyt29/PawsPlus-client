@@ -110,7 +110,7 @@ export class EditModalComponent implements OnInit {
     this.postServiceService.edit(serviceId, this.serviceForm.value).subscribe(() => {
       this.toastr.success("Успешно редактира своята услуга!");
       this.modalService.close();
-      location.reload();
+      window.location.reload();
     });
   }
 

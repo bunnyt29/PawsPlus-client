@@ -38,6 +38,7 @@ export class SearchComponent implements OnInit {
   selectedPlace: any = null;
   priceRange: number[] = [0, 200];
   today: Date;
+  maxDateForStartDate!: Date;
   minDateForEndDate!: Date;
   formattedAddress: string | undefined = '';
   paramsObject: { [key: string]: any } = {};
@@ -62,8 +63,8 @@ export class SearchComponent implements OnInit {
   searchParams: {
     petType: string | null;
     serviceType: string | null;
-    startDate: Date | null;
-    endDate: Date | null;
+    startDate: string | Date | null;
+    endDate: string | Date | null;
     minPrice: string | null;
     maxPrice: string | null;
     latitude: number;
@@ -72,7 +73,7 @@ export class SearchComponent implements OnInit {
   } = {
     petType: null,
     serviceType: null,
-    startDate: null,
+    startDate: new Date(),
     endDate: null,
     minPrice: null,
     maxPrice: null,
@@ -100,16 +101,6 @@ export class SearchComponent implements OnInit {
     this.route.queryParams.subscribe(queryParams => {
       this.paramsObject = { ...this.paramsObject, ...queryParams };
       this.searchParams = Object.assign(this.searchParams, queryParams);
-
-      if (queryParams['startDate']) {
-        const parsedStart = new Date(queryParams['startDate']);
-        this.searchParams.startDate = isNaN(parsedStart.getTime()) ? null : parsedStart;
-      }
-
-      if (queryParams['endDate']) {
-        const parsedEnd = new Date(queryParams['endDate']);
-        this.searchParams.endDate = isNaN(parsedEnd.getTime()) ? null : parsedEnd;
-      }
 
       this.selectedOption = this.serviceOptions.find(option => option.value.toString() === this.searchParams.serviceType);
 
@@ -144,6 +135,14 @@ export class SearchComponent implements OnInit {
       this.minDateForEndDate = new Date(this.searchParams.startDate);
     } else {
       this.minDateForEndDate = this.today;
+    }
+  }
+
+  onEndDateChange(event: any): void {
+    if (this.searchParams.endDate) {
+      this.maxDateForStartDate = new Date(this.searchParams.endDate);
+    } else {
+      this.maxDateForStartDate = this.today;
     }
   }
 
@@ -191,14 +190,15 @@ export class SearchComponent implements OnInit {
   }
 
   private performSearch(): void {
+    const parseToDateOnly = (value: any): string | null => {
+      if (!value) return null;
+      const date = new Date(value);
+      return isNaN(date.getTime()) ? null : date.toISOString().split('T')[0];
+    };
+
     const params = {
       ...this.searchParams,
-      startDate: this.searchParams.startDate
-        ? this.searchParams.startDate.toISOString().split('T')[0]
-        : null,
-      endDate: this.searchParams.endDate
-        ? this.searchParams.endDate.toISOString().split('T')[0]
-        : null
+      startDate: parseToDateOnly(this.searchParams.startDate || this.today)
     };
 
     this.postService.search(params).subscribe(res => {
@@ -209,7 +209,6 @@ export class SearchComponent implements OnInit {
       let firstLocationSet = false;
 
       this.searchResults.forEach((result, index) => {
-        console.log(result)
         if (result.latitude && result.longitude) {
           this.addMarker(result.latitude, result.longitude, `${result.firstName} ${result.lastName}`, index);
 

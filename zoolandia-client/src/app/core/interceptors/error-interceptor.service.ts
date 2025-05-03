@@ -23,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         if (err.status === 401) {
           message = 'Неуспешен опит за вход!';
-          this.router.navigate(['/auth/login']);
+          this.router.navigate(['/access-denied']);
         } else if (err.status === 404) {
           message = description || 'Търсеният от вас резултат не е намерен.';
           this.router.navigate(['/not-found']);

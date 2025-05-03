@@ -32,6 +32,7 @@
                 [showIcon]="true"
                 [dateFormat]="'yy-mm-dd'"
                 [minDate]="today"
+                [maxDate]="maxDateForStartDate"
                 dataType="string"
                 inputId="startDate"
                 class="custom-calendar"
@@ -45,7 +46,7 @@
             <div class="filter-options">
               <p-calendar
                 [(ngModel)]="searchParams.endDate"
-                (ngModelChange)="onSearch()"
+                (ngModelChange)="onEndDateChange($event); onSearch()"
                 [showIcon]="true"
                 [dateFormat]="'yy-mm-dd'"
                 [minDate]="minDateForEndDate"

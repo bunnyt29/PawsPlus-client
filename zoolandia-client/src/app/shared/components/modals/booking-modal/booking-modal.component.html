@@ -8,7 +8,7 @@
   >
     <span aria-hidden="true">&times;</span>
   </button>
-  <div class="modal-content">
+  <div class="modal-content" *ngIf="config">
     <div class="modal-header">
       <h3 class="modal-title">{{ config.title }}</h3>
       <p>{{ config.description }}</p>
@@ -33,7 +33,25 @@
           </div>
         </div>
         <div class="filter">
-          <span class="filter-heading">Избери дати</span>
+          <span class="filter-heading">
+            <button class="btn info-btn" (click)="toggleAvailableDates()">
+              i
+              <span class="tooltip-text">Информация за свободните дати</span>
+            </button>
+            Избери дати
+          </span>
+          <div class="filter">
+            <div class="available-dates-list">
+              <p-calendar *ngIf="showAvailability"
+                [ngModel]="availableDates"
+                [ngModelOptions]="{ standalone: true }"
+                selectionMode="multiple"
+                [dateFormat]="'yy-mm-dd'"
+                [readonlyInput]="true"
+                [inline]="true">
+              </p-calendar>
+            </div>
+          </div>
           <div class="filter-dates">
             <div class="date">
               <img src="/images/desktop/home/calendar.svg" alt="Календар">

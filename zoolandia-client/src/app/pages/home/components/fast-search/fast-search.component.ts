@@ -50,7 +50,7 @@ export class FastSearchComponent {
     petType: 0,
     serviceType: 0,
     startDate: new Date(),
-    endDate: new Date(),
+    endDate: null,
     minPrice: 1,
     maxPrice: 100,
     latitude: 0,
@@ -101,8 +101,7 @@ export class FastSearchComponent {
 
     const queryParams = {
       ...this.searchParams,
-      startDate: parseToDateOnly(this.searchParams.startDate),
-      endDate: parseToDateOnly(this.searchParams.endDate)
+      startDate: parseToDateOnly(this.searchParams.startDate || this.today)
     };
     this.router.navigate(['/search'], { queryParams });
   }
