@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  //apiUrl: 'https://192.168.0.106:7267',
   apiUrl: 'https://localhost:7267',
   //apiUrl: 'https://pawsplus.azurewebsites.net/',
   googleMapsApiKey: 'AIzaSyBm3pL4gMGCv_j2mCUEPI1NjZoyyvHuLN4',

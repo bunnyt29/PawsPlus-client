@@ -80,7 +80,7 @@
       <td *ngIf="hasMessages()" data-label="Съобщение">
         {{ booking.additionalDescription }}
       </td>
-      <td (click)="viewPet(booking.ownerId)" data-label="Животно">
+      <td (click)="viewPet(booking.ownerId)" class="pet" data-label="Животно">
         <img *ngIf="booking.petType === 'Dog'" src="/images/shared/dog.svg" alt="Куче">
         <img *ngIf="booking.petType === 'Cat'" src="/images/shared/cat.svg" alt="Котка">
       </td>

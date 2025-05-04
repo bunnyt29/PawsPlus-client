@@ -814,12 +814,19 @@ p-calendar .p-datepicker-calendar td {
   &-dates {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 30px;
 
-    .date {
+    .date  {
       display: flex;
-      align-items: center;
-      gap: 5px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+
+      &-calendar {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
     }
   }
 
@@ -898,7 +905,7 @@ p-calendar .p-datepicker-calendar td {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 50px;
 
       .modal-header {
         display: flex;
@@ -992,7 +999,6 @@ p-calendar .p-datepicker-calendar td {
 
             .date {
               display: flex;
-              align-items: center;
               gap: 5px;
             }
           }

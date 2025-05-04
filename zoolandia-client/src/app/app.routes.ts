@@ -29,7 +29,6 @@ export const routes: Routes = [
     path: "pet",
     loadChildren: () => import("./pages/pet/pet.module").then((m) => m.PetModule),
     canActivate: [AuthGuard],
-    data: { allowedRoles: ['Owner'] }
   },
   {
     path: "post",

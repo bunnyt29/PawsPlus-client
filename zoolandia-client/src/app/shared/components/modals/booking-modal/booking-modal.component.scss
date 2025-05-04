@@ -13,46 +13,23 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
 
-  .info-btn {
-    position: relative;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: colors.$accent-color;
-    border-radius: 50%;
+.info-btn {
+  width: fit-content;
+  padding: 5px;
+  background-color: colors.$accent-color;
+  border-radius: 5px;
 
-    .tooltip-text {
-      visibility: hidden;
-      opacity: 0;
-      width: max-content;
-      background-color: colors.$secondary-background;
-      color: colors.$primary-text-color;
-      text-align: center;
-      border-radius: 4px;
-      padding: 5px;
-      position: absolute;
-      left: 120px;
-      bottom: 125%;
-      transform: translateX(-50%);
-      transition: opacity 0.2s;
-      white-space: nowrap;
-      z-index: 10;
-    }
-
-    &:hover {
-      background-color: darken(colors.$accent-color, 10%);
-
-      .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
+  &:hover {
+    background-color: darken(colors.$accent-color, 10%);
   }
 }
 
 .available-dates-list {
   pointer-events: none;
+}
+
+.date {
+  width: 50%;
 }

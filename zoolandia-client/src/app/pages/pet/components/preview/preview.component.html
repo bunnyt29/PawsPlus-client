@@ -1,0 +1,199 @@
+<div class="my-pet-details-holder">
+  <div class="left-column">
+    <div class="left-column-title">
+      <img src="/images/desktop/pet/personality.svg" alt="Иконка на лапичка">
+      <h2>Поведение и характер</h2>
+    </div>
+    <div class="personality">
+      <div class="personality-item">
+        <img *ngIf="pet.petType === 1" src="/images/desktop/pet/dog.svg" alt="Куче">
+        <img *ngIf="pet.petType === 2" src="/images/desktop/pet/cat.svg" alt="Котка">
+        <div class="personality-item-description">
+          <span class="personality-item-description-title">Характер</span>
+          <span>{{ pet.personality?.temperament}}</span>
+        </div>
+      </div>
+      <div class="personality-item">
+        <img *ngIf="activityLevel === 0 && pet.petType === 1"
+             src="/images/desktop/pet/activity-level-low.svg" alt="Няма информация">
+        <img *ngIf="activityLevel > 0 && activityLevel < 5 && pet.petType === 1"
+             src="/images/desktop/pet/activity-level-low.svg" alt="Спящо куче">
+        <img *ngIf="activityLevel > 4 && activityLevel < 8 && pet.petType === 1"
+             src="/images/desktop/pet/activity-level-medium.svg" alt="Спокойно куче">
+        <img *ngIf="activityLevel > 7 && pet.petType === 1"
+             src="/images/desktop/pet/activity-level-high.svg" alt="Игриво куче">
+        <img *ngIf="pet.petType === 2"
+             src="/images/desktop/pet/cat-activity-level.png" alt="Коте">
+        <div class="personality-item-description">
+          <span class="personality-item-description-title">Ниво на активност</span>
+          <span *ngIf="activityLevel === 0">Липсват данни</span>
+          <span *ngIf="activityLevel > 0 && activityLevel < 5">Малко активно</span>
+          <span *ngIf="activityLevel > 4 && activityLevel < 8">Активно</span>
+          <span *ngIf="activityLevel > 7">Много активно</span>
+        </div>
+      </div>
+      <div class="personality-item">
+        <img *ngIf="pet.petType === 1" src="/images/desktop/pet/frightened-dog.svg" alt="Уплашено куче">
+        <img *ngIf="pet.petType === 2" src="/images/desktop/pet/frightened-cat.png" alt="Уплашено коте">
+        <div class="personality-item-description">
+          <span class="personality-item-description-title">Страхове</span>
+          <span *ngIf="pet.personality?.hasFears === null">Липсва информация</span>
+          <span *ngIf="pet.personality?.hasFears === 1">Няма</span>
+          <span *ngIf="pet.personality?.hasFears === 2">{{pet.personality?.fearsDescription}}</span>
+        </div>
+      </div>
+      <div class="personality-item">
+        <img *ngIf="pet.petType === 1" src="/images/desktop/pet/is-trained-dog.svg" alt="Трениращо куче">
+        <img *ngIf="pet.petType === 2" src="/images/desktop/pet/is-trained-cat.png" alt="Трениращо куче">
+        <div class="personality-item-description">
+          <span class="personality-item-description-title">Дресировка</span>
+          <span *ngIf="pet.personality?.isTrained === null">Липсва информация</span>
+          <span *ngIf="pet.personality?.isTrained === 1">Дресирано е</span>
+          <span *ngIf="pet.personality?.isTrained === 2">Не е дресирано</span>
+          <span *ngIf="pet.personality?.isTrained === 3">Не съм сигурен</span>
+        </div>
+      </div>
+    </div>
+    <div class="left-column-title">
+      <img src="/images/desktop/pet/health-status.svg" alt="Иконка на здравен тефтер">
+      <h2>Здравословно състояние</h2>
+    </div>
+    <div class="health-status">
+      <div class="health-status-items">
+        <div class="health-status-item">
+          <div class="health-status-item-title">
+            <div class="health-status-item-image-holder">
+              <img src="/images/shared/isVaccinated.png" alt="Иконка за ваксина">
+            </div>
+            <div class="status">
+              <span>Ваксинирано ли е?</span>
+            </div>
+          </div>
+          <div class="health-status-answer">
+            <span *ngIf="pet.healthStatus?.isVaccinated === null"><img src="/images/shared/no-info.png" alt="Липсват данни"></span>
+            <span *ngIf="pet.healthStatus?.isVaccinated"><img src="/images/shared/answer-yes.png" alt="Да"></span>
+            <span *ngIf="pet.healthStatus?.isVaccinated === false"><img src="/images/shared/answer-no.png" alt="Не"></span>
+          </div>
+        </div>
+        <div class="health-status-item">
+          <div class="health-status-item-title">
+            <div class="health-status-item-image-holder">
+              <img src="/images/shared/isCastrated.png" alt="Иконка за кастрация">
+            </div>
+            <div class="status">
+              <span>Кастрирано ли е?</span>
+            </div>
+          </div>
+          <div class="health-status-answer">
+            <span *ngIf="pet.healthStatus?.isCastrated === null"><img src="/images/shared/no-info.png" alt="Липсват данни"></span>
+            <span *ngIf="pet.healthStatus?.isCastrated"><img src="/images/shared/answer-yes.png" alt="Да"></span>
+            <span *ngIf="pet.healthStatus?.isCastrated === false"><img src="/images/shared/answer-no.png" alt="Не"></span>
+          </div>
+        </div>
+        <div class="health-status-item">
+          <div class="health-status-item-title">
+            <div class="health-status-item-image-holder">
+              <img src="/images/shared/takesMedications.png" alt="Иконка за медикаменти">
+            </div>
+            <div class="status">
+              <span>Приема ли медикаменти?</span>
+            </div>
+          </div>
+          <div class="health-status-answer">
+            <span *ngIf="pet.healthStatus?.takesMedications === null"><img src="/images/shared/no-info.png" alt="Липсват данни"></span>
+            <span *ngIf="pet.healthStatus?.takesMedications"><img src="/images/shared/answer-yes.png" alt="Да"></span>
+            <span *ngIf="pet.healthStatus?.takesMedications === false"><img src="/images/shared/answer-no.png" alt="Не"></span>
+          </div>
+        </div>
+      </div>
+      <div class="health-status-items">
+        <div class="health-status-item reversed">
+          <div class="health-status-item-title">
+            <div class="health-status-item-image-holder">
+              <img src="/images/shared/hasEatingSchedule.png" alt="Иконка на купичка за храна">
+            </div>
+            <div class="status">
+              <span>Хранителен режим</span>
+            </div>
+          </div>
+          <div class="health-status-answer">
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule === ''"><img src="/images/shared/no-info.png" alt="Липсват данни"></span>
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'once'">
+              <img *ngIf="pet.petType === 1" src="/images/desktop/pet/dog.svg" alt="Куче">
+              <img *ngIf="pet.petType === 2" src="/images/desktop/pet/cat.svg" alt="Котка">
+              {{ pet.name }} се храни веднъж за деня.
+            </span>
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'twice'">
+              <img *ngIf="pet.petType === 1" src="/images/desktop/pet/dog.svg" alt="Куче">
+              <img *ngIf="pet.petType === 2" src="/images/desktop/pet/cat.svg" alt="Котка">
+              {{ pet.name }} се храни два пъти дневно.
+            </span>
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'other'">{{ pet.healthStatus?.otherDietaryNeeds }}</span>
+          </div>
+        </div>
+        <div *ngIf="pet.healthStatus?.otherDietaryNeeds == 'other'" class="health-status-item">
+          <div class="health-status-item-title">
+            <div class="health-status-item-image-holder">
+              <img src="/images/shared/otherDietaryNeeds.png" alt="Иконка на храна за домашни животни">
+            </div>
+            <div class="status">
+              <span>Диетата на {{pet.name}}</span>
+            </div>
+          </div>
+          <div class="health-status-answer">
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule === ''"><img src="/images/shared/no-info.png" alt="Липсват данни"> Няма информация</span>
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule">{{ pet.healthStatus?.hasEatingSchedule}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="health-status-items" *ngIf="!pet.healthStatus?.healthProblems">
+        <div class="health-status-item">
+          <div class="health-status-item-title">
+            <div class="health-status-item-image-holder">
+              <img src="/images/shared/otherDietaryNeeds.png" alt="Здравословен проблем">
+            </div>
+            <div class="status">
+              <span>Други здравословни проблеми</span>
+            </div>
+          </div>
+        </div>
+        <div class="health-status-answer">
+          <span *ngIf="pet.healthStatus?.healthProblems">{{ pet.healthStatus?.healthProblems }}</span>
+          <!--          <span *ngIf="!pet.healthStatus?.healthProblems">{{ pet.healthStatus?.healthProblems }}</span>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right-column">
+    <div class="main-details-holder">
+      <div class="main-details-header">
+        <div class="profile-image">
+          <img [src]="pet.photoUrl"  alt="Your pet photo">
+        </div>
+        <span class="pet-name">{{ pet.name }}</span>
+        <div *ngFor="let breed of pet.breeds; let i = index">
+          <span class="pet-breed">{{ breed.name }}</span>
+        </div>
+      </div>
+      <div class="main-details">
+        <div class="main-detail-holder">
+          <span class="main-detail">{{ getGenderTranslation(pet.gender) }}</span>
+          <span>Пол</span>
+        </div>
+        <div class="main-detail-holder">
+          <span class="main-detail">{{ pet.age.years }} г. {{ pet.age.months }} м.</span>
+          <span>Години</span>
+        </div>
+        <div *ngIf="pet.petType === 1" class="main-detail-holder">
+          <span class="main-detail" *ngIf="pet.weight == 1">0-8 кг.</span>
+          <span class="main-detail" *ngIf="pet.weight == 2">8-20 кг.</span>
+          <span class="main-detail" *ngIf="pet.weight == 3">21-50 кг.</span>
+          <span class="main-detail" *ngIf="pet.weight == 4">50+ кг.</span>
+          <span>Тегло</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-wrapper-modal></app-wrapper-modal>
+

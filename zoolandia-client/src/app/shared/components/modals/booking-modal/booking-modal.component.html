@@ -34,12 +34,9 @@
         </div>
         <div class="filter">
           <span class="filter-heading">
-            <button class="btn info-btn" (click)="toggleAvailableDates()">
-              i
-              <span class="tooltip-text">Информация за свободните дати</span>
-            </button>
             Избери дати
           </span>
+          <button class="btn info-btn" (click)="toggleAvailableDates()">Покажи свободните дати</button>
           <div class="filter">
             <div class="available-dates-list">
               <p-calendar *ngIf="showAvailability"
@@ -54,25 +51,31 @@
           </div>
           <div class="filter-dates">
             <div class="date">
-              <img src="/images/desktop/home/calendar.svg" alt="Календар">
-              <p-calendar
-                [dateFormat]="'yy-mm-dd'"
-                formControlName="startDay"
-                dataType="string"
-                inputId="startDate"
-                class="custom-calendar"
-                placeholder="Начална дата"
-              ></p-calendar>
+              <span>Начална дата</span>
+              <div class="date-calendar">
+                <img src="/images/desktop/home/calendar.svg" alt="Календар">
+                <p-calendar
+                  [dateFormat]="'yy-mm-dd'"
+                  formControlName="startDay"
+                  dataType="string"
+                  inputId="startDate"
+                  class="custom-calendar"
+                  placeholder="Начална дата"
+                ></p-calendar>
+              </div>
             </div>
             <div class="date">
-              <img src="/images/desktop/home/calendar.svg" alt="Календар">
-              <p-calendar
-                [dateFormat]="'yy-mm-dd'"
-                formControlName="endDay"
-                dataType="string"
-                inputId="endDate"
-                placeholder="Крайна дата"
-              ></p-calendar>
+              <span>Крайна дата</span>
+              <div class="date-calendar">
+                <img src="/images/desktop/home/calendar.svg" alt="Календар">
+                <p-calendar
+                  [dateFormat]="'yy-mm-dd'"
+                  formControlName="endDay"
+                  dataType="string"
+                  inputId="endDate"
+                  placeholder="Крайна дата"
+                ></p-calendar>
+              </div>
             </div>
           </div>
         </div>
@@ -80,13 +83,16 @@
           <span class="filter-heading">Избери часове</span>
           <div class="filter-dates">
             <div class="date">
-              <img src="/images/desktop/home/calendar.svg" alt="Календар">
-              <input
-                type="time"
-                class="native-time-input"
-                formControlName="startTime"
-                lang="en-GB"
-              />
+              <span>Начален час</span>
+              <div class="date-calendar">
+                <img src="/images/desktop/home/calendar.svg" alt="Календар">
+                <input
+                  type="time"
+                  class="native-time-input"
+                  formControlName="startTime"
+                  lang="en-GB"
+                />
+              </div>
 <!--              <p-calendar-->
 <!--                formControlName="startTime"-->
 <!--                [timeOnly]="true"-->
@@ -96,12 +102,15 @@
 <!--              ></p-calendar>-->
             </div>
             <div class="date">
-              <img src="/images/desktop/home/calendar.svg" alt="Календар">
-              <input
-                type="time"
-                class="native-time-input"
-                formControlName="endTime"
-              />
+              <span>Краен час</span>
+              <div class="date-calendar">
+                <img src="/images/desktop/home/calendar.svg" alt="Календар">
+                <input
+                  type="time"
+                  class="native-time-input"
+                  formControlName="endTime"
+                />
+              </div>
 <!--              <p-calendar-->
 <!--                formControlName="endTime"-->
 <!--                [timeOnly]="true"-->

@@ -50,7 +50,6 @@ export class NotificationsComponent implements OnInit {
   fetchData(): void {
     this.bookingService.getPending().subscribe(res => {
       this.bookings = res.map((booking: any) => ({ ...booking, meetingPlaceAddress: '' }));
-      console.log(this.bookings)
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Pending');
       this.bookings.forEach((booking: any): void => {
 
@@ -89,7 +88,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   viewPet(ownerId: string): void {
-    this.router.navigate(['/pet/details', ownerId])
+    this.router.navigate(['/pet/preview'], { queryParams: { ownerId: ownerId } });
   }
 
   approve(bookingId: string, ownerId: string, serviceName: string): void {
@@ -102,6 +101,7 @@ export class NotificationsComponent implements OnInit {
     this.bookingService.approve(bookingId, data).subscribe( (): void => {
       this.toastr.success('Успешно потвърдихте поръчката!');
       this.activeTab = 'Approved';
+      window.location.reload();
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Approved');
     })
   }
@@ -156,6 +156,7 @@ export class NotificationsComponent implements OnInit {
     this.bookingService.start(bookingId).subscribe(() => {
       this.toastr.success("Поръчката е в процес на изпълнение!");
       this.activeTab = 'Started';
+      window.location.reload();
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Started');
     })
   }
@@ -164,6 +165,7 @@ export class NotificationsComponent implements OnInit {
     this.bookingService.complete(bookingId).subscribe(() => {
       this.toastr.success("Поръчката е завършена!");
       this.activeTab = 'Completed';
+      window.location.reload();
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Completed');
     })
   }
