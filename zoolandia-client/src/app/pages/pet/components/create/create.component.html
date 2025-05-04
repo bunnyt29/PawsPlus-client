@@ -30,8 +30,11 @@
                      formControlName="name"
                      class="input-for-pet-name"
                      placeholder="Име"/>
-            </div>
 
+              <div class="alert" *ngIf="name?.touched && name?.errors?.['required']">
+                * Името е задължително.
+              </div>
+            </div>
             <div class="age-and-gender-fields">
               <div class="age-fields-holder" *ngIf="dynamicFields.includes('age')">
                 <label for="age-years" class="pet-label">Възраст</label>
@@ -41,13 +44,20 @@
                          placeholder="Години"
                          id="age-years"
                          formControlName="years"
-                         min="0">
+                         min="0"
+                         [ngClass]="{'invalid-input': ageYears?.touched && ageYears?.invalid}">
                   <input type="number"
                          class="secondary-input age"
                          placeholder="Месеци"
                          id="age-months"
                          formControlName="months"
-                         min="0" max="11">
+                         min="0"
+                         max="11"
+                         [ngClass]="{'invalid-input': ageMonths?.touched && ageMonths?.invalid}"
+                  >
+                </div>
+                <div class="alert" *ngIf="ageYears?.touched && ageYears?.errors?.['required'] || ageMonths?.touched && ageMonths?.errors?.['required']">
+                  * задължително
                 </div>
               </div>
               <div class="gender-fields">
@@ -123,6 +133,9 @@
                       placeholder="Избери порода...">
                     </p-autoComplete>
                   </span>
+                <div class="alert" *ngIf="breed?.touched && breed?.errors?.['required']">
+                  * Изборът на поне една порода е задължителен.
+                </div>
             </div>
           </div>
         </div>

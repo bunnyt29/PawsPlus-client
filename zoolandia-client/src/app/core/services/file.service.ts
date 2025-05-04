@@ -17,6 +17,9 @@ export class FileService {
     const formData = new FormData();
     formData.append('image', file);
 
-    return this.http.post<any>(this.filePath + '/' + 'uploadImage', formData);
+    return this.http.post<any>(this.filePath + '/' + 'uploadImage', formData,
+    {
+      headers: { 'X-Skip-Loader': 'true' }
+    });
   }
 }

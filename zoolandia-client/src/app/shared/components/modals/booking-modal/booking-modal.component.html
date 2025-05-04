@@ -55,12 +55,15 @@
               <div class="date-calendar">
                 <img src="/images/desktop/home/calendar.svg" alt="Календар">
                 <p-calendar
+                  (ngModelChange)="onStartDateChange($event);"
                   [dateFormat]="'yy-mm-dd'"
                   formControlName="startDay"
                   dataType="string"
                   inputId="startDate"
                   class="custom-calendar"
                   placeholder="Начална дата"
+                  [minDate]="today"
+                  [maxDate]="maxDateForStartDate"
                 ></p-calendar>
               </div>
             </div>
@@ -69,11 +72,13 @@
               <div class="date-calendar">
                 <img src="/images/desktop/home/calendar.svg" alt="Календар">
                 <p-calendar
+                  (ngModelChange)="onEndDateChange($event);"
                   [dateFormat]="'yy-mm-dd'"
                   formControlName="endDay"
                   dataType="string"
                   inputId="endDate"
                   placeholder="Крайна дата"
+                  [minDate]="minDateForEndDate"
                 ></p-calendar>
               </div>
             </div>

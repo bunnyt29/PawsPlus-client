@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -38,7 +38,8 @@ export class NotificationsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -101,8 +102,8 @@ export class NotificationsComponent implements OnInit {
     this.bookingService.approve(bookingId, data).subscribe( (): void => {
       this.toastr.success('Успешно потвърдихте поръчката!');
       this.activeTab = 'Approved';
-      window.location.reload();
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Approved');
+      this.cdr.detectChanges();
     })
   }
 
@@ -156,8 +157,8 @@ export class NotificationsComponent implements OnInit {
     this.bookingService.start(bookingId).subscribe(() => {
       this.toastr.success("Поръчката е в процес на изпълнение!");
       this.activeTab = 'Started';
-      window.location.reload();
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Started');
+      this.cdr.detectChanges();
     })
   }
 
@@ -165,8 +166,8 @@ export class NotificationsComponent implements OnInit {
     this.bookingService.complete(bookingId).subscribe(() => {
       this.toastr.success("Поръчката е завършена!");
       this.activeTab = 'Completed';
-      window.location.reload();
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Completed');
+      this.cdr.detectChanges();
     })
   }
 }

@@ -13,6 +13,7 @@ import {SliderModule} from 'primeng/slider';
 import {SharedModule} from '../../../../shared/shared.module';
 
 import {environment} from '../../../../../environments/environment';
+import {RatingModule} from 'primeng/rating';
 
 @Component({
   selector: 'app-search',
@@ -25,7 +26,8 @@ import {environment} from '../../../../../environments/environment';
     SliderModule,
     FormsModule,
     GoogleMapsModule,
-    GoogleAutocompleteComponent
+    GoogleAutocompleteComponent,
+    RatingModule
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
@@ -70,6 +72,7 @@ export class SearchComponent implements OnInit {
     latitude: number;
     longitude: number;
     formattedAddress: string | undefined;
+    orderByParameter: string | null;
   } = {
     petType: null,
     serviceType: null,
@@ -79,7 +82,8 @@ export class SearchComponent implements OnInit {
     maxPrice: null,
     latitude: 0,
     longitude: 0,
-    formattedAddress: undefined
+    formattedAddress: undefined,
+    orderByParameter: "rating"
   };
 
   constructor(

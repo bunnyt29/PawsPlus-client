@@ -7,13 +7,6 @@
       <span>Върни се обратно</span>
     </div>
 
-    <!-- Logo -->
-    <picture routerLink="/search" (click)="sidebarOpen = false">
-      <source media="(max-width:1100px)" srcset="/images/desktop/logo.svg">
-      <img src="/images/desktop/logo.svg" alt="logo">
-    </picture>
-
-    <!-- Navigation links -->
     <ul>
       <li>
         <a routerLink="my-profile" routerLinkActive="active" (click)="sidebarOpen = false">Моят профил</a>
@@ -24,7 +17,7 @@
       <li *ngIf="profile?.roles?.includes('Sitter')">
         <a routerLink="my-post" routerLinkActive="active" (click)="sidebarOpen = false">Моята обява</a>
       </li>
-      <li>
+      <li *ngIf="profile?.postStatus == 4">
         <a routerLink="notifications" routerLinkActive="active" (click)="sidebarOpen = false">Поръчки</a>
       </li>
     </ul>

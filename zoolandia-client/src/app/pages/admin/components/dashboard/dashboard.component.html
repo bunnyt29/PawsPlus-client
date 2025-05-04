@@ -25,7 +25,11 @@
   </div>
 </div>
 <div class="dashboard">
-  <table>
+  <div *ngIf="pendingPosts.length === 0" class="no-bookings-message">
+    <img src="/images/shared/no-profiles-for-approve.png" alt="Липсващи">
+    <span>Няма заявки за одобрение</span>
+  </div>
+  <table *ngIf="pendingPosts.length > 0">
     <thead>
       <tr>
         <th scope="col">Автор</th>

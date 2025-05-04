@@ -9,9 +9,18 @@ import {LoaderService} from '../services/loader.service';
 export class LoaderInterceptor implements HttpInterceptor {
   constructor(private loaderService: LoaderService) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.loaderService.show(); // Show loader on request start
+    const skipLoader = req.headers.get('X-Skip-Loader') === 'true';
+
+    if (!skipLoader) {
+      this.loaderService.show();
+    }
+
     return next.handle(req).pipe(
-      finalize(() => this.loaderService.hide()) // Hide loader on request completion
+      finalize(() => {
+        if (!skipLoader) {
+          this.loaderService.hide();
+        }
+      })
     );
   }
 }

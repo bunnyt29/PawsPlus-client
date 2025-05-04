@@ -122,8 +122,46 @@
       </google-map>
 
     </div>
+    <div class="sort-by" *ngIf="searchResults.length != 0">
+      <div class="sort-dropdown">
+        <label for="sortSelect">Сортирай по:</label>
+        <select id="sortSelect" [(ngModel)]="searchParams.orderByParameter" (change)="onSearch()">
+          <option value="rating">Рейтинг</option>
+          <option value="distance">Дистанция</option>
+          <option value="price">Цена</option>
+        </select>
+      </div>
+    </div>
     <div class="search-results-holder">
       <div *ngFor="let searchResult of searchResults; let i = index;" class="search-result">
+        <div class="search-result-rating">
+          <p-rating
+            [(ngModel)]="searchResult.rating"
+            [readonly]="true"
+            [cancel]="false"
+            stars="5"
+          >
+            <ng-template pTemplate="onicon">
+              <img
+                src="/images/shared/rating-active.png"
+                width="20px"
+                height="20px"
+                alt="Paw Active"
+              />
+            </ng-template>
+
+            <ng-template pTemplate="officon">
+              <img
+                src="/images/shared/rating-inactive.png"
+                style="filter: grayscale(100%) opacity(0.4);"
+                width="20px"
+                height="20px"
+                alt="Paw Inactive"
+              />
+            </ng-template>
+          </p-rating>
+          <span>{{ searchResult.rating | number:'1.1-2' }} / 5.0</span>
+        </div>
         <div class="search-result-info">
           <div class="image-holder">
             <img [src]="searchResult.photoUrl" alt="Снимка на {{searchResult.firstName}}">

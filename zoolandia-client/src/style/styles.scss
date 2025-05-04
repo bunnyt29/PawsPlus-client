@@ -1624,7 +1624,7 @@ p-calendar .p-datepicker-calendar td {
   padding: 0.6rem 0.9rem;
   font-size: typography.$font-size-xs;
   font-weight: typography.$medium;
-  color: colors.$danger-darker-color;
+  color: colors.$danger-darker-color !important;
   line-height: 1.4;
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   animation: fadeInAlert 0.25s ease-in-out;
@@ -1641,3 +1641,17 @@ p-calendar .p-datepicker-calendar td {
   }
 }
 
+.no-bookings-message {
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  align-items: center;
+
+  span {
+    font-size: typography.$font-size-lg;
+    font-weight: typography.$bold;
+  }
+}

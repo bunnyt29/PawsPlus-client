@@ -45,6 +45,9 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
   filteredMeetingPlaces: Array<{ id: number; name: string }> = [];
   availableDates!: Date[];
   showAvailability: boolean = false;
+  today!: Date;
+  maxDateForStartDate!: Date;
+  minDateForEndDate!: Date;
 
   services = [
     { id: 1, name: 'DogWalking', imagePath: '/images/desktop/post/service-walking.svg' },
@@ -66,6 +69,8 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
     private router: Router,
     private cd: ChangeDetectorRef
   ) {
+    this.today = new Date();
+    this.minDateForEndDate = new Date();
     const now = new Date();
     const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000); // add 1 hour
 
@@ -153,6 +158,23 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
     this.cd.markForCheck();
   }
 
+  onStartDateChange(event: any): void {
+    if (this.bookingForm.value.startDay) {
+      this.minDateForEndDate = new Date(this.bookingForm.value.startDay);
+    } else {
+      this.minDateForEndDate = this.today;
+    }
+  }
+
+  onEndDateChange(event: any): void {
+    if (this.bookingForm.value.endDay) {
+      this.maxDateForStartDate = new Date(this.bookingForm.value.endDay);
+    } else {
+      this.maxDateForStartDate = this.today;
+    }
+  }
+
+
 
   formatTime(controlName: string) {
     let selectedTime: Date = this.bookingForm.get(controlName)?.value;
@@ -180,19 +202,31 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
       sitterId: this.config.data.profileId
     })
 
-    const formatDateOnly = (date: Date): string => {
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const day = date.getDate().toString().padStart(2, '0');
-      return `${year}-${month}-${day}`;
+    // const formatDateOnly = (date: Date): string => {
+    //   const year = date.getFullYear();
+    //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    //   const day = date.getDate().toString().padStart(2, '0');
+    //   return `${year}-${month}-${day}`;
+    // };
+    //
+    // const formValue = { ...this.bookingForm.value };
+    //
+    // formValue.startDay = formatDateOnly(formValue.startDay);
+    // formValue.endDay = formatDateOnly(formValue.endDay);
+
+    const parseToDateOnly = (value: any): string | null => {
+      if (!value) return null;
+      const date = new Date(value);
+      return isNaN(date.getTime()) ? null : date.toISOString().split('T')[0];
     };
 
-    const formValue = { ...this.bookingForm.value };
+    const formData = {
+      ...this.bookingForm.value,
+      startDay: parseToDateOnly(this.bookingForm.value.startDate || this.today),
+      endDay: parseToDateOnly(this.bookingForm.value.endDate || this.today)
+    };
 
-    formValue.startDay = formatDateOnly(formValue.startDay);
-    formValue.endDay = formatDateOnly(formValue.endDay);
-
-    this.bookingService.create(formValue).subscribe( () => {
+    this.bookingService.create(formData).subscribe( () => {
       this.toastr.success("Успешно изпрати своята заявка! Очаквай потвърждение скоро!");
       this.closeModal.emit();
       this.router.navigate(['/profile/my-profile-details/notifications'])

@@ -14,6 +14,7 @@ import {PetType} from '../../../../shared/models/PetType';
 import {Gender} from '../../../../shared/models/Gender';
 import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
 import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
+import {EMPTY} from 'rxjs';
 
 
 @Component({
@@ -60,29 +61,29 @@ export class CreateComponent implements OnInit {
     this.petForm = this.fb.group({
       profileId: ['', Validators.required],
       name: ['', Validators.required],
-      photoUrl: [null],
+      photoUrl: [this.defaultImage],
       petType: [1, Validators.required],
       age: this.fb.group({
-        years: [0, Validators.required],
-        months: [0, Validators.required]
+        years: [null, Validators.required],
+        months: [null, Validators.required]
       }),
       gender: [Gender.Male, Validators.required],
       breeds: [null, Validators.required],
-      weight: [null, Validators.required],
+      weight: [null],
       personality: this.fb.group({
         temperament: [''],
         activityLevel: [''],
         isTrained: [null],
         hasFears: [null],
-        fearsDescription: ['Липсват']
+        fearsDescription: ['']
       }),
       healthStatus: this.fb.group({
         isVaccinated: [null],
         isCastrated: [null],
         takesMedications: [null],
-        hasEatingSchedule: ['Няма'],
-        otherDietaryNeeds: ['Няма'],
-        healthProblems: ['Няма']
+        hasEatingSchedule: [''],
+        otherDietaryNeeds: [''],
+        healthProblems: ['']
       })
     });
   }
@@ -91,6 +92,26 @@ export class CreateComponent implements OnInit {
     this.updateFormFields();
     this.setupAgeAdjuster();
     this.getBreeds();
+  }
+
+  get name() {
+    return this.petForm.get('name');
+  }
+
+  get ageYears() {
+    return this.petForm.get('age.years');
+  }
+
+  get ageMonths() {
+    return this.petForm.get('age.months');
+  }
+
+  get breed() {
+    return this.petForm.get('breeds');
+  }
+
+  get weight() {
+    return this.petForm.get('weight');
   }
 
   previousPet(): void {
@@ -177,15 +198,23 @@ export class CreateComponent implements OnInit {
   }
 
   onSubmit(): void {
+
     this.profileService.getMine().subscribe({
       next: (res) => {
         this.profileId = res.id;
 
-        const formData = {
-          ...this.petForm.value,
+        this.petForm.patchValue({
           profileId: this.profileId,
-          petType: PetType[this.selectedPet.charAt(0).toUpperCase() + this.selectedPet.slice(1).toLowerCase() as keyof typeof PetType],
-        };
+          petType: PetType[this.selectedPet.charAt(0).toUpperCase() + this.selectedPet.slice(1).toLowerCase() as keyof typeof PetType]
+        });
+
+        if (this.petForm.invalid) {
+          this.petForm.markAllAsTouched();
+          this.toastr.error('Моля, попълнете валидни данни.');
+          return;
+        }
+
+        const formData = this.petForm.value;
 
         this.petService.create(formData).subscribe({
           next: (response): void => {

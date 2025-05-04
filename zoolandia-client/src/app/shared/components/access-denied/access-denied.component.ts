@@ -12,10 +12,4 @@ import {RouterLink} from '@angular/router';
   styleUrl: './access-denied.component.scss'
 })
 export class AccessDeniedComponent {
-  constructor(private location: Location)
-  {}
-
-  goBack() {
-    this.location.back();
-  }
 }
