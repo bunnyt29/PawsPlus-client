@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class NotificationService {
-  private notificationsPath = environment.apiUrl + "notifications"
+  private notificationsPath = environment.apiUrl + "/notifications"
 
   constructor(private http: HttpClient) {}
 

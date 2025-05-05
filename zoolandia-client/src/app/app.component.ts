@@ -6,6 +6,8 @@ import {environment} from '../environments/environment';
 import {HomeComponent} from './pages/home/components/home/home.component';
 import {LoaderComponent} from './shared/components/loader/loader.component';
 import {NotificationService} from './shared/services/notification.service';
+import { App as CapacitorApp } from '@capacitor/app';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -21,13 +23,22 @@ export class AppComponent implements OnInit{
 
 
   private hiddenRoutes: string[] = ['/profile/edit', '/post/multi-step-form', '/pet/create', '/access-denied', '/not-found'];
-  private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/admin', '/auth', '/profile/preview'];
+  private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/admin', '/auth/role-selection', '/profile/preview'];
 
   constructor(
     private router: Router,
     private renderer: Renderer2,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private location: Location
   ) {
+    CapacitorApp.addListener('backButton', () => {
+      if (this.router.url !== '/home') {
+        this.location.back();
+      } else {
+        CapacitorApp.exitApp();
+      }
+    });
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.hideNavbar =

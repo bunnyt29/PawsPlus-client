@@ -30,6 +30,9 @@
                 />
               {{ service.name | translateService}}
             </label>
+            <div class="alert" *ngIf="serviceType?.touched && serviceType?.errors?.['required']">
+              * Моля, изберете услуга.
+            </div>
           </div>
         </div>
         <div class="filter">
@@ -66,6 +69,9 @@
                   [maxDate]="maxDateForStartDate"
                 ></p-calendar>
               </div>
+              <div class="alert" *ngIf="startDay?.touched && startDay?.errors?.['required']">
+                * Началната дата е задължителна.
+              </div>
             </div>
             <div class="date">
               <span>Крайна дата</span>
@@ -80,6 +86,9 @@
                   placeholder="Крайна дата"
                   [minDate]="minDateForEndDate"
                 ></p-calendar>
+              </div>
+              <div class="alert" *ngIf="endDay?.touched && endDay?.errors?.['required']">
+                * Крайната дата е задължителна.
               </div>
             </div>
           </div>
@@ -98,6 +107,9 @@
                   lang="en-GB"
                 />
               </div>
+              <div class="alert" *ngIf="startTime?.touched && startTime?.errors?.['required']">
+                * Началният час е задължителен.
+              </div>
 <!--              <p-calendar-->
 <!--                formControlName="startTime"-->
 <!--                [timeOnly]="true"-->
@@ -115,6 +127,9 @@
                   class="native-time-input"
                   formControlName="endTime"
                 />
+              </div>
+              <div class="alert" *ngIf="endTime?.touched && endTime?.errors?.['required']">
+                * Крайният час е задължителен.
               </div>
 <!--              <p-calendar-->
 <!--                formControlName="endTime"-->
@@ -156,11 +171,17 @@
               {{ meetingPlace.name }}
             </label>
           </div>
+          <div class="alert" *ngIf="meetingPlaceType?.touched && meetingPlaceType?.errors?.['required']">
+            * Моля, изберете начин за взимане на животното.
+          </div>
         </div>
 
         <div class="filter" [ngStyle]="{'display': bookingForm.value.meetingPlaceType === 3 ? 'flex' : 'none'}">
           <span class="filter-heading">Избери място на среща</span>
           <google-autocomplete (placeSelected)="handlePlaceSelected($event)"></google-autocomplete>
+          <div class="alert" *ngIf="meetingPlaceId?.touched && meetingPlaceId?.errors?.['required'] && bookingForm.value.meetingPlaceType === 3">
+            * Моля, изберете място на среща.
+          </div>
         </div>
         <div class="filter">
           <span class="filter-heading">Допълнително съобщение</span>
@@ -172,7 +193,6 @@
       <button
         type="button"
         class="btn secondary-button"
-        data-dismiss="modal"
         (click)="submitBookingForm()"
       >
         Резервирай

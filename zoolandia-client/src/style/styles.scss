@@ -27,7 +27,6 @@ body {
 .auth-background {
   background-image: url("/images/desktop/auth/auth-background.svg");
   background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
 
   @include for-phone-only {
@@ -38,7 +37,7 @@ body {
 }
 
 .auth-layout {
-  height: 100vh;
+  height: calc(100vh - 111px);
   display: flex;
   align-items: center;
 
@@ -541,9 +540,10 @@ textarea {
 
 
     .my-profile-head {
+      gap: 10px;
 
       .profile-image {
-        width: 40%;
+
       }
 
       .my-profile-names {
@@ -1610,6 +1610,10 @@ p-calendar .p-datepicker-calendar td {
         line-height: 1.5;
       }
     }
+  }
+
+  @include for-phone-only {
+    grid-template-columns: 1fr;
   }
 }
 

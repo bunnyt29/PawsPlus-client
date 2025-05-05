@@ -92,6 +92,30 @@ export class EditComponent implements OnInit {
     this.getBreeds();
   }
 
+  get petType() {
+    return this.petForm.get('petType');
+  }
+
+  get name() {
+    return this.petForm.get('name');
+  }
+
+  get ageYears() {
+    return this.petForm.get('age.years');
+  }
+
+  get ageMonths() {
+    return this.petForm.get('age.months');
+  }
+
+  get breed() {
+    return this.petForm.get('breeds');
+  }
+
+  get weight() {
+    return this.petForm.get('weight');
+  }
+
   previousPet(): void {
     this.currentIndex = (this.currentIndex - 1 + this.pets.length) % this.pets.length;
     this.selectedPet = this.pets[this.currentIndex];
@@ -222,6 +246,12 @@ export class EditComponent implements OnInit {
   }
 
   editPet(): void {
+    if (this.petForm.invalid) {
+      this.petForm.markAllAsTouched();
+      this.toastr.error('Моля, попълнете валидни данни.');
+      return;
+    }
+
     const formData = {
       ...this.petForm.value,
       petType: PetType[this.selectedPet.charAt(0).toUpperCase() + this.selectedPet.slice(1).toLowerCase() as keyof typeof PetType],
@@ -229,7 +259,7 @@ export class EditComponent implements OnInit {
 
     this.petService.edit(this.petId, formData).subscribe(res => {
       this.toastr.success("Успешно редактира домашния си любимец!");
-      this.router.navigate(['/profile/my-profile-details/my-pets'])
-    })
+      this.router.navigate(['/profile/my-profile-details/my-pets']);
+    });
   }
 }

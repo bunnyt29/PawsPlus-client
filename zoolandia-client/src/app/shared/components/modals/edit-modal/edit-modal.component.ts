@@ -48,7 +48,7 @@ export class EditModalComponent implements OnInit {
     this.serviceForm = this.fb.group({
       id: ['', Validators.required],
       price: [0, Validators.required],
-      availableDates: [[], [Validators.required, Validators.minLength(1)]],
+      availableDates: [[]],
       meetingPlaces: this.fb.array([], Validators.required),
       serviceType: [null, Validators.required],
       postId: ['', Validators.required]
@@ -58,6 +58,14 @@ export class EditModalComponent implements OnInit {
 
   ngOnInit() {
     this.getService();
+  }
+
+  get price() {
+    return this.serviceForm.get('price');
+  }
+
+  get meetingPlaces() {
+    return this.serviceForm.get('meetingPlaces');
   }
 
   getService() {
@@ -94,7 +102,7 @@ export class EditModalComponent implements OnInit {
 
     formData.availableDates = formData.availableDates.map((date: Date | string) => {
       if (date instanceof Date) {
-        return date.toISOString().split('T')[0]; // 'yyyy-MM-dd'
+        return date.toISOString().split('T')[0];
       }
       return date;
     });

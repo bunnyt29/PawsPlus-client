@@ -72,14 +72,21 @@ export class AddModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.serviceForm = this.fb.group({
-      id: ['', Validators.required],
-      price: [0, Validators.required],
-      availableDates: [[], [Validators.required, Validators.minLength(1)]],
+      price: [null, Validators.required],
+      availableDates: [[]],
       meetingPlaces: this.fb.array([], Validators.required),
       serviceType: [null, Validators.required],
       postId: ['', Validators.required]
     });
     this.getPost();
+  }
+
+  get price() {
+    return this.serviceForm.get('price');
+  }
+
+  get meetingPlaces() {
+    return this.serviceForm.get('meetingPlaces');
   }
 
   getPost(): void {
@@ -136,12 +143,18 @@ export class AddModalComponent implements OnInit {
     this.serviceForm.patchValue({
       'postId': post.id
     });
-    this.postServiceService.create(this.serviceForm.value).subscribe( () => {
-      this.toastr.success("Успешно добави услуга!");
-      this.serviceForm.reset();
-    })
-    this.modalService.close();
-    window.location.reload();
+
+    if (this.serviceForm.invalid){
+      this.serviceForm.markAllAsTouched();
+      return;
+    } else {
+      this.postServiceService.create(this.serviceForm.value).subscribe( () => {
+        this.toastr.success("Успешно добави услуга!");
+        this.serviceForm.reset();
+      })
+      this.modalService.close();
+      window.location.reload();
+    }
   }
 
   editPost(): void {

@@ -61,6 +61,7 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
     { id: 2, name: 'Оставяне в дома на гледача' },
     { id: 3, name: 'Взимане от трето място' },
   ];
+  private isSubmitting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -86,7 +87,7 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
       endDay: [new Date(), Validators.required],
       endTime: [formatToHHMM(oneHourLater), Validators.required],
       meetingPlaceType: [null, Validators.required],
-      meetingPlaceId: ['', Validators.required],
+      meetingPlaceId: [''],
       additionalDescription: [''],
       serviceType: [1, Validators.required],
       sitterId: ['', Validators.required]
@@ -99,10 +100,20 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
       .pipe(startWith(null))
       .subscribe(() => {
         setTimeout(() => this.getFilteredMeetingPlaces());
+      });
+
+    this.bookingForm.get('meetingPlaceType')!.valueChanges.subscribe(value => {
+      const meetingPlaceIdControl = this.bookingForm.get('meetingPlaceId');
+
+      if (value === 3) {
+        meetingPlaceIdControl?.setValidators([Validators.required]);
+      } else {
+        meetingPlaceIdControl?.clearValidators();
+      }
+
+      meetingPlaceIdControl?.updateValueAndValidity();
     });
   }
-
-
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.getFilteredServices();
@@ -117,6 +128,34 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
       }
       this.cd.markForCheck();
     });
+  }
+
+  get startDay() {
+    return this.bookingForm.get('startDay');
+  }
+
+  get endDay() {
+    return this.bookingForm.get('endDay');
+  }
+
+  get startTime() {
+    return this.bookingForm.get('startTime');
+  }
+
+  get endTime() {
+    return this.bookingForm.get('endTime');
+  }
+
+  get meetingPlaceType() {
+    return this.bookingForm.get('meetingPlaceType');
+  }
+
+  get meetingPlaceId() {
+    return this.bookingForm.get('meetingPlaceId');
+  }
+
+  get serviceType() {
+    return this.bookingForm.get('serviceType');
   }
 
   getFilteredServices(): void {
@@ -174,8 +213,6 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
     }
   }
 
-
-
   formatTime(controlName: string) {
     let selectedTime: Date = this.bookingForm.get(controlName)?.value;
     if (selectedTime) {
@@ -198,21 +235,16 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
   }
 
   submitBookingForm() {
+    this.isSubmitting = true;
     this.bookingForm.patchValue({
       sitterId: this.config.data.profileId
-    })
+    });
 
-    // const formatDateOnly = (date: Date): string => {
-    //   const year = date.getFullYear();
-    //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    //   const day = date.getDate().toString().padStart(2, '0');
-    //   return `${year}-${month}-${day}`;
-    // };
-    //
-    // const formValue = { ...this.bookingForm.value };
-    //
-    // formValue.startDay = formatDateOnly(formValue.startDay);
-    // formValue.endDay = formatDateOnly(formValue.endDay);
+    if (this.bookingForm.invalid) {
+      this.bookingForm.markAllAsTouched();
+      this.toastr.error('Моля, попълнете всички задължителни полета.');
+      return;
+    }
 
     const parseToDateOnly = (value: any): string | null => {
       if (!value) return null;
@@ -222,15 +254,16 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
 
     const formData = {
       ...this.bookingForm.value,
-      startDay: parseToDateOnly(this.bookingForm.value.startDate || this.today),
-      endDay: parseToDateOnly(this.bookingForm.value.endDate || this.today)
+      startDay: parseToDateOnly(this.bookingForm.value.startDay || this.today),
+      endDay: parseToDateOnly(this.bookingForm.value.endDay || this.today)
     };
 
-    this.bookingService.create(formData).subscribe( () => {
+    this.bookingService.create(formData).subscribe(() => {
+      console.log("called")
       this.toastr.success("Успешно изпрати своята заявка! Очаквай потвърждение скоро!");
       this.closeModal.emit();
-      this.router.navigate(['/profile/my-profile-details/notifications'])
-    })
+      this.router.navigate(['/profile/my-profile-details/notifications']);
+    });
   }
 
   toggleAvailableDates() {

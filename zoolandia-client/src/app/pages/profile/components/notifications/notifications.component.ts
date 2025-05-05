@@ -11,6 +11,7 @@ import {WrapperModalComponent} from '../../../../shared/components/modals/wrappe
 import {AnimalTypePipe} from "../../../../shared/pipes/animal-type.pipe";
 import {TranslateServicePipe} from "../../../../shared/pipes/translate-service.pipe";
 import {Review} from '../../../../shared/models/Review';
+import {NotificationService} from '../../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-notifications',
@@ -35,6 +36,7 @@ export class NotificationsComponent implements OnInit {
   constructor(
     private bookingService: BookingService,
     private googleMapsService: GoogleMapsService,
+    private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -99,7 +101,15 @@ export class NotificationsComponent implements OnInit {
       ownerId: ownerId,
       serviceName: serviceName
     }
+
+    const bookingData = {
+      profileId: ownerId,
+      title: "Поръчката ви е одобрена",
+      body: `Вашата заявка за ${serviceName} бе одобрена!`
+    }
+
     this.bookingService.approve(bookingId, data).subscribe( (): void => {
+      this.notificationService.create(bookingData).subscribe( () => {})
       this.toastr.success('Успешно потвърдихте поръчката!');
       this.activeTab = 'Approved';
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Approved');
@@ -153,8 +163,15 @@ export class NotificationsComponent implements OnInit {
       });
     }
 
-  startBooking(bookingId: string) {
+  startBooking(bookingId: string, ownerId: string) {
+    const bookingData = {
+      profileId: ownerId,
+      title: "Твоята поръчка е в процес на изпълнение!",
+      body: `Процесът започна – домашният ти любимец вече е в сигурни ръце и всичко върви по план!`
+    }
+
     this.bookingService.start(bookingId).subscribe(() => {
+      this.notificationService.create(bookingData).subscribe( () => {})
       this.toastr.success("Поръчката е в процес на изпълнение!");
       this.activeTab = 'Started';
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Started');
@@ -162,8 +179,15 @@ export class NotificationsComponent implements OnInit {
     })
   }
 
-  completeBooking(bookingId: string) {
+  completeBooking(bookingId: string, ownerId: string) {
+    const bookingData = {
+      profileId: ownerId,
+      title: "Вашата поръчка бе завършена!",
+      body: `Очакваме ви отново скоро! Не забравяйте да оставите обратна връзка, тя е важна за нас!`
+    }
+
     this.bookingService.complete(bookingId).subscribe(() => {
+      this.notificationService.create(bookingData).subscribe( () => {})
       this.toastr.success("Поръчката е завършена!");
       this.activeTab = 'Completed';
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Completed');

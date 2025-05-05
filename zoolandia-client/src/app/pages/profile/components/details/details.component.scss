@@ -1,5 +1,6 @@
 @use '../../../../../style/abstracts/typography';
 @use '../../../../../style/abstracts/colors';
+@use '../../../../../style/breakpoints/breakpoints' as *;
 
 
 
@@ -339,5 +340,9 @@
       display: flex;
       gap: 5px;
     }
+  }
+
+  @include for-phone-only {
+    grid-column: 1;
   }
 }

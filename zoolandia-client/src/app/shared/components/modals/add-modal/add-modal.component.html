@@ -82,6 +82,9 @@
                    formControlName="price"/>
             <span>лв.</span>
           </div>
+          <div class="alert" *ngIf="price?.touched && price?.errors?.['required']">
+            * Цената е задължително поле.
+          </div>
         </div>
         <div class="modal-body-item choose-meeting-place">
           <div class="modal-body-item-title">
@@ -96,6 +99,9 @@
                 (change)="onMeetingPlaceChange($event, option.id)">
               {{ option.name }}
             </label>
+            <div class="alert" *ngIf="meetingPlaces?.touched && meetingPlaces?.errors?.['required']">
+              * Място за вземане на животното е задължително поле.
+            </div>
           </div>
         </div>
       </div>

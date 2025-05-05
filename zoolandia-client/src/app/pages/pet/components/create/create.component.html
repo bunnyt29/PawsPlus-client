@@ -30,7 +30,6 @@
                      formControlName="name"
                      class="input-for-pet-name"
                      placeholder="Име"/>
-
               <div class="alert" *ngIf="name?.touched && name?.errors?.['required']">
                 * Името е задължително.
               </div>
@@ -53,8 +52,7 @@
                          formControlName="months"
                          min="0"
                          max="11"
-                         [ngClass]="{'invalid-input': ageMonths?.touched && ageMonths?.invalid}"
-                  >
+                         [ngClass]="{'invalid-input': ageMonths?.touched && ageMonths?.invalid}">
                 </div>
                 <div class="alert" *ngIf="ageYears?.touched && ageYears?.errors?.['required'] || ageMonths?.touched && ageMonths?.errors?.['required']">
                   * задължително

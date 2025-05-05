@@ -9,6 +9,7 @@ import {AuthService} from '../../../auth/services/auth.service';
 import {WrapperModalComponent} from '../../../../shared/components/modals/wrapper-modal/wrapper-modal.component';
 import {TranslateServicePipe} from '../../../../shared/pipes/translate-service.pipe';
 import {AnimalTypePipe} from '../../../../shared/pipes/animal-type.pipe';
+import {NotificationService} from '../../../../shared/services/notification.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -30,6 +31,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private postService: PostService,
     private authService: AuthService,
+    private notificationService: NotificationService,
     private router: Router,
     private toastr: ToastrService,
     private modalService: ModalService,
@@ -76,10 +78,18 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['profile/preview'], { queryParams: { id: profileId }});
   }
 
-  approve(postId: any): void {
+  approve(postId: any, profileId: string): void {
+    const data = {
+      profileId: profileId,
+      title: "Профилът ти е одобрен!",
+      body: `Всичко изглежда чудесно – профилът ти е активен и можеш да започнеш още днес! `
+    }
+
     this.postService.approve(postId).subscribe(() => {
+      this.notificationService.create(data).subscribe(() => {})
       this.toastr.success('Активирахте профила!');
       location.reload();
+      this.cd.detectChanges();
     });
   }
 

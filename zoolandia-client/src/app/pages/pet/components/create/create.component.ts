@@ -198,7 +198,6 @@ export class CreateComponent implements OnInit {
   }
 
   onSubmit(): void {
-
     this.profileService.getMine().subscribe({
       next: (res) => {
         this.profileId = res.id;

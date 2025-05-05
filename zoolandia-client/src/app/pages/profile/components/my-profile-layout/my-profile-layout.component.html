@@ -17,7 +17,7 @@
       <li *ngIf="profile?.roles?.includes('Sitter')">
         <a routerLink="my-post" routerLinkActive="active" (click)="sidebarOpen = false">Моята обява</a>
       </li>
-      <li *ngIf="profile?.postStatus == 4">
+      <li *ngIf="profile?.postStatus == 4 || profile?.roles?.includes('Owner')">
         <a routerLink="notifications" routerLinkActive="active" (click)="sidebarOpen = false">Поръчки</a>
       </li>
     </ul>

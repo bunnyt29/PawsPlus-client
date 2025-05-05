@@ -61,7 +61,7 @@
             <button class="btn" (click)="viewPost(pendingPost.profileId)">
               <img src="/images/shared/admin/view-more.png">
             </button>
-            <button class="btn" (click)="approve(pendingPost.postId)">
+            <button class="btn" (click)="approve(pendingPost.postId, pendingPost.profileId)">
               <img src="/images/shared/admin/activate.png">
             </button>
             <button class="btn" (click)="openReasonForRejectModal(pendingPost.postId)">
