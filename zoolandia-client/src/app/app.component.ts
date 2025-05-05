@@ -22,8 +22,8 @@ export class AppComponent implements OnInit{
   @ViewChild(HomeComponent) homeComponent!: HomeComponent;
 
 
-  private hiddenRoutes: string[] = ['/profile/edit', '/post/multi-step-form', '/pet/create', '/access-denied', '/not-found'];
-  private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/admin', '/auth/role-selection', '/profile/preview'];
+  private hiddenRoutes: string[] = ['/profile/edit', '/post/multi-step-form', '/pet/create', '/access-denied', '/not-found', '/profile/preview'];
+  private hiddenRoutePrefixes: string[] = ['/profile/my-profile-details', '/admin', '/auth/role-selection'];
 
   constructor(
     private router: Router,

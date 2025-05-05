@@ -28,6 +28,12 @@ const routes: Routes = [
     data: { allowedRoles: ['Administrator'] }
   },
   {
+    path: 'preview-owner',
+    loadComponent: () =>
+      import('./components/owner-details-preview/owner-details-preview.component').then((m) => m.OwnerDetailsPreviewComponent),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'my-profile-details',
     component: MyProfileLayoutComponent,
     children: [

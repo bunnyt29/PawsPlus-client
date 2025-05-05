@@ -133,7 +133,6 @@
       }
 
       .nav-profile-image {
-
         .profile-options {
           position: absolute;
           top: 70px;
@@ -268,6 +267,13 @@
 
         &-name {
           display: none;
+        }
+
+        .nav-profile-image {
+
+          .profile-options {
+            right: 0;
+          }
         }
       }
 

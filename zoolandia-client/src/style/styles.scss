@@ -1214,6 +1214,7 @@ p-calendar .p-datepicker-calendar td {
           gap: 10px;
           font-weight: typography.$semi-bold;
           text-align: center;
+          cursor: pointer;
         }
 
         //td:first-child {
@@ -1659,3 +1660,4 @@ p-calendar .p-datepicker-calendar td {
     font-weight: typography.$bold;
   }
 }
+

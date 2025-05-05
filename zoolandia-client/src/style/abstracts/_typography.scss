@@ -53,7 +53,7 @@ h1 {
 }
 
 h2 {
-  @include responsive-font($font-size-3xl, $font-size-2xl, 2.5rem);
+  @include responsive-font($font-size-3xl, $font-size-2xl, 1.9rem);
 }
 
 h3 {

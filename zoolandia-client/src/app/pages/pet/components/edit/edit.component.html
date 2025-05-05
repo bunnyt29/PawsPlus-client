@@ -58,7 +58,7 @@
                 </div>
               </div>
               <div class="gender-fields">
-                <label class="radio-button" [class.selected]="petForm.get('gender')?.value === Gender.Male">
+                <label class="radio-button" [class.selected]="petForm.get('gender')?.value === Gender.Male" [title]="'Мъжко'">
                   <input
                     type="radio"
                     formControlName="gender"
@@ -67,7 +67,7 @@
                   />
                   <img src="/images/desktop/pet/gender-male.svg" alt="Male">
                 </label>
-                <label class="radio-button" [class.selected]="petForm.get('gender')?.value === Gender.Female">
+                <label class="radio-button" [class.selected]="petForm.get('gender')?.value === Gender.Female" [title]="'Женско'">
                   <input
                     type="radio"
                     formControlName="gender"

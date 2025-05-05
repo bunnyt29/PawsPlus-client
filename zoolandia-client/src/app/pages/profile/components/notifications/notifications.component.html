@@ -33,7 +33,7 @@
   <table *ngIf="filteredBookings.length > 0">
     <thead>
     <tr>
-      <th scope="col" *ngIf="profile?.roles?.includes('Sitter')">Автор</th>
+      <th scope="col" *ngIf="profile?.roles?.includes('Sitter')">Собственик</th>
       <th scope="col" *ngIf="profile?.roles?.includes('Owner')">Гледач</th>
       <th scope="col">Услуга</th>
       <th scope="col">Дати</th>
@@ -49,7 +49,9 @@
     <tbody>
     <tr *ngFor="let booking of filteredBookings">
       <td *ngIf="profile?.roles?.includes('Sitter')" data-label="Собственик">
-        <div class="author">
+        <div class="author"
+             (click)="viewOwnerProfile(booking.ownerId)"
+             [title]="'Разгледай профила на ' + booking.firstName + ' ' + booking.lastName">
           <img class="profile-image-small" [src]="booking.photoUrl" alt="">
           {{ booking.firstName }} {{ booking.lastName }}
         </div>
@@ -80,7 +82,7 @@
       <td *ngIf="hasMessages()" data-label="Съобщение">
         {{ booking.additionalDescription }}
       </td>
-      <td (click)="viewPet(booking.ownerId)" class="pet" data-label="Животно">
+      <td (click)="viewPet(booking.ownerId)" class="pet" data-label="Животно" [title]="'Запознай се с този домашен любимец'">
         <img *ngIf="booking.petType === 'Dog'" src="/images/shared/dog.svg" alt="Куче">
         <img *ngIf="booking.petType === 'Cat'" src="/images/shared/cat.svg" alt="Котка">
       </td>

@@ -194,4 +194,9 @@ export class NotificationsComponent implements OnInit {
       this.cdr.detectChanges();
     })
   }
+
+  viewOwnerProfile(ownerId: string) {
+    this.router.navigate(['profile/preview-owner'], { queryParams: { id: ownerId }});
+
+  }
 }

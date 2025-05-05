@@ -1,0 +1,38 @@
+<img class="profile-decoration-bottom-right" src="/images/desktop/profile/profile-bottom-right-blob.svg" alt="">
+<div class="my-profile-holder container">
+  <div class="my-profile-head">
+    <div class="profile-image">
+      <img [src]="data.photoUrl" alt="Your profile image">
+    </div>
+    <div class="my-profile-names">
+      <span>{{ data.firstName }}</span>
+      <span>{{ data.lastName }}</span>
+    </div>
+  </div>
+  <div class="my-profile-main">
+    <div class="my-profile-main-section" *ngIf="data.description">
+      <div class="my-profile-main-section-title">
+        <img src="/images/shared/additional-description.svg" alt="additional-description">
+        <h2>Допълнително описание</h2>
+      </div>
+      <p>{{ data.description }}</p>
+    </div>
+    <div class="my-profile-main-section">
+      <div class="my-profile-main-section-title">
+        <img src="/images/shared/contacts-icon.svg" alt="contacts">
+        <h2>Контакти</h2>
+      </div>
+      <div class="contacts">
+        <div class="contact">
+          <h3>Имейл адрес</h3>
+          <address>{{ data.email }}</address>
+        </div>
+        <div class="contact">
+          <h3>Телефонен номер</h3>
+          <address>{{ data.phoneNumber }}</address>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-wrapper-modal></app-wrapper-modal>
