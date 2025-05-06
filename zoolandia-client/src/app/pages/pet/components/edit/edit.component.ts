@@ -14,6 +14,7 @@ import {Pet} from '../../../../shared/models/Pet';
 import {Gender} from '../../../../shared/models/Gender';
 import {ImageUploadComponent} from '../../../../shared/components/image-upload/image-upload.component';
 import {NavigationMenuComponent} from '../../../../shared/components/navigation-menu/navigation-menu.component';
+import {HttpEvent, HttpEventType} from '@angular/common/http';
 
 @Component({
   selector: 'app-edit',
@@ -46,6 +47,9 @@ export class EditComponent implements OnInit {
     dog: 'Куче',
     cat: 'Котка'
   };
+
+  isUploading!: boolean;
+  uploadProgress!: number;
 
   constructor(
     private fb: FormBuilder,
@@ -161,14 +165,23 @@ export class EditComponent implements OnInit {
   }
 
   onFileUpload(file: File): void {
+    this.isUploading = true;
+    this.uploadProgress = 0;
+
     this.fileService.uploadImage(file).subscribe({
-      next: (res) => {
-        const photoUrl = res.imageUrl;
-        this.petForm.patchValue({ photoUrl: photoUrl });
+      next: (event: HttpEvent<any>) => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          this.uploadProgress = Math.round((event.loaded / event.total) * 100);
+        } else if (event.type === HttpEventType.Response) {
+          const photoUrl = event.body.imageUrl;
+          this.petForm.patchValue({ photoUrl: photoUrl });
+          this.isUploading = false;
+        }
       },
-      error: (err) => {
-        this.toastr.error('Изникна грешка при прикачването на файл!')
-      },
+      error: () => {
+        this.toastr.error('Грешка при качването на изображението.');
+        this.isUploading = false;
+      }
     });
   }
 

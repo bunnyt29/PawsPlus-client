@@ -24,8 +24,12 @@
               <app-image-upload [defaultImage]="defaultImage"
                                 (fileSelected)="onFileUpload($event)"
                                 [width]="'100px'"
-                                [height]="'100px'">
+                                [height]="'100px'"
+                                [isInvalid]="!!(photoUrl?.touched && photoUrl?.invalid)">
               </app-image-upload>
+              <div class="alert" *ngIf="photoUrl?.touched && photoUrl?.errors?.['required']">
+                * задължително е да прикачите снимка
+              </div>
               <input type="text"
                      formControlName="name"
                      class="input-for-pet-name"
@@ -117,6 +121,9 @@
                   50+ кг
                 </button>
               </div>
+            </div>
+            <div class="alert" *ngIf="weight?.touched && weight?.errors?.['required']">
+              * Изборът на килограми е задължителен.
             </div>
 
             <div *ngIf="dynamicFields.includes('breed')" class="breed-field-holder">

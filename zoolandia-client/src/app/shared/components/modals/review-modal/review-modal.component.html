@@ -15,12 +15,6 @@
     <div class="modal-body" [formGroup]="reviewForm">
       <p>{{ config.description }}</p>
       <p-rating formControlName="rating" stars="5">
-        <ng-template pTemplate="cancelicon">
-          <img
-            src="/images/shared/cancel.png"
-            width="25px"
-            height="25px" />
-        </ng-template>
         <ng-template pTemplate="onicon">
           <img
             src="/images/shared/rating-active.png"

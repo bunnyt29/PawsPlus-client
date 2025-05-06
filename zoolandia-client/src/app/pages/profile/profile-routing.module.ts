@@ -24,8 +24,7 @@ const routes: Routes = [
     path: 'preview',
     loadComponent: () =>
       import('./components/sitter-details-preview/sitter-details-preview.component').then((m) => m.SitterDetailsPreviewComponent),
-    canActivate: [AuthGuard],
-    data: { allowedRoles: ['Administrator'] }
+    canActivate: [AuthGuard]
   },
   {
     path: 'preview-owner',

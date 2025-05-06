@@ -1,10 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {
+  NavigationCancel,
+  NavigationEnd, NavigationError,
+  NavigationStart,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet
+} from '@angular/router';
 
 import {ProfileService} from '../../services/profile.service';
 import {AuthService} from '../../../auth/services/auth.service';
 import {Profile} from '../../../../shared/models/Profile';
 import {SharedModule} from '../../../../shared/shared.module';
+import {LoaderService} from '../../../../core/services/loader.service';
 
 @Component({
   selector: 'app-my-profile-layout',
@@ -25,11 +34,26 @@ export class MyProfileLayoutComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private authService: AuthService,
+    private loaderService: LoaderService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.fetchData();
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.loaderService.show();
+      }
+
+      if (
+        event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError
+      ) {
+        this.loaderService.hide();
+      }
+    });
   }
 
   fetchData(): void {

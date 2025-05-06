@@ -57,7 +57,9 @@
         </div>
       </td>
       <td *ngIf="profile?.roles?.includes('Owner')" data-label="Гледач">
-        <div class="author">
+        <div class="author"
+             (click)="viewSitterProfile(booking.sitterId)"
+             [title]="'Разгледай профила на ' + booking.sitterFirstName + ' ' + booking.sitterLastName">
           <img class="profile-image-small" [src]="booking.sitterPhotoUrl" alt="">
           {{ booking.sitterFirstName }} {{ booking.sitterLastName }}
         </div>

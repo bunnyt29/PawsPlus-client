@@ -91,6 +91,7 @@
               <google-autocomplete
                 [inputValue]="formattedAddress"
                 (placeSelected)="handlePlaceSelected($event)"
+                (input)="handleInputChange($event)"
                 (blur)="profileForm.get('location')?.markAsTouched()">
               </google-autocomplete>
 

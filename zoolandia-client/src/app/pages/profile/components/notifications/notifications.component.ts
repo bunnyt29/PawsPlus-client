@@ -12,6 +12,7 @@ import {AnimalTypePipe} from "../../../../shared/pipes/animal-type.pipe";
 import {TranslateServicePipe} from "../../../../shared/pipes/translate-service.pipe";
 import {Review} from '../../../../shared/models/Review';
 import {NotificationService} from '../../../../shared/services/notification.service';
+import {LoaderService} from '../../../../core/services/loader.service';
 
 @Component({
   selector: 'app-notifications',
@@ -37,6 +38,7 @@ export class NotificationsComponent implements OnInit {
     private bookingService: BookingService,
     private googleMapsService: GoogleMapsService,
     private notificationService: NotificationService,
+    private loaderService: LoaderService,
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -51,6 +53,8 @@ export class NotificationsComponent implements OnInit {
   }
 
   fetchData(): void {
+    this.loaderService.show();
+
     this.bookingService.getPending().subscribe(res => {
       this.bookings = res.map((booking: any) => ({ ...booking, meetingPlaceAddress: '' }));
       this.filteredBookings = this.bookings.filter(booking => booking.status === 'Pending');
@@ -68,6 +72,7 @@ export class NotificationsComponent implements OnInit {
           });
         }
       });
+      this.loaderService.hide();
     });
   }
 
@@ -131,7 +136,15 @@ export class NotificationsComponent implements OnInit {
         action: 'cancel',
         data: data,
         discard: () => console.log('Delete cancelled'),
-      });
+      },
+        (action) => {
+          if (action === 'cancel') {
+            this.activeTab = 'Canceled';
+            this.filteredBookings = this.bookings.filter(booking => booking.status === 'Canceled');
+          }
+          this.cdr.detectChanges();
+        }
+      );
     } else if (action === 'disapprove') {
       const data: {id: string, ownerId: string, serviceName: string} =
       {
@@ -145,7 +158,15 @@ export class NotificationsComponent implements OnInit {
         action: 'disapproveBooking',
         data: data,
         discard: () => console.log('Delete cancelled'),
-      });
+      },
+        (action) => {
+          if (action === 'disapprove') {
+            this.activeTab = 'Canceled';
+            this.filteredBookings = this.bookings.filter(booking => booking.status === 'Canceled');
+          }
+          this.cdr.detectChanges();
+        }
+      );
     }
   }
   openReviewModal(reviewerId: string, reviewedId: string): void {
@@ -174,8 +195,8 @@ export class NotificationsComponent implements OnInit {
       this.notificationService.create(bookingData).subscribe( () => {})
       this.toastr.success("Поръчката е в процес на изпълнение!");
       this.activeTab = 'Started';
-      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Started');
       this.cdr.detectChanges();
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Started');
     })
   }
 
@@ -190,13 +211,16 @@ export class NotificationsComponent implements OnInit {
       this.notificationService.create(bookingData).subscribe( () => {})
       this.toastr.success("Поръчката е завършена!");
       this.activeTab = 'Completed';
-      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Completed');
       this.cdr.detectChanges();
+      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Completed');
     })
   }
 
   viewOwnerProfile(ownerId: string) {
     this.router.navigate(['profile/preview-owner'], { queryParams: { id: ownerId }});
+  }
 
+  viewSitterProfile(sitterId: string) {
+    this.router.navigate(['profile/preview'], { queryParams: { id: sitterId }});
   }
 }

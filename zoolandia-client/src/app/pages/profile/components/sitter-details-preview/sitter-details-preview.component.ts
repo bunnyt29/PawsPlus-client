@@ -1,5 +1,7 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {Location} from '@angular/common';
 import {CalendarModule} from "primeng/calendar";
 import {GoogleMap, MapCircle} from "@angular/google-maps";
 import {CommonModule} from "@angular/common";
@@ -9,7 +11,7 @@ import {PostService} from '../../../post/services/post.service';
 import {ProfileService} from '../../services/profile.service';
 import {ModalService} from '../../../../shared/services/modal.service';
 import {WrapperModalComponent} from "../../../../shared/components/modals/wrapper-modal/wrapper-modal.component";
-import {FormsModule} from '@angular/forms';
+
 
 
 import {environment} from '../../../../../environments/environment';
@@ -59,6 +61,7 @@ export class SitterDetailsPreviewComponent implements OnInit, AfterViewChecked {
     private postService: PostService,
     private modalService: ModalService,
     private cd: ChangeDetectorRef,
+    private location: Location,
     private router: Router,
     private toastr: ToastrService
   ) {}
@@ -153,5 +156,9 @@ export class SitterDetailsPreviewComponent implements OnInit, AfterViewChecked {
       data: postId,
       discard: () => console.log('Delete cancelled'),
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

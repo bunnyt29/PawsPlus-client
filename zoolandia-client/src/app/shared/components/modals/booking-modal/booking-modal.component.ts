@@ -192,6 +192,12 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
         { meetingPlaceType: this.filteredMeetingPlaces[0].id },
         { emitEvent: false }
       );
+
+      if (this.bookingForm.value.meetingPlaceType === 3) {
+        const meetingPlaceIdControl = this.bookingForm.get('meetingPlaceId');
+        meetingPlaceIdControl?.setValidators([Validators.required]);
+        meetingPlaceIdControl?.updateValueAndValidity();
+      }
     }
 
     this.cd.markForCheck();
@@ -259,7 +265,6 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
     };
 
     this.bookingService.create(formData).subscribe(() => {
-      console.log("called")
       this.toastr.success("Успешно изпрати своята заявка! Очаквай потвърждение скоро!");
       this.closeModal.emit();
       this.router.navigate(['/profile/my-profile-details/notifications']);

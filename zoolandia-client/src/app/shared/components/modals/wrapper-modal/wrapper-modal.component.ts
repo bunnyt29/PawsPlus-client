@@ -43,4 +43,9 @@ export class WrapperModalComponent {
   closeModal(): void {
     this.modalService.close();
   }
+
+  handleActionCompleted(action: string): void {
+    this.modalService.onActionCompleted?.(action);
+    this.modalService.close();
+  }
 }

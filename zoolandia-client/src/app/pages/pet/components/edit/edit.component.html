@@ -21,10 +21,12 @@
         <div class="main-details">
           <div class="details-holder">
             <div class="common-fields">
-              <app-image-upload [defaultImage]="pet.photoUrl"
-                                (fileSelected)="onFileUpload($event)"
-                                [width]="'100px'"
-                                [height]="'100px'"></app-image-upload>
+              <app-image-upload
+                [defaultImage]="pet.photoUrl"
+                [width]="'100px'"
+                [height]="'100px'"
+                (fileSelected)="onFileUpload($event)">
+              </app-image-upload>
               <input type="text"
                      formControlName="name"
                      class="input-for-pet-name"

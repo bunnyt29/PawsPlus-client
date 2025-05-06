@@ -86,22 +86,24 @@
         <div class="filter">
           <span class="filter-text">Цена:</span>
           <div class="filter-options">
-            <span>0</span>
+            <span>{{ priceRange[0] }} лв.</span>
             <p-slider
               [(ngModel)]="priceRange"
               [range]="true"
               (onChange)="updatePriceRange($event); onSearch()"
             ></p-slider>
-            <span>200</span>
+            <span>{{ priceRange[1] }} лв.</span>
           </div>
         </div>
 
         <div class="filter">
           <span class="filter-text">Район:</span>
-          <google-autocomplete
-            [inputValue]="formattedAddress"
-            (placeSelected)="handlePlaceSelected($event);">
-          </google-autocomplete>
+            <google-autocomplete
+              [inputValue]="formattedAddress"
+              (placeSelected)="handlePlaceSelected($event);"
+              (input)="handleInputChange($event)"
+            >
+            </google-autocomplete>
         </div>
       </div>
 

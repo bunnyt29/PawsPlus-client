@@ -17,7 +17,7 @@ import {RatingModule} from 'primeng/rating';
 import {ToastrService} from 'ngx-toastr';
 import {ReviewService} from '../../../../shared/services/review.service';
 import {BookingService} from '../../../../shared/services/booking.service';
-import {Observable} from 'rxjs';
+import {LoaderService} from '../../../../core/services/loader.service';
 
 @Component({
   selector: 'app-details',
@@ -74,7 +74,8 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
     private reviewService: ReviewService,
     private bookingService: BookingService,
     private cd: ChangeDetectorRef,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private loaderService: LoaderService
   ) {
     this.reviewForm = this.fb.group({
       'rating': [''],
@@ -100,36 +101,45 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
   }
 
   fetchData() {
-    this.profileService.get(this.profileId).subscribe(res => {
-      this.data = res;
-      this.placeId = res.location?.placeId || '';
-      this.reviews = res.reviews;
+    this.loaderService.show();
 
-      if (this.data.post && this.data.post.services) {
-        this.data.post.services = this.data.post.services.map((service: any) => {
-          if (service.availableDates) {
-            service.availableDates = service.availableDates.map((dateStr: string) => new Date(dateStr));
-          }
-          service.showAvailability = false;
-          return service;
-        });
-      }
+    this.profileService.get(this.profileId).subscribe({
+      next: (res) => {
+        this.data = res;
+        this.placeId = res.location?.placeId || '';
+        this.reviews = res.reviews;
 
-      if (this.googleMap && this.googleMap.googleMap) {
-        this.initializeMap();
-      }
-    });
-    this.profileService.getMine().subscribe( res => {
-      this.mineId = res.id;
-
-      this.bookingService.haveCompletedBookings(this.profileId, this.mineId).subscribe(result => {
-        if (result) {
-          const alreadyReviewed = this.reviews.some(review => review.profileId === this.mineId);
-          this.canLeaveReview = !alreadyReviewed;
-        } else {
-          this.canLeaveReview = false;
+        if (this.data.post?.services) {
+          this.data.post.services = this.data.post.services.map((service: any) => {
+            if (service.availableDates) {
+              service.availableDates = service.availableDates.map((dateStr: string) => new Date(dateStr));
+            }
+            service.showAvailability = false;
+            return service;
+          });
         }
-      });
+
+        if (this.googleMap && this.googleMap.googleMap) {
+          this.initializeMap();
+        }
+
+        this.profileService.getMine().subscribe({
+          next: (res) => {
+            this.mineId = res.id;
+
+            this.bookingService.haveCompletedBookings(this.profileId, this.mineId).subscribe({
+              next: (result) => {
+                const alreadyReviewed = this.reviews.some(review => review.profileId === this.mineId);
+                this.canLeaveReview = result && !alreadyReviewed;
+                this.loaderService.hide();
+              },
+              error: () => this.loaderService.hide()
+            });
+          },
+          error: () => this.loaderService.hide()
+        });
+      },
+      error: () => this.loaderService.hide()
     });
   }
 

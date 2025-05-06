@@ -4,7 +4,7 @@
 
 .pet-left-decoration {
   position: absolute;
-  top: 0;
+  top: 110px;
   left: 0;
 
   @include for-phone-only {
@@ -13,7 +13,7 @@
 }
 
 .pet-create-holder {
-  padding-top: 112px;
+  padding-block: 112px 50px;
 
   h2 {
     text-align: center;

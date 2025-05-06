@@ -1,5 +1,5 @@
 <div class="my-profile-holder container" *ngIf="data">
-  <a routerLink="/admin/dashboard"><-- Обратно към администраторския панел</a>
+  <a (click)="goBack()" class="go-back"><-- Назад</a>
   <div class="my-profile-head">
     <div class="profile-image">
       <img [src]="data.photoUrl" alt="Your profile image">

@@ -69,8 +69,8 @@ export class SearchComponent implements OnInit {
     endDate: string | Date | null;
     minPrice: string | null;
     maxPrice: string | null;
-    latitude: number;
-    longitude: number;
+    latitude: number | null;
+    longitude: number | null;
     formattedAddress: string | undefined;
     orderByParameter: string | null;
   } = {
@@ -186,6 +186,20 @@ export class SearchComponent implements OnInit {
         center: { lat: location.lat(), lng: location.lng() },
         zoom: 15
       };
+
+      this.ngZone.run(() => {
+        this.onSearch();
+      });
+    }
+  }
+
+  handleInputChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.value.trim()) {
+      this.selectedPlace = null;
+      this.searchParams.latitude = null;
+      this.searchParams.longitude = null;
 
       this.ngZone.run(() => {
         this.onSearch();

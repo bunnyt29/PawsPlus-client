@@ -37,7 +37,8 @@ body {
 }
 
 .auth-layout {
-  height: calc(100vh - 111px);
+  min-height: calc(100vh - 111px);
+  padding-block: 40px;
   display: flex;
   align-items: center;
 
@@ -880,6 +881,7 @@ p-calendar .p-datepicker-calendar td {
       top: 20px;
       right: 30px;
       background-color: transparent;
+      z-index: 1000;
 
       span {
         font-size: typography.$font-size-xl;

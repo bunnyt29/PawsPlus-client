@@ -118,16 +118,18 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    const formData = { ...this.registerForm.value };
-    delete formData.confirmPassword;
-
-    if (formData.invalid) {
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
       this.toastr.error('Моля, попълнете валидни данни.');
       return;
     }
+
+    const formData = { ...this.registerForm.value };
+    delete formData.confirmPassword;
 
     this.authService.register(formData).subscribe(() => {
       this.toastr.warning("Изпратихме ти съобщение! Потвърди имейла си!");
     });
   }
+
 }

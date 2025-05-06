@@ -61,7 +61,7 @@ export class CreateComponent implements OnInit {
     this.petForm = this.fb.group({
       profileId: ['', Validators.required],
       name: ['', Validators.required],
-      photoUrl: [this.defaultImage],
+      photoUrl: [null, Validators.required],
       petType: [1, Validators.required],
       age: this.fb.group({
         years: [null, Validators.required],
@@ -92,6 +92,10 @@ export class CreateComponent implements OnInit {
     this.updateFormFields();
     this.setupAgeAdjuster();
     this.getBreeds();
+  }
+
+  get photoUrl() {
+    return this.petForm.get('photoUrl');
   }
 
   get name() {
@@ -135,6 +139,16 @@ export class CreateComponent implements OnInit {
     };
 
     this.dynamicFields = fields[this.selectedPet];
+
+    const weightControl = this.petForm.get('weight');
+    if (weightControl) {
+      if (this.selectedPet === 'dog') {
+        weightControl.setValidators([Validators.required]);
+      } else {
+        weightControl.clearValidators();
+      }
+      weightControl.updateValueAndValidity();
+    }
   }
 
   setupAgeAdjuster(): void {

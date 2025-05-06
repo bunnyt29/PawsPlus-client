@@ -163,6 +163,19 @@ export class EditComponent implements OnInit, AfterViewInit {
     }
   }
 
+  handleInputChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.value.trim()) {
+      this.formattedAddress = '';
+      this.markerPosition = null;
+
+      this.profileForm.patchValue({
+        location: null
+      });
+    }
+  }
+
   saveChanges(): Observable<any>{
     if (this.profileForm.invalid) {
       this.profileForm.markAllAsTouched();

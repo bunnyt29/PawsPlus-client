@@ -14,7 +14,8 @@
         <img *ngIf="pet.petType === 2" src="/images/desktop/pet/cat.svg" alt="Котка">
         <div class="personality-item-description">
           <span class="personality-item-description-title">Характер</span>
-          <span>{{ pet.personality?.temperament}}</span>
+          <span *ngIf="pet.personality?.temperament">{{ pet.personality?.temperament}}</span>
+          <span *ngIf="!pet.personality?.temperament">Липсва информация</span>
         </div>
       </div>
       <div class="personality-item">
@@ -30,7 +31,7 @@
              src="/images/desktop/pet/cat-activity-level.png" alt="Коте">
         <div class="personality-item-description">
           <span class="personality-item-description-title">Ниво на активност</span>
-          <span *ngIf="activityLevel === 0">Липсват данни</span>
+          <span *ngIf="activityLevel === 0">Липсва информация</span>
           <span *ngIf="activityLevel > 0 && activityLevel < 5">Малко активно</span>
           <span *ngIf="activityLevel > 4 && activityLevel < 8">Активно</span>
           <span *ngIf="activityLevel > 7">Много активно</span>
@@ -121,7 +122,7 @@
             </div>
           </div>
           <div class="health-status-answer">
-            <span *ngIf="pet.healthStatus?.hasEatingSchedule === ''"><img src="/images/shared/no-info.png" alt="Липсват данни"></span>
+            <span *ngIf="pet.healthStatus?.hasEatingSchedule === ''">Липсва информация</span>
             <span *ngIf="pet.healthStatus?.hasEatingSchedule == 'once'">
               <img *ngIf="pet.petType === 1" src="/images/desktop/pet/dog.svg" alt="Куче">
               <img *ngIf="pet.petType === 2" src="/images/desktop/pet/cat.svg" alt="Котка">
@@ -150,7 +151,7 @@
           </div>
         </div>
       </div>
-      <div class="health-status-items" *ngIf="!pet.healthStatus?.healthProblems">
+      <div class="health-status-items">
         <div class="health-status-item">
           <div class="health-status-item-title">
             <div class="health-status-item-image-holder">
@@ -163,7 +164,7 @@
         </div>
         <div class="health-status-answer">
           <span *ngIf="pet.healthStatus?.healthProblems">{{ pet.healthStatus?.healthProblems }}</span>
-<!--          <span *ngIf="!pet.healthStatus?.healthProblems">{{ pet.healthStatus?.healthProblems }}</span>-->
+          <span *ngIf="!pet.healthStatus?.healthProblems">Липсва информация</span>
         </div>
       </div>
     </div>

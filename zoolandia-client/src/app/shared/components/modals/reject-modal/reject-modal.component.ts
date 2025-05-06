@@ -21,6 +21,7 @@ import {NotificationService} from '../../../services/notification.service';
 })
 export class RejectModalComponent {
   @Input() config!: ModalConfig;
+  @Output() actionCompleted = new EventEmitter<string>();
   @Output() closeModal = new EventEmitter<void>();
   rejectForm!: FormGroup;
 
@@ -72,6 +73,7 @@ export class RejectModalComponent {
     this.bookingService.disapprove(this.config.data).subscribe( () => {
       this.notificationService.create(bookingData).subscribe(() => {});
       this.toastr.success('Отхвърлихте поръчката');
+      this.actionCompleted.emit('disapprove');
       this.closeModal.emit();
     })
   }
@@ -85,8 +87,8 @@ export class RejectModalComponent {
 
     this.bookingService.cancel(this.config.data).subscribe( () => {
       this.toastr.success('Отхвърлихте поръчката');
+      this.actionCompleted.emit('cancel');
       this.closeModal.emit();
-      window.location.reload();
     })
   }
 }

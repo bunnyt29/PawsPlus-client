@@ -185,7 +185,7 @@
         </div>
       </div>
     </div>
-    <div class="reviews">
+    <div class="reviews" *ngIf="reviews.length > 0 || canLeaveReview">
       <div class="reviews-title">
         <h2>Доверени отзиви от стопаните</h2>
       </div>
