@@ -43,9 +43,9 @@ export class DeleteModalComponent {
   deleteService(serviceId: string) {
     this.postServiceService.delete(serviceId).subscribe(() => {
       this.toastr.success("Успешно изтрита услуга!");
-      this.closeModal.emit();
-      location.reload();
     });
+    this.closeModal.emit();
+    location.reload();
   }
 
   deleteAnimal() {

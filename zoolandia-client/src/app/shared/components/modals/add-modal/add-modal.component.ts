@@ -153,7 +153,7 @@ export class AddModalComponent implements OnInit {
         this.serviceForm.reset();
       })
       this.modalService.close();
-      window.location.reload();
+      location.reload();
     }
   }
 

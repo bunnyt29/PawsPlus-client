@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Location} from '@angular/common';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {EMPTY, Observable} from 'rxjs';
 import {GoogleMap, MapAdvancedMarker} from '@angular/google-maps';
 import {ToastrService} from 'ngx-toastr';
@@ -25,7 +25,8 @@ import {environment} from '../../../../../environments/environment';
     ImageUploadComponent,
     GoogleAutocompleteComponent,
     GoogleMap,
-    MapAdvancedMarker
+    MapAdvancedMarker,
+    RouterLink
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'

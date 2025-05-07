@@ -114,10 +114,15 @@ export class NotificationsComponent implements OnInit {
     }
 
     this.bookingService.approve(bookingId, data).subscribe( (): void => {
-      this.notificationService.create(bookingData).subscribe( () => {})
+      const booking = this.bookings.find(b => b.id === bookingId);
+      if (booking) {
+        booking.status = 'Approved';
+      }
+
+      this.notificationService.create(bookingData).subscribe(() => {});
       this.toastr.success('Успешно потвърдихте поръчката!');
       this.activeTab = 'Approved';
-      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Approved');
+      this.filterBookings('Approved');
       this.cdr.detectChanges();
     })
   }
@@ -192,11 +197,16 @@ export class NotificationsComponent implements OnInit {
     }
 
     this.bookingService.start(bookingId).subscribe(() => {
-      this.notificationService.create(bookingData).subscribe( () => {})
+      const booking = this.bookings.find(b => b.id === bookingId);
+      if (booking) {
+        booking.status = 'Started';
+      }
+
+      this.notificationService.create(bookingData).subscribe(() => {});
       this.toastr.success("Поръчката е в процес на изпълнение!");
-      this.activeTab = 'Started';
+
+      this.filterBookings('Started');
       this.cdr.detectChanges();
-      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Started');
     })
   }
 
@@ -208,11 +218,16 @@ export class NotificationsComponent implements OnInit {
     }
 
     this.bookingService.complete(bookingId).subscribe(() => {
-      this.notificationService.create(bookingData).subscribe( () => {})
+      const booking = this.bookings.find(b => b.id === bookingId);
+      if (booking) {
+        booking.status = 'Completed';
+      }
+
+      this.notificationService.create(bookingData).subscribe(() => {});
       this.toastr.success("Поръчката е завършена!");
-      this.activeTab = 'Completed';
+
+      this.filterBookings('Completed');
       this.cdr.detectChanges();
-      this.filteredBookings = this.bookings.filter(booking => booking.status === 'Completed');
     })
   }
 
@@ -221,6 +236,6 @@ export class NotificationsComponent implements OnInit {
   }
 
   viewSitterProfile(sitterId: string) {
-    this.router.navigate(['profile/preview'], { queryParams: { id: sitterId }});
+    this.router.navigate(['profile/details'], { queryParams: { id: sitterId }});
   }
 }

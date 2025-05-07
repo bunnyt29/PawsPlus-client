@@ -120,9 +120,9 @@
             <img src="/images/shared/add-animal.svg" alt="Add button">
             <span>Добави домашен любимец</span>
           </div>
-          <div *ngIf="profile.roles?.includes('Sitter')" class="add">
-            <img src="/images/shared/add-gallery.svg" alt="Add button">
-            <span>Създай галерия от твои снимки с животни</span>
+          <div *ngIf="profile.roles?.includes('Sitter')" routerLink="/profile/my-profile-details/my-post" class="add">
+            <img src="/images/shared/add-service.png" alt="Add button">
+            <span>Създай първата си услуга</span>
           </div>
         </div>
       </div>

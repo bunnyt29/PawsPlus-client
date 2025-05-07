@@ -18,6 +18,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ReviewService} from '../../../../shared/services/review.service';
 import {BookingService} from '../../../../shared/services/booking.service';
 import {LoaderService} from '../../../../core/services/loader.service';
+import {AuthService} from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-details',
@@ -69,6 +70,7 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private authService: AuthService,
     private profileService: ProfileService,
     private modalService: ModalService,
     private reviewService: ReviewService,
@@ -123,22 +125,26 @@ export class DetailsComponent implements OnInit, AfterViewChecked {
           this.initializeMap();
         }
 
-        this.profileService.getMine().subscribe({
-          next: (res) => {
-            this.mineId = res.id;
+        if (this.authService.isAuthenticated()) {
+          this.profileService.getMine().subscribe({
+            next: (res) => {
+              this.mineId = res.id;
 
-            this.bookingService.haveCompletedBookings(this.profileId, this.mineId).subscribe({
-              next: (result) => {
-                const alreadyReviewed = this.reviews.some(review => review.profileId === this.mineId);
-                this.canLeaveReview = result && !alreadyReviewed;
-                this.loaderService.hide();
-              },
-              error: () => this.loaderService.hide()
-            });
-          },
-          error: () => this.loaderService.hide()
-        });
-      },
+              this.bookingService.haveCompletedBookings(this.profileId, this.mineId).subscribe({
+                next: (result) => {
+                  const alreadyReviewed = this.reviews.some(review => review.profileId === this.mineId);
+                  this.canLeaveReview = result && !alreadyReviewed;
+                  this.loaderService.hide();
+                },
+                error: () => this.loaderService.hide()
+              });
+            },
+            error: () => this.loaderService.hide()
+          });
+        } else {
+          this.loaderService.hide();
+        }
+        },
       error: () => this.loaderService.hide()
     });
   }

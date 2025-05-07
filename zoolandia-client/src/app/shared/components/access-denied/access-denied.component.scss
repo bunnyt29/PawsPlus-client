@@ -1,5 +1,6 @@
 @use '../../../../style/abstracts/typography';
 @use '../../../../style/abstracts/colors';
+@use '../../../../style/breakpoints/breakpoints' as *;
 
 .page-access-denied-holder {
   height: 100vh;
@@ -17,6 +18,10 @@
       width: 50%;
     }
 
+    h1 {
+      text-align: center;
+    }
+
     &-text {
       margin-bottom: 20px;
       font-size: typography.$font-size-xl;
@@ -28,6 +33,26 @@
       align-items: center;
       gap: 5px;
       cursor: pointer;
+    }
+  }
+
+  @include for-phone-only {
+
+    .page-access-denied {
+      width: 90%;
+
+      &-image {
+        width: 80%;
+      }
+
+      h1 {
+        font-size: typography.$font-size-lg;
+      }
+
+      &-text {
+        font-size: typography.$font-size-md;
+        text-align: center;
+      }
     }
   }
 }

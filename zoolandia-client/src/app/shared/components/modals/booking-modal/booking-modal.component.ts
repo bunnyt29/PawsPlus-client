@@ -20,6 +20,8 @@ import {ModalConfig} from '../../../models/ModalConfig';
 import {TranslateServicePipe} from '../../../pipes/translate-service.pipe';
 import {startWith} from 'rxjs';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import {AuthService} from '../../../../pages/auth/services/auth.service';
+import {NotificationService} from '../../../services/notification.service';
 
 
 @Component({
@@ -66,14 +68,16 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
   constructor(
     private fb: FormBuilder,
     private bookingService: BookingService,
+    private authService: AuthService,
     private toastr: ToastrService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private notificationService: NotificationService
   ) {
     this.today = new Date();
     this.minDateForEndDate = new Date();
     const now = new Date();
-    const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000); // add 1 hour
+    const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000);
 
     const formatToHHMM = (date: Date): string => {
       const hours = date.getHours().toString().padStart(2, '0');
@@ -115,6 +119,9 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
     });
   }
   ngAfterViewInit(): void {
+    if (!this.authService.isAuthenticated()){
+      this.router.navigate(['/access-denied']);
+    }
     setTimeout(() => {
       this.getFilteredServices();
 
@@ -258,6 +265,12 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
       return isNaN(date.getTime()) ? null : date.toISOString().split('T')[0];
     };
 
+    const bookingData = {
+      profileId: this.config.data.profileId,
+      title: "Нова поръчка",
+      body: `Имаш нова поръчка. Провери профила си!`
+    }
+
     const formData = {
       ...this.bookingForm.value,
       startDay: parseToDateOnly(this.bookingForm.value.startDay || this.today),
@@ -265,6 +278,7 @@ export class BookingModalComponent implements AfterViewInit, OnInit {
     };
 
     this.bookingService.create(formData).subscribe(() => {
+      this.notificationService.create(bookingData).subscribe(() => {});
       this.toastr.success("Успешно изпрати своята заявка! Очаквай потвърждение скоро!");
       this.closeModal.emit();
       this.router.navigate(['/profile/my-profile-details/notifications']);

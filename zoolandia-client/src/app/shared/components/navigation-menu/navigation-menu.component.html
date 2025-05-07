@@ -70,7 +70,7 @@
             <img src="/images/shared/home/dropdown-options/my-post.png" alt="Иконка на календар">
             Моята обява
           </p>
-          <p [routerLink]="'/profile/my-profile-details/notifications'">
+          <p [routerLink]="'/profile/my-profile-details/notifications'" *ngIf="profile?.postStatus == 4 || profile?.roles?.includes('Owner')">
             <img src="/images/shared/home/dropdown-options/notifications.png" alt="Иконка на камбанка">
             Поръчки
           </p>

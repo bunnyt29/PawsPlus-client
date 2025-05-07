@@ -53,7 +53,6 @@ export class NotificationService {
   }
 
   private sendTokenToBackend(token: string) {
-    // Send token to your ASP.NET API
     this.http
       .post(this.notificationsPath + '/registerDevice', { deviceToken: token })
       .subscribe({
