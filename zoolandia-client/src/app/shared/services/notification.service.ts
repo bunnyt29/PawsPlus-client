@@ -15,36 +15,27 @@ export class NotificationService {
 
   async initPushNotifications() {
     if (Capacitor.getPlatform() !== 'web') {
-      // Request permission to use push notifications
       let permStatus = await PushNotifications.requestPermissions();
 
       if (permStatus.receive === 'granted') {
-        // Register with FCM/APNS
         await PushNotifications.register();
 
-        // On successful registration, get the FCM token
         PushNotifications.addListener('registration', (token: Token) => {
           console.log('FCM Token:', token.value);
-          // Send the token to your backend
           this.sendTokenToBackend(token.value);
         });
 
-        // Handle registration errors
         PushNotifications.addListener('registrationError', (error: any) => {
           console.error('Error on registration:', error);
         });
 
-        // Handle incoming notifications
         PushNotifications.addListener('pushNotificationReceived', (notification) => {
           console.log('Push received:', notification);
-          // Display notification or update UI
           alert(`${notification?.title || 'Notification'}: ${notification?.body || ''}`);
         });
 
-        // Handle notification tap
         PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
           console.log('Push action performed:', action);
-          // Navigate or perform action based on notification data
         });
       } else {
         console.log('Push notification permission denied');

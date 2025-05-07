@@ -49,13 +49,11 @@ export class RegisterComponent implements OnInit {
       }
     });
 
-    // Push notification setup
     this.setupPushNotifications();
   }
 
   setupPushNotifications = async () => {
     try {
-      // Check permissions and request if necessary
       let permStatus = await PushNotifications.checkPermissions();
       if (permStatus.receive === 'prompt') {
         permStatus = await PushNotifications.requestPermissions();
@@ -65,10 +63,8 @@ export class RegisterComponent implements OnInit {
         throw new Error('User denied permissions!');
       }
 
-      // Register for notifications
       await PushNotifications.register();
 
-      // Add listeners for different events
       await this.addPushNotificationListeners();
     } catch (error) {
       console.error('Push notifications setup failed: ', error);

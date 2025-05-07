@@ -29,7 +29,6 @@ export class ErrorInterceptor implements HttpInterceptor {
         );
 
         if (shouldIgnore) {
-          // Пропускаме обработката — не показваме тостър, не пренасочваме
           return throwError(() => err);
         }
 
