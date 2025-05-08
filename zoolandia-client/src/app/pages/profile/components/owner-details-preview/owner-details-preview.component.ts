@@ -36,12 +36,7 @@ export class OwnerDetailsPreviewComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private profileService: ProfileService,
-    private postService: PostService,
-    private modalService: ModalService,
-    private cd: ChangeDetectorRef,
-    private router: Router,
-    private toastr: ToastrService
+    private profileService: ProfileService
   ) {}
 
   ngOnInit(): void {

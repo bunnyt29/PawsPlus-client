@@ -39,7 +39,6 @@ export class EditModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private petService: PetService,
     private postServiceService: PostServiceService,
     private modalService: ModalService,
     private toastr: ToastrService,

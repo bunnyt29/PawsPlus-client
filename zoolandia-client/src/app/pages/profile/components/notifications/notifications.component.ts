@@ -18,7 +18,6 @@ import {LoaderService} from '../../../../core/services/loader.service';
   selector: 'app-notifications',
   standalone: true,
   imports: [
-    AnimalTypePipe,
     CommonModule,
     TranslateServicePipe,
     WrapperModalComponent
@@ -32,11 +31,9 @@ export class NotificationsComponent implements OnInit {
   filteredBookings: Array<any> = [];
   activeTab: string = 'Pending';
   reviews: Array<Review> | undefined = [];
-  canLeaveReview: boolean = true;
 
   constructor(
     private bookingService: BookingService,
-    private googleMapsService: GoogleMapsService,
     private notificationService: NotificationService,
     private loaderService: LoaderService,
     private router: Router,
@@ -120,10 +117,10 @@ export class NotificationsComponent implements OnInit {
       }
 
       this.notificationService.create(bookingData).subscribe(() => {});
-      this.toastr.success('Успешно потвърдихте поръчката!');
-      this.activeTab = 'Approved';
-      this.filterBookings('Approved');
-      this.cdr.detectChanges();
+        this.toastr.success('Успешно потвърдихте поръчката!');
+        this.activeTab = 'Approved';
+        this.filterBookings('Approved');
+        this.cdr.detectChanges();
     })
   }
 

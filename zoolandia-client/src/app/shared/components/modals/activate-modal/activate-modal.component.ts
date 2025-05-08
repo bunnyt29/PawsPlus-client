@@ -18,7 +18,6 @@ import {TranslateServicePipe} from '../../../pipes/translate-service.pipe';
     CommonModule,
     PaginatorModule,
     ReactiveFormsModule,
-    TranslateServicePipe
   ],
   templateUrl: './activate-modal.component.html',
   styleUrl: './activate-modal.component.scss'

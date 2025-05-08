@@ -53,7 +53,6 @@ export class EditComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private profileService: ProfileService,
     private fileService: FileService,
-    private authService: AuthService,
     private router: Router,
     private toastr: ToastrService,
     private location: Location

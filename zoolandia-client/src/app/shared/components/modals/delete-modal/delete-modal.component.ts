@@ -28,7 +28,6 @@ export class DeleteModalComponent {
     private postServiceService: PostServiceService,
     private postService: PostService,
     private reviewService: ReviewService,
-    private modalService: ModalService,
     private toastr: ToastrService,
     private router: Router
   ) {
@@ -43,9 +42,10 @@ export class DeleteModalComponent {
   deleteService(serviceId: string) {
     this.postServiceService.delete(serviceId).subscribe(() => {
       this.toastr.success("Успешно изтрита услуга!");
+      this.closeModal.emit();
+      location.reload();
     });
-    this.closeModal.emit();
-    location.reload();
+
   }
 
   deleteAnimal() {

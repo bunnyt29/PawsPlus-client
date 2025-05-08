@@ -151,9 +151,9 @@ export class AddModalComponent implements OnInit {
       this.postServiceService.create(this.serviceForm.value).subscribe( () => {
         this.toastr.success("Успешно добави услуга!");
         this.serviceForm.reset();
+        this.modalService.close();
+        window.location.reload();
       })
-      this.modalService.close();
-      location.reload();
     }
   }
 

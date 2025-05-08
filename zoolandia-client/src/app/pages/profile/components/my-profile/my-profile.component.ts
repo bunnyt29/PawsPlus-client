@@ -45,7 +45,6 @@ export class MyProfileComponent implements OnInit, AfterViewInit {
   };
 
   constructor(
-    private profileService: ProfileService,
     private modalService: ModalService,
     private route: ActivatedRoute
   ) { }
